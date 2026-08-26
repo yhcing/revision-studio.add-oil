@@ -1,34 +1,1781 @@
-function markEssay() {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pastel Revision Studio</title>
 
-    const prompt =
-        document
-            .getElementById('essay-prompt')
-            .value
-            .trim();
+<style>
+:root {
+    --bg-color: #F6F3EE;
+    --card-bg: #FFFFFF;
+    --primary: #D5A1A3;
+    --primary-hover: #CE9C9D;
+    --accent-bg: #F8E6E6;
+    --text-main: #333333;
+    --text-sub: #7A6F6D;
+    --border-color: #EAE8EB;
+    --shadow: 0 8px 25px rgba(213,161,163,.12);
+}
 
-    const text =
-        document
-            .getElementById('essay-text')
-            .value
-            .trim();
+[data-theme="blue"] {
+    --bg-color:#EBF6FA;
+    --primary:#80ADBC;
+    --primary-hover:#A4C8D5;
+    --accent-bg:#D9E6EC;
+    --border-color:#C0D3D8;
+    --shadow:0 8px 25px rgba(128,173,188,.15);
+}
 
-    if (!prompt) {
+[data-theme="nude"] {
+    --bg-color:#FBEFE3;
+    --primary:#CAB08B;
+    --primary-hover:#D9BD9C;
+    --accent-bg:#DEC8BD;
+    --border-color:#D4C8B6;
+    --shadow:0 8px 25px rgba(202,176,139,.15);
+}
+
+[data-theme="sage"] {
+    --bg-color:#F1F5EF;
+    --primary:#9CAF88;
+    --primary-hover:#8B9E78;
+    --accent-bg:#E2EADF;
+    --border-color:#C8D6C4;
+    --shadow:0 8px 25px rgba(156,175,136,.15);
+}
+
+[data-theme="lavender"] {
+    --bg-color:#F5F2F9;
+    --primary:#B5A0D0;
+    --primary-hover:#A38DC0;
+    --accent-bg:#E8E1F2;
+    --border-color:#D3C7E3;
+    --shadow:0 8px 25px rgba(181,160,208,.15);
+}
+
+[data-theme="peach"] {
+    --bg-color:#FDF5EF;
+    --primary:#E8A87C;
+    --primary-hover:#D7976B;
+    --accent-bg:#F9E5D8;
+    --border-color:#EECDBC;
+    --shadow:0 8px 25px rgba(232,168,124,.15);
+}
+
+* {
+    box-sizing:border-box;
+}
+
+body {
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--bg-color);
+    color:var(--text-main);
+    margin:0;
+    padding:20px;
+    transition:.3s ease;
+}
+
+.header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    max-width:1100px;
+    margin:0 auto 20px;
+    background:var(--card-bg);
+    padding:12px 25px;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border-color);
+    gap:15px;
+}
+
+.user-profile-section {
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.profile-badge {
+    display:flex;
+    align-items:center;
+    gap:6px;
+    background:var(--accent-bg);
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+}
+
+.avatar-icon {
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--primary);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.compact-lang-btn {
+    background:var(--card-bg);
+    color:var(--text-main);
+    border:1px solid var(--border-color);
+    padding:5px 10px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.app-layout {
+    display:grid;
+    grid-template-columns:270px 1fr;
+    gap:20px;
+    max-width:1100px;
+    margin:0 auto;
+}
+
+.sidebar,
+.main-panel {
+    background:var(--card-bg);
+    padding:22px;
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border-color);
+}
+
+.function-nav {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.function-btn {
+    background:var(--accent-bg);
+    color:var(--text-main);
+    text-align:left;
+    border:1px solid transparent;
+}
+
+.function-btn.active {
+    background:var(--primary);
+    color:white;
+}
+
+.function-panel {
+    display:none;
+}
+
+.function-panel.active {
+    display:block;
+}
+
+h2,h3 {
+    color:var(--primary);
+    margin-top:0;
+    font-weight:700;
+}
+
+.type-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin:15px 0;
+}
+
+.type-card {
+    background:var(--accent-bg);
+    padding:12px 14px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:14px;
+    font-weight:500;
+}
+
+.type-card select {
+    width:65px;
+    padding:4px;
+    border-radius:6px;
+}
+
+.file-item {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:10px;
+    background:var(--accent-bg);
+    border-radius:10px;
+    margin-bottom:8px;
+    font-size:13px;
+}
+
+.upload-zone {
+    border:2px dashed var(--primary);
+    background:var(--accent-bg);
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+    cursor:pointer;
+    margin-bottom:20px;
+}
+
+.upload-zone:hover {
+    opacity:.85;
+}
+
+input[type="text"],
+textarea,
+select,
+button {
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid var(--border-color);
+    font-size:14px;
+    outline:none;
+}
+
+textarea {
+    resize:vertical;
+    font-family:inherit;
+}
+
+button {
+    background:var(--primary);
+    color:white;
+    border:none;
+    font-weight:600;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+button:hover {
+    background:var(--primary-hover);
+}
+
+.swatch-grid {
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.swatch {
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    border:2px solid white;
+    cursor:pointer;
+    box-shadow:0 2px 5px rgba(0,0,0,.1);
+}
+
+.hidden {
+    display:none !important;
+}
+
+.quiz-question {
+    background:white;
+    padding:16px;
+    margin-top:12px;
+    border-radius:12px;
+    border:1px solid var(--border-color);
+}
+
+.question-type {
+    font-size:12px;
+    color:var(--text-sub);
+    margin-bottom:7px;
+}
+
+.option {
+    display:block;
+    padding:8px;
+    margin-top:5px;
+    background:var(--bg-color);
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.option:hover {
+    background:var(--accent-bg);
+}
+
+.answer-box {
+    margin-top:10px;
+    padding:10px;
+    background:var(--accent-bg);
+    border-radius:8px;
+    font-size:13px;
+}
+
+.score-box {
+    background:var(--accent-bg);
+    padding:15px;
+    border-radius:12px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.essay-stats {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
+}
+
+.stat {
+    background:var(--card-bg);
+    border:1px solid var(--border-color);
+    border-radius:10px;
+    padding:12px;
+    text-align:center;
+}
+
+.stat strong {
+    display:block;
+    color:var(--primary);
+    font-size:20px;
+}
+
+.feedback-list {
+    margin:10px 0 0;
+    padding-left:20px;
+}
+
+.success {
+    border-left:4px solid var(--primary);
+}
+
+@media(max-width:760px) {
+    body {
+        padding:10px;
+    }
+
+    .header {
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .user-profile-section {
+        justify-content:space-between;
+        flex-wrap:wrap;
+    }
+
+    .app-layout {
+        grid-template-columns:1fr;
+    }
+
+    .type-grid {
+        grid-template-columns:1fr;
+    }
+
+    .essay-stats {
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body data-theme="rose">
+
+<div class="header">
+
+    <h3 style="margin:0" id="app-title">
+        🌸 Pastel Revision Studio
+    </h3>
+
+    <div class="user-profile-section">
+
+        <div class="profile-badge">
+            <div class="avatar-icon" id="user-avatar">?</div>
+            <span id="user-display">Guest User</span>
+        </div>
+
+        <button
+            class="compact-lang-btn"
+            onclick="toggleLanguage()"
+            id="lang-toggle-btn"
+            style="width:auto;margin:0">
+            🌐 廣東話
+        </button>
+
+        <button
+            id="auth-btn"
+            onclick="toggleAuthModal()"
+            style="width:auto;padding:5px 12px;margin:0;font-size:12px">
+            Log In
+        </button>
+
+    </div>
+</div>
+
+
+<div class="app-layout">
+
+<div class="sidebar">
+
+    <h3>🧭 Functions</h3>
+
+    <div class="function-nav">
+
+        <button
+            class="function-btn active"
+            onclick="showPanel('test',this)">
+            📝 Practice Test
+        </button>
+
+        <button
+            class="function-btn"
+            onclick="showPanel('essay',this)">
+            ✍️ Essay Marker
+        </button>
+
+        <button
+            class="function-btn"
+            onclick="showPanel('notes',this)">
+            📚 Notes
+        </button>
+
+    </div>
+
+
+    <h3 id="lbl-theme">🎨 Theme Swatches</h3>
+
+    <div class="swatch-grid">
+
+        <span class="swatch"
+            style="background:#D5A1A3"
+            onclick="setTheme('rose')"
+            title="Blush Rose"></span>
+
+        <span class="swatch"
+            style="background:#80ADBC"
+            onclick="setTheme('blue')"
+            title="Soft Blue"></span>
+
+        <span class="swatch"
+            style="background:#CAB08B"
+            onclick="setTheme('nude')"
+            title="Warm Nude"></span>
+
+        <span class="swatch"
+            style="background:#9CAF88"
+            onclick="setTheme('sage')"
+            title="Sage Green"></span>
+
+        <span class="swatch"
+            style="background:#B5A0D0"
+            onclick="setTheme('lavender')"
+            title="Lavender Mist"></span>
+
+        <span class="swatch"
+            style="background:#E8A87C"
+            onclick="setTheme('peach')"
+            title="Peach Coral"></span>
+
+    </div>
+
+
+    <h3 id="lbl-files">📂 Topic Files</h3>
+
+    <div id="file-container">
+
+        <div class="file-item">
+            <label>
+                <input
+                    type="checkbox"
+                    class="topic-cb"
+                    value="Photosynthesis"
+                    checked>
+                Photosynthesis
+            </label>
+        </div>
+
+        <div class="file-item">
+            <label>
+                <input
+                    type="checkbox"
+                    class="topic-cb"
+                    value="Cold War"
+                    checked>
+                Cold War
+            </label>
+        </div>
+
+    </div>
+
+
+    <h4
+        style="margin-top:20px;color:var(--primary)"
+        id="lbl-add-file">
+        + Add Topic File
+    </h4>
+
+    <input
+        type="text"
+        id="file-title"
+        placeholder="File Name..."
+        style="margin-bottom:8px">
+
+    <textarea
+        id="file-content"
+        rows="4"
+        placeholder="Paste notes..."></textarea>
+
+    <button
+        onclick="addTopicFile()"
+        id="btn-save-file">
+        Save File
+    </button>
+
+</div>
+
+
+<div class="main-panel">
+
+    <!-- AUTH -->
+
+    <div
+        id="auth-box"
+        class="hidden"
+        style="background:var(--accent-bg);padding:15px;border-radius:12px;margin-bottom:20px">
+
+        <input
+            type="text"
+            id="user-input"
+            placeholder="Enter Username"
+            style="margin-bottom:8px">
+
+        <button onclick="loginUser()">
+            Sign In / Register
+        </button>
+
+    </div>
+
+
+    <!-- TEST -->
+
+    <div id="panel-test" class="function-panel active">
+
+        <h2 id="lbl-upload-heading">
+            📥 Upload Material to Notes
+        </h2>
+
+        <div
+            class="upload-zone"
+            onclick="document.getElementById('file-upload-input').click()">
+
+            <span style="font-size:24px">📄</span>
+
+            <p
+                style="margin:5px 0 0;font-weight:600"
+                id="lbl-drag-text">
+                Click or Drop Files Here (.txt)
+            </p>
+
+            <input
+                type="file"
+                id="file-upload-input"
+                accept=".txt,text/plain"
+                style="display:none"
+                onchange="handleFileUpload(event)">
+
+        </div>
+
+
+        <h2 id="lbl-config">
+            ⚙️ Test Configurator
+        </h2>
+
+
+        <div class="type-grid">
+
+            <div class="type-card">
+
+                <label>
+                    <input type="checkbox" checked id="cb-mcq">
+                    <span id="opt-mcq">Multiple Choice</span>
+                </label>
+
+                <select id="count-mcq">
+                    <option value="3">3</option>
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                </select>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <label>
+                    <input type="checkbox" checked id="cb-tf">
+                    <span id="opt-tf">True / False</span>
+                </label>
+
+                <select id="count-tf">
+                    <option value="3">3</option>
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                </select>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <label>
+                    <input type="checkbox" checked id="cb-sa">
+                    <span id="opt-sa">Short Answer</span>
+                </label>
+
+                <select id="count-sa">
+                    <option value="2">2</option>
+                    <option value="4" selected>4</option>
+                    <option value="6">6</option>
+                </select>
+
+            </div>
+
+
+            <div class="type-card">
+
+                <label>
+                    <input type="checkbox" checked id="cb-essay">
+                    <span id="opt-essay">Essay Prompts</span>
+                </label>
+
+                <select id="count-essay">
+                    <option value="1">1</option>
+                    <option value="2" selected>2</option>
+                    <option value="3">3</option>
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            onclick="generatePracticeTest()"
+            style="padding:14px;font-size:16px"
+            id="btn-generate">
+            🧠 Generate Practice Test
+        </button>
+
+
+        <div
+            id="generated-quiz-output"
+            class="hidden"
+            style="margin-top:20px">
+
+            <div class="score-box">
+
+                <h3 id="lbl-quiz-result" style="margin-bottom:5px">
+                    Generated Practice Questions
+                </h3>
+
+                <span id="question-count">
+                    0 questions generated
+                </span>
+
+            </div>
+
+            <div id="quiz-content-list"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ESSAY MARKER -->
+
+    <div id="panel-essay" class="function-panel">
+
+        <h2 id="lbl-essay-heading">
+            📝 Instant Essay Marker
+        </h2>
+
+        <input
+            type="text"
+            id="essay-prompt"
+            placeholder="Essay Prompt Title..."
+            style="margin-bottom:10px">
+
+        <textarea
+            id="essay-text"
+            rows="10"
+            placeholder="Write or paste essay..."></textarea>
+
+        <button
+            onclick="markEssay()"
+            id="btn-mark">
+            Submit & Mark Essay
+        </button>
+
+
+        <div
+            id="essay-result"
+            class="hidden"
+            style="margin-top:15px;padding:15px;background:var(--accent-bg);border-radius:12px">
+
+            <strong
+                id="essay-grade"
+                style="font-size:20px;color:var(--primary)">
+            </strong>
+
+            <p
+                id="essay-feedback"
+                style="margin:8px 0 0;font-size:13px">
+            </p>
+
+            <div class="essay-stats">
+
+                <div class="stat">
+                    <strong id="essay-word-count">0</strong>
+                    Words
+                </div>
+
+                <div class="stat">
+                    <strong id="essay-sentence-count">0</strong>
+                    Sentences
+                </div>
+
+                <div class="stat">
+                    <strong id="essay-paragraph-count">0</strong>
+                    Paragraphs
+                </div>
+
+            </div>
+
+            <div id="essay-feedback-list"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NOTES -->
+
+    <div id="panel-notes" class="function-panel">
+
+        <h2>📚 Notes & Topics</h2>
+
+        <p>
+            Your uploaded notes appear here.
+            Select topics from the sidebar and generate a test.
+        </p>
+
+        <textarea
+            id="notes-preview"
+            rows="12"
+            placeholder="Your notes will appear here when you select a topic..."></textarea>
+
+        <button onclick="showSelectedNotes()">
+            View Selected Notes
+        </button>
+
+    </div>
+
+</div>
+</div>
+
+
+<script>
+
+"use strict";
+
+/* =========================
+   DATA
+========================= */
+
+let currentLang = "en";
+
+const uploadedNotes = {};
+
+const builtInNotes = {
+
+    "Photosynthesis": `
+    Photosynthesis is the process by which green plants convert light energy into chemical energy.
+    Chlorophyll absorbs light energy in plant cells.
+    Carbon dioxide enters the plant through tiny openings called stomata.
+    Water is absorbed by the roots and transported through the plant.
+    Glucose is produced during photosynthesis.
+    Plants can use glucose as an energy source.
+    Oxygen is released as a by-product of photosynthesis.
+    `,
+
+    "Cold War": `
+    The Cold War was a period of political tension between the United States and the Soviet Union.
+    The conflict developed after the Second World War.
+    The United States generally supported capitalism.
+    The Soviet Union generally supported communism.
+    NATO was established in 1949 as a military alliance.
+    The Soviet Union and its allies later created the Warsaw Pact.
+    The Berlin Wall became a major symbol of the division between communist and capitalist Europe.
+    `
+};
+
+
+/* =========================
+   TRANSLATIONS
+========================= */
+
+const translations = {
+
+    en: {
+        appTitle:"🌸 Pastel Revision Studio",
+        langBtn:"🌐 廣東話",
+        userDefault:"Guest User",
+        authBtn:"Log In",
+        lblTheme:"🎨 Theme Swatches",
+        lblFiles:"📂 Topic Files",
+        lblAddFile:"+ Add Topic File",
+        btnSaveFile:"Save File",
+        lblUploadHeading:"📥 Upload Material to Notes",
+        lblDragText:"Click or Drop Files Here (.txt)",
+        lblConfig:"⚙️ Test Configurator",
+        optMcq:"Multiple Choice",
+        optTf:"True / False",
+        optSa:"Short Answer",
+        optEssay:"Essay Prompts",
+        btnGenerate:"🧠 Generate Practice Test",
+        lblQuizResult:"Generated Practice Questions",
+        lblEssayHeading:"📝 Instant Essay Marker",
+        btnMark:"Submit & Mark Essay"
+    },
+
+    zh: {
+        appTitle:"🌸 溫習筆記與測驗生成器",
+        langBtn:"🌐 English",
+        userDefault:"訪客",
+        authBtn:"登入 / 註冊",
+        lblTheme:"🎨 主題配色",
+        lblFiles:"📂 溫習檔案庫",
+        lblAddFile:"+ 新增主題檔案",
+        btnSaveFile:"儲存檔案",
+        lblUploadHeading:"📥 上傳文件並生成測驗",
+        lblDragText:"按此上傳或拖放文字檔 (.txt)",
+        lblConfig:"⚙️ 測驗自訂選項",
+        optMcq:"多項選擇題",
+        optTf:"是非題",
+        optSa:"短答題",
+        optEssay:"問答題 / 文章題目",
+        btnGenerate:"🧠 生成溫習測驗",
+        lblQuizResult:"已生成的溫習題目",
+        lblEssayHeading:"📝 智能文章批改工具",
+        btnMark:"提交並批改文章"
+    }
+
+};
+
+
+/* =========================
+   LANGUAGE
+========================= */
+
+function toggleLanguage() {
+
+    currentLang = currentLang === "en" ? "zh" : "en";
+
+    const t = translations[currentLang];
+
+    const ids = [
+        "app-title",
+        "lang-toggle-btn",
+        "auth-btn",
+        "lbl-theme",
+        "lbl-files",
+        "lbl-add-file",
+        "btn-save-file",
+        "lbl-upload-heading",
+        "lbl-drag-text",
+        "lbl-config",
+        "opt-mcq",
+        "opt-tf",
+        "opt-sa",
+        "opt-essay",
+        "btn-generate",
+        "lbl-quiz-result",
+        "lbl-essay-heading",
+        "btn-mark"
+    ];
+
+    const keys = [
+        "appTitle",
+        "langBtn",
+        "authBtn",
+        "lblTheme",
+        "lblFiles",
+        "lblAddFile",
+        "btnSaveFile",
+        "lblUploadHeading",
+        "lblDragText",
+        "lblConfig",
+        "optMcq",
+        "optTf",
+        "optSa",
+        "optEssay",
+        "btnGenerate",
+        "lblQuizResult",
+        "lblEssayHeading",
+        "btnMark"
+    ];
+
+    ids.forEach((id,index) => {
+
+        const element = document.getElementById(id);
+
+        if (element) {
+            element.innerText = t[keys[index]];
+        }
+
+    });
+
+    const user = document.getElementById("user-display");
+
+    if (
+        user.innerText === "Guest User" ||
+        user.innerText === "訪客"
+    ) {
+        user.innerText = t.userDefault;
+    }
+}
+
+
+/* =========================
+   FILE UPLOAD
+========================= */
+
+function handleFileUpload(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".txt")) {
 
         alert(
-            currentLang === 'en'
-                ? 'Please enter an essay prompt.'
-                : '請輸入文章題目。'
+            currentLang === "en"
+            ? "Please upload a .txt file."
+            : "請上傳 .txt 文字檔。"
+        );
+
+        event.target.value = "";
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+
+        const content = String(e.target.result || "").trim();
+
+        if (!content) {
+
+            alert(
+                currentLang === "en"
+                ? "This file is empty."
+                : "這個檔案是空的。"
+            );
+
+            return;
+        }
+
+        uploadedNotes[file.name] = content;
+
+        addFileToSidebar(file.name);
+
+        alert(
+            currentLang === "en"
+            ? `"${file.name}" loaded successfully!`
+            : `"${file.name}" 已成功載入！`
+        );
+
+        event.target.value = "";
+    };
+
+    reader.onerror = function() {
+
+        alert(
+            currentLang === "en"
+            ? "Could not read this file."
+            : "無法讀取這個檔案。"
+        );
+
+    };
+
+    reader.readAsText(file);
+}
+
+
+function addFileToSidebar(fileName) {
+
+    const container = document.getElementById("file-container");
+
+    const exists = Array.from(
+        container.querySelectorAll(".topic-cb")
+    ).some(cb => cb.value === fileName);
+
+    if (exists) return;
+
+    const div = document.createElement("div");
+    div.className = "file-item";
+
+    const label = document.createElement("label");
+
+    const checkbox = document.createElement("input");
+
+    checkbox.type = "checkbox";
+    checkbox.className = "topic-cb";
+    checkbox.value = fileName;
+    checkbox.checked = true;
+
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(" " + fileName));
+
+    div.appendChild(label);
+    container.appendChild(div);
+}
+
+
+/* =========================
+   PRACTICE TEST
+========================= */
+
+function generatePracticeTest() {
+
+    const checkedTopics = Array.from(
+        document.querySelectorAll(".topic-cb:checked")
+    ).map(cb => cb.value);
+
+    if (!checkedTopics.length) {
+
+        alert(
+            currentLang === "en"
+            ? "Select at least one topic."
+            : "請至少選擇一個溫習主題。"
         );
 
         return;
     }
 
+    const settings = {
+
+        mcq: getCount("cb-mcq","count-mcq"),
+
+        tf: getCount("cb-tf","count-tf"),
+
+        sa: getCount("cb-sa","count-sa"),
+
+        essay: getCount("cb-essay","count-essay")
+
+    };
+
+    const allQuestions = [];
+
+    checkedTopics.forEach(topic => {
+
+        const notes =
+            uploadedNotes[topic] ||
+            builtInNotes[topic] ||
+            "";
+
+        if (!notes) return;
+
+        allQuestions.push(
+            ...createQuestionsFromNotes(
+                notes,
+                topic,
+                settings
+            )
+        );
+
+    });
+
+    if (!allQuestions.length) {
+
+        alert(
+            currentLang === "en"
+            ? "Not enough information was found in your notes."
+            : "你的筆記沒有足夠資料生成題目。"
+        );
+
+        return;
+    }
+
+    shuffle(allQuestions);
+
+    renderQuestions(allQuestions);
+}
+
+
+function getCount(checkId,countId) {
+
+    const checked = document.getElementById(checkId).checked;
+
+    if (!checked) return 0;
+
+    return Number(document.getElementById(countId).value) || 0;
+}
+
+
+function createQuestionsFromNotes(notes,topic,settings) {
+
+    const sentences = extractSentences(notes);
+
+    if (!sentences.length) return [];
+
+    const shuffled = shuffle([...sentences]);
+
+    const questions = [];
+
+
+    /* MCQ */
+
+    for (let i=0; i<settings.mcq; i++) {
+
+        const sentence = shuffled[i % shuffled.length];
+
+        const question = createMCQ(
+            sentence,
+            topic,
+            sentences
+        );
+
+        if (question) questions.push(question);
+    }
+
+
+    /* TRUE / FALSE */
+
+    for (let i=0; i<settings.tf; i++) {
+
+        const sentence =
+            shuffled[
+                (i + settings.mcq) %
+                shuffled.length
+            ];
+
+        questions.push(
+            createTrueFalse(
+                sentence,
+                topic,
+                i
+            )
+        );
+    }
+
+
+    /* SHORT ANSWER */
+
+    for (let i=0; i<settings.sa; i++) {
+
+        const sentence =
+            shuffled[
+                (
+                    i +
+                    settings.mcq +
+                    settings.tf
+                ) %
+                shuffled.length
+            ];
+
+        questions.push({
+
+            type:"Short Answer",
+
+            topic,
+
+            question:
+                currentLang === "en"
+                ? `Explain this idea from your notes: "${sentence}"`
+                : `請解釋筆記中的以下概念：「${sentence}」`,
+
+            answer:sentence
+
+        });
+    }
+
+
+    /* ESSAY */
+
+    for (let i=0; i<settings.essay; i++) {
+
+        questions.push({
+
+            type:"Essay",
+
+            topic,
+
+            question:
+                currentLang === "en"
+                ? `Discuss ${topic}, using evidence and ideas from your notes.`
+                : `運用筆記中的資料及例子，討論${topic}。`,
+
+            answer:shuffled
+                .slice(0,Math.min(4,shuffled.length))
+                .join(" ")
+
+        });
+    }
+
+    return questions;
+}
+
+
+function extractSentences(notes) {
+
+    return notes
+        .replace(/\r/g," ")
+        .replace(/\n+/g," ")
+        .replace(/\s+/g," ")
+        .split(/(?<=[.!?])\s+/)
+        .map(s => s.trim())
+        .filter(s => s.length >= 20);
+}
+
+
+/* =========================
+   MCQ
+========================= */
+
+function createMCQ(sentence,topic,allSentences) {
+
+    const words = sentence
+        .replace(/[.,!?;:()[\]{}]/g,"")
+        .split(/\s+/)
+        .filter(word => word.length >= 5);
+
+    if (words.length < 4) return null;
+
+    const answer =
+        words[Math.floor(Math.random() * words.length)];
+
+    const questionText = sentence.replace(
+        new RegExp(escapeRegExp(answer),"i"),
+        "_____"
+    );
+
+    const possibleWrongAnswers =
+        allSentences
+        .flatMap(s =>
+            s
+            .replace(/[.,!?;:()[\]{}]/g,"")
+            .split(/\s+/)
+        )
+        .filter(word =>
+            word.length >= 5 &&
+            word.toLowerCase() !== answer.toLowerCase()
+        );
+
+    const wrongAnswers = [
+        ...new Set(possibleWrongAnswers)
+    ];
+
+    shuffle(wrongAnswers);
+
+    const selectedWrong = wrongAnswers.slice(0,3);
+
+    if (selectedWrong.length < 3) return null;
+
+    const options = shuffle([
+        answer,
+        ...selectedWrong
+    ]);
+
+    return {
+
+        type:"Multiple Choice",
+
+        topic,
+
+        question:
+            currentLang === "en"
+            ? `Which word correctly completes this statement? "${questionText}"`
+            : `哪一個詞語最適合填入以下句子？「${questionText}」`,
+
+        options,
+
+        answer:
+            `${String.fromCharCode(
+                65 + options.indexOf(answer)
+            )}. ${answer}`
+
+    };
+}
+
+
+/* =========================
+   TRUE / FALSE
+========================= */
+
+function createTrueFalse(sentence,topic,index) {
+
+    const makeFalse = index % 2 === 1;
+
+    let statement = sentence;
+
+    if (makeFalse) {
+
+        const words = sentence.split(/\s+/);
+
+        if (words.length > 5) {
+
+            const position =
+                Math.floor(words.length / 2);
+
+            words[position] =
+                "not " + words[position];
+
+            statement = words.join(" ");
+        }
+
+    }
+
+    return {
+
+        type:"True / False",
+
+        topic,
+
+        question:
+            currentLang === "en"
+            ? `True or False: ${statement}`
+            : `正確或錯誤：${statement}`,
+
+        answer:makeFalse ? "False" : "True"
+
+    };
+}
+
+
+/* =========================
+   RENDER QUESTIONS
+========================= */
+
+function renderQuestions(questions) {
+
+    const container =
+        document.getElementById("quiz-content-list");
+
+    container.innerHTML = "";
+
+    questions.forEach((question,index) => {
+
+        const box = document.createElement("div");
+
+        box.className = "quiz-question";
+
+
+        const type = document.createElement("div");
+
+        type.className = "question-type";
+
+        type.innerText =
+            `${question.type} · ${question.topic}`;
+
+        box.appendChild(type);
+
+
+        const title = document.createElement("strong");
+
+        title.innerText =
+            `Q${index + 1}. ${question.question}`;
+
+        box.appendChild(title);
+
+
+        if (question.type === "Multiple Choice") {
+
+            question.options.forEach((option,optionIndex) => {
+
+                const label = document.createElement("label");
+
+                label.className = "option";
+
+                const radio = document.createElement("input");
+
+                radio.type = "radio";
+                radio.name = `question-${index}`;
+                radio.value = option;
+
+                label.appendChild(radio);
+
+                label.appendChild(
+                    document.createTextNode(
+                        ` ${String.fromCharCode(65 + optionIndex)}. ${option}`
+                    )
+                );
+
+                box.appendChild(label);
+
+            });
+
+            addAnswerButton(box,question.answer);
+
+        }
+
+        else if (question.type === "True / False") {
+
+            ["True","False"].forEach(value => {
+
+                const label =
+                    document.createElement("label");
+
+                label.className = "option";
+
+                const radio =
+                    document.createElement("input");
+
+                radio.type = "radio";
+                radio.name = `question-${index}`;
+                radio.value = value;
+
+                label.appendChild(radio);
+
+                label.appendChild(
+                    document.createTextNode(
+                        currentLang === "en"
+                        ? ` ${value}`
+                        : value === "True"
+                            ? " 正確"
+                            : " 錯誤"
+                    )
+                );
+
+                box.appendChild(label);
+
+            });
+
+            addAnswerButton(box,question.answer);
+
+        }
+
+        else if (question.type === "Short Answer") {
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.rows = 4;
+
+            textarea.placeholder =
+                currentLang === "en"
+                ? "Write your answer here..."
+                : "在此輸入答案...";
+
+            textarea.style.marginTop = "10px";
+
+            box.appendChild(textarea);
+
+            addAnswerButton(box,question.answer);
+
+        }
+
+        else {
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.rows = 7;
+
+            textarea.placeholder =
+                currentLang === "en"
+                ? "Plan your essay here..."
+                : "在此規劃你的文章...";
+
+            textarea.style.marginTop = "10px";
+
+            box.appendChild(textarea);
+
+            addAnswerButton(box,question.answer);
+
+        }
+
+        container.appendChild(box);
+
+    });
+
+
+    document.getElementById("question-count").innerText =
+        currentLang === "en"
+        ? `${questions.length} questions generated from your notes`
+        : `已根據你的筆記生成 ${questions.length} 題`;
+
+    document
+        .getElementById("generated-quiz-output")
+        .classList.remove("hidden");
+}
+
+
+function addAnswerButton(box,answer) {
+
+    const button =
+        document.createElement("button");
+
+    button.style.width = "auto";
+    button.style.padding = "8px 12px";
+
+    button.innerText =
+        currentLang === "en"
+        ? "Show Answer"
+        : "顯示答案";
+
+    const answerBox =
+        document.createElement("div");
+
+    answerBox.className = "answer-box hidden";
+
+    answerBox.innerText =
+        currentLang === "en"
+        ? `Answer: ${answer}`
+        : `答案：${answer}`;
+
+    button.onclick = () => {
+
+        answerBox.classList.toggle("hidden");
+
+    };
+
+    box.appendChild(button);
+    box.appendChild(answerBox);
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPanel(name,button) {
+
+    document
+        .querySelectorAll(".function-panel")
+        .forEach(panel =>
+            panel.classList.remove("active")
+        );
+
+    document
+        .querySelectorAll(".function-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    const panel =
+        document.getElementById("panel-" + name);
+
+    if (panel) {
+        panel.classList.add("active");
+    }
+
+    if (button) {
+        button.classList.add("active");
+    }
+}
+
+
+/* =========================
+   THEMES
+========================= */
+
+function setTheme(theme) {
+
+    document.body.setAttribute(
+        "data-theme",
+        theme
+    );
+
+    try {
+        localStorage.setItem(
+            "revisionTheme",
+            theme
+        );
+    } catch(e) {}
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function toggleAuthModal() {
+
+    document
+        .getElementById("auth-box")
+        .classList.toggle("hidden");
+}
+
+
+function loginUser() {
+
+    const input =
+        document.getElementById("user-input");
+
+    const username =
+        input.value.trim();
+
+    if (!username) {
+
+        alert(
+            currentLang === "en"
+            ? "Please enter a username."
+            : "請輸入使用者名稱。"
+        );
+
+        return;
+    }
+
+    document.getElementById("user-display").innerText =
+        username;
+
+    document.getElementById("user-avatar").innerText =
+        username.charAt(0).toUpperCase();
+
+    document
+        .getElementById("auth-box")
+        .classList.add("hidden");
+
+    try {
+        localStorage.setItem(
+            "revisionUsername",
+            username
+        );
+    } catch(e) {}
+}
+
+
+/* =========================
+   ADD TOPIC FILE
+========================= */
+
+function addTopicFile() {
+
+    const title =
+        document.getElementById("file-title")
+        .value
+        .trim();
+
+    const content =
+        document.getElementById("file-content")
+        .value
+        .trim();
+
+    if (!title) {
+
+        alert(
+            currentLang === "en"
+            ? "Please enter a file name."
+            : "請輸入檔案名稱。"
+        );
+
+        return;
+    }
+
+    if (!content) {
+
+        alert(
+            currentLang === "en"
+            ? "Please enter some notes."
+            : "請輸入一些筆記內容。"
+        );
+
+        return;
+    }
+
+    const fileName =
+        title.toLowerCase().endsWith(".txt")
+        ? title
+        : title + ".txt";
+
+    uploadedNotes[fileName] = content;
+
+    addFileToSidebar(fileName);
+
+    document.getElementById("file-title").value = "";
+    document.getElementById("file-content").value = "";
+
+    alert(
+        currentLang === "en"
+        ? "Topic file saved!"
+        : "主題檔案已儲存！"
+    );
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+function showSelectedNotes() {
+
+    const selected =
+        Array.from(
+            document.querySelectorAll(".topic-cb:checked")
+        );
+
+    if (!selected.length) {
+
+        alert(
+            currentLang === "en"
+            ? "Select a topic first."
+            : "請先選擇一個主題。"
+        );
+
+        return;
+    }
+
+    const notes =
+        selected
+        .map(checkbox => {
+
+            const topic = checkbox.value;
+
+            return (
+                uploadedNotes[topic] ||
+                builtInNotes[topic] ||
+                ""
+            );
+
+        })
+        .filter(Boolean)
+        .join("\n\n");
+
+    document.getElementById("notes-preview").value =
+        notes;
+}
+
+
+/* =====================================================
+   FIXED ESSAY MARKER
+===================================================== */
+
+function markEssay() {
+
+    const text =
+        document
+            .getElementById("essay-text")
+            .value
+            .trim();
+
+    const prompt =
+        document
+            .getElementById("essay-prompt")
+            .value
+            .trim();
+
+
     if (!text) {
 
         alert(
-            currentLang === 'en'
-                ? 'Please enter essay text.'
-                : '請先輸入文章內容。'
+            currentLang === "en"
+            ? "Please enter essay text."
+            : "請先輸入文章內容。"
         );
 
         return;
@@ -36,306 +1783,410 @@ function markEssay() {
 
 
     /*
-        Basic essay analysis
+       Count words correctly.
+
+       The old version used:
+           text.split(/\s+/).length
+
+       which can give inaccurate results for empty/odd whitespace.
     */
 
     const words =
-        text
-            .split(/\s+/)
-            .filter(word => word.length > 0);
+        text.match(/\S+/g) || [];
 
     const wordCount =
         words.length;
 
 
+    /*
+       Count sentences.
+    */
+
     const sentences =
         text
-            .split(/[.!?。！？]+/)
-            .map(sentence => sentence.trim())
-            .filter(Boolean);
+        .split(/[.!?]+/)
+        .map(s => s.trim())
+        .filter(Boolean);
+
+    const sentenceCount =
+        sentences.length;
+
+
+    /*
+       Count paragraphs.
+
+       A paragraph is separated by one or more blank lines.
+    */
 
     const paragraphs =
         text
-            .split(/\n\s*\n/)
-            .map(paragraph => paragraph.trim())
-            .filter(Boolean);
+        .split(/\n\s*\n/)
+        .map(p => p.trim())
+        .filter(Boolean);
+
+    const paragraphCount =
+        paragraphs.length || 1;
 
 
     /*
-        Calculate basic writing indicators
+       Basic quality checks.
     */
-
-    let score = 0;
 
     const feedback = [];
 
+    let score = 0;
 
-    // Length
+
+    /* Length */
 
     if (wordCount >= 300) {
 
-        score += 25;
+        score += 4;
 
     } else if (wordCount >= 200) {
 
-        score += 20;
+        score += 3;
 
     } else if (wordCount >= 120) {
 
-        score += 15;
-
-    } else if (wordCount >= 80) {
-
-        score += 10;
+        score += 2;
 
     } else {
 
-        score += 5;
+        score += 1;
 
         feedback.push(
-            currentLang === 'en'
-                ? 'Your essay is quite short. Develop your ideas with more explanation and evidence.'
-                : '文章比較簡短，可以加入更多解釋及證據來發展你的論點。'
+            currentLang === "en"
+            ? "Your essay is quite short. Develop your explanation and evidence."
+            : "文章比較短，可以加入更多解釋及證據。"
         );
     }
 
 
-    // Paragraph structure
+    /* Paragraph structure */
 
-    if (paragraphs.length >= 4) {
+    if (paragraphCount >= 4) {
 
-        score += 20;
+        score += 2;
 
-    } else if (paragraphs.length >= 3) {
+    } else if (paragraphCount >= 2) {
 
-        score += 17;
-
-    } else if (paragraphs.length >= 2) {
-
-        score += 12;
+        score += 1;
 
     } else {
 
-        score += 5;
-
         feedback.push(
-            currentLang === 'en'
-                ? 'Use clearer paragraph structure to separate your main ideas.'
-                : '建議使用更清晰的段落結構來分開不同主要論點。'
+            currentLang === "en"
+            ? "Use clearer paragraphs to separate different ideas."
+            : "可以使用更清晰的分段來分開不同觀點。"
         );
     }
 
 
-    // Sentence development
+    /* Sentence development */
 
-    const averageSentenceLength =
-        sentences.length
-            ? wordCount / sentences.length
-            : 0;
+    if (sentenceCount >= 8) {
 
-    if (averageSentenceLength >= 12) {
+        score += 2;
 
-        score += 20;
+    } else if (sentenceCount >= 5) {
 
-    } else if (averageSentenceLength >= 8) {
-
-        score += 15;
+        score += 1;
 
     } else {
 
-        score += 8;
-
         feedback.push(
-            currentLang === 'en'
-                ? 'Try developing your explanations into fuller sentences.'
-                : '可以把解釋發展成更完整的句子。'
+            currentLang === "en"
+            ? "Try developing your ideas with more complete explanations."
+            : "可以用更完整的句子發展你的觀點。"
         );
     }
 
 
-    /*
-        Check whether the prompt appears
-        to be addressed.
-    */
+    /* Evidence / examples */
 
-    const promptWords =
-        prompt
-            .toLowerCase()
-            .replace(/[^\p{L}\p{N}\s]/gu, '')
-            .split(/\s+/)
-            .filter(word => word.length >= 4);
+    const evidenceWords = [
+        "because",
+        "therefore",
+        "however",
+        "for example",
+        "such as",
+        "evidence",
+        "this shows",
+        "this suggests",
+        "例如",
+        "因此",
+        "證據",
+        "顯示"
+    ];
 
-    const essayLower =
+    const lowerText =
         text.toLowerCase();
 
-    const matchedPromptWords =
-        promptWords.filter(
-            word =>
-                essayLower.includes(word)
+    const hasEvidence =
+        evidenceWords.some(
+            word => lowerText.includes(word.toLowerCase())
         );
 
-    const promptCoverage =
-        promptWords.length
-            ? matchedPromptWords.length /
-              promptWords.length
-            : 1;
+    if (hasEvidence) {
 
-
-    if (promptCoverage >= 0.5) {
-
-        score += 20;
-
-    } else if (promptCoverage >= 0.25) {
-
-        score += 12;
-
-        feedback.push(
-            currentLang === 'en'
-                ? 'Make sure your paragraphs directly address the essay question.'
-                : '確保每一段都直接回應文章題目。'
-        );
+        score += 2;
 
     } else {
 
-        score += 5;
-
         feedback.push(
-            currentLang === 'en'
-                ? 'Your response may not be closely focused on the essay question.'
-                : '你的文章可能未有充分集中回應題目。'
+            currentLang === "en"
+            ? "Add specific evidence, examples, or linking phrases to strengthen your argument."
+            : "加入具體證據、例子或連接詞，可以令論點更有說服力。"
         );
     }
 
 
     /*
-        Look for evidence / explanation language.
+       Prompt relevance.
+
+       This doesn't pretend to use AI.
+       It simply checks whether words from the prompt
+       appear in the essay.
     */
 
-    const evidenceWords =
-        currentLang === 'en'
-            ? [
-                'because',
-                'therefore',
-                'however',
-                'for example',
-                'evidence',
-                'shows',
-                'demonstrates',
-                'this means'
-            ]
-            : [
-                '因為',
-                '因此',
-                '然而',
-                '例如',
-                '證據',
-                '顯示',
-                '反映',
-                '意思是'
-            ];
+    if (prompt) {
 
-    const evidenceCount =
-        evidenceWords.filter(
-            word =>
-                essayLower.includes(
-                    word.toLowerCase()
-                )
-        ).length;
+        const promptWords =
+            prompt
+            .toLowerCase()
+            .match(/[a-zA-ZÀ-ÿ\u4e00-\u9fff]{4,}/g) || [];
 
+        const meaningfulWords =
+            promptWords.filter(
+                word =>
+                    ![
+                        "what",
+                        "why",
+                        "how",
+                        "discuss",
+                        "explain",
+                        "describe",
+                        "the",
+                        "and",
+                        "with",
+                        "about"
+                    ].includes(word)
+            );
 
-    if (evidenceCount >= 3) {
+        const matched =
+            meaningfulWords.some(
+                word => lowerText.includes(word)
+            );
 
-        score += 15;
+        if (matched) {
 
-    } else if (evidenceCount >= 1) {
+            score += 1;
 
-        score += 10;
+        } else {
 
-        feedback.push(
-            currentLang === 'en'
-                ? 'Add more evidence and explanation to strengthen your argument.'
-                : '加入更多證據及解釋，可以令你的論點更加有力。'
-        );
-
-    } else {
-
-        score += 5;
-
-        feedback.push(
-            currentLang === 'en'
-                ? 'Try to support your ideas with specific evidence or examples.'
-                : '嘗試使用具體證據或例子支持你的論點。'
-        );
+            feedback.push(
+                currentLang === "en"
+                ? "Make sure your paragraphs directly address the essay question."
+                : "確保每一段都直接回應文章題目。"
+            );
+        }
     }
 
 
     /*
-        Convert score into grade
+       Convert score to grade.
     */
 
     let grade;
 
-    if (score >= 90) {
+    if (score >= 10) {
 
-        grade = 'A';
+        grade = "A";
 
-    } else if (score >= 80) {
+    } else if (score >= 8) {
 
-        grade = 'A-';
+        grade = "A-";
 
-    } else if (score >= 70) {
+    } else if (score >= 7) {
 
-        grade = 'B+';
+        grade = "B+";
 
-    } else if (score >= 60) {
+    } else if (score >= 5) {
 
-        grade = 'B';
+        grade = "B";
 
-    } else if (score >= 50) {
+    } else if (score >= 4) {
 
-        grade = 'C';
+        grade = "C";
 
     } else {
 
-        grade = 'D';
+        grade = "C-";
     }
 
 
     /*
-        Default positive feedback
-        if no problems were detected.
+       Default positive feedback.
     */
 
     if (!feedback.length) {
 
         feedback.push(
-            currentLang === 'en'
-                ? 'Strong structure, relevant ideas and good development. Keep supporting your arguments with precise evidence.'
-                : '文章結構良好，論點相關而且發展完整。繼續使用準確的證據支持你的論點。'
+            currentLang === "en"
+            ? "Strong structure and development. Keep using specific evidence to support your points."
+            : "文章結構及內容發展不錯。繼續使用具體證據支持你的觀點。"
         );
+
     }
 
 
     /*
-        Display result
+       Display result.
     */
 
-    document.getElementById('essay-grade')
-        .innerText =
-            currentLang === 'en'
-                ? `Grade: ${grade} · ${score}/100`
-                : `評級：${grade} · ${score}/100`;
+    const gradeElement =
+        document.getElementById("essay-grade");
+
+    gradeElement.innerText =
+        currentLang === "en"
+        ? `Grade: ${grade}`
+        : `評級：${grade}`;
 
 
-    document.getElementById('essay-feedback')
-        .innerText =
-            currentLang === 'en'
-                ? `Feedback: ${feedback.join(' ')} Word count: ${wordCount}.`
-                : `評語：${feedback.join(' ')} 字數：${wordCount}。`;
+    const feedbackElement =
+        document.getElementById("essay-feedback");
+
+    feedbackElement.innerText =
+        currentLang === "en"
+        ? `Feedback: ${feedback.join(" ")}`
+        : `評語：${feedback.join(" ")}`;
+
+
+    document.getElementById("essay-word-count").innerText =
+        wordCount;
+
+    document.getElementById("essay-sentence-count").innerText =
+        sentenceCount;
+
+    document.getElementById("essay-paragraph-count").innerText =
+        paragraphCount;
+
+
+    const list =
+        document.getElementById("essay-feedback-list");
+
+    list.innerHTML = "";
+
+    const ul =
+        document.createElement("ul");
+
+    ul.className = "feedback-list";
+
+    feedback.forEach(item => {
+
+        const li =
+            document.createElement("li");
+
+        li.innerText = item;
+
+        ul.appendChild(li);
+
+    });
+
+    list.appendChild(ul);
 
 
     document
-        .getElementById('essay-result')
-        .classList
-        .remove('hidden');
+        .getElementById("essay-result")
+        .classList.remove("hidden");
 }
+
+
+/* =========================
+   UTILITIES
+========================= */
+
+function shuffle(array) {
+
+    for (
+        let i = array.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(Math.random() * (i + 1));
+
+        [
+            array[i],
+            array[j]
+        ] = [
+            array[j],
+            array[i]
+        ];
+    }
+
+    return array;
+}
+
+
+function escapeRegExp(text) {
+
+    return String(text).replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&"
+    );
+}
+
+
+/* =========================
+   STARTUP
+========================= */
+
+document.addEventListener("DOMContentLoaded",function() {
+
+    try {
+
+        const savedTheme =
+            localStorage.getItem("revisionTheme");
+
+        if (savedTheme) {
+            document.body.setAttribute(
+                "data-theme",
+                savedTheme
+            );
+        }
+
+        const savedUsername =
+            localStorage.getItem("revisionUsername");
+
+        if (savedUsername) {
+
+            document.getElementById(
+                "user-display"
+            ).innerText = savedUsername;
+
+            document.getElementById(
+                "user-avatar"
+            ).innerText =
+                savedUsername
+                .charAt(0)
+                .toUpperCase();
+        }
+
+    } catch(e) {
+
+        console.warn(
+            "Local storage is unavailable.",
+            e
+        );
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

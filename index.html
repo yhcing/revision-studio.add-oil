@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,52 +28,52 @@
 }
 
 [data-theme="blue"] {
-    --bg-color:#EBF6FA;
-    --primary:#80ADBC;
-    --primary-hover:#A4C8D5;
-    --accent-bg:#D9E6EC;
-    --border-color:#C0D3D8;
-    --shadow:0 8px 25px rgba(128,173,188,0.15);
+    --bg-color: #EBF6FA;
+    --primary: #80ADBC;
+    --primary-hover: #A4C8D5;
+    --accent-bg: #D9E6EC;
+    --border-color: #C0D3D8;
+    --shadow: 0 8px 25px rgba(128,173,188,0.15);
 }
 
 [data-theme="nude"] {
-    --bg-color:#FBEFE3;
-    --primary:#CAB08B;
-    --primary-hover:#D9BD9C;
-    --accent-bg:#DEC8BD;
-    --border-color:#D4C8B6;
-    --shadow:0 8px 25px rgba(202,176,139,0.15);
+    --bg-color: #FBEFE3;
+    --primary: #CAB08B;
+    --primary-hover: #D9BD9C;
+    --accent-bg: #DEC8BD;
+    --border-color: #D4C8B6;
+    --shadow: 0 8px 25px rgba(202,176,139,0.15);
 }
 
 [data-theme="sage"] {
-    --bg-color:#F1F5EF;
-    --primary:#9CAF88;
-    --primary-hover:#8B9E78;
-    --accent-bg:#E2EADF;
-    --border-color:#C8D6C4;
-    --shadow:0 8px 25px rgba(156,175,136,0.15);
+    --bg-color: #F1F5EF;
+    --primary: #9CAF88;
+    --primary-hover: #8B9E78;
+    --accent-bg: #E2EADF;
+    --border-color: #C8D6C4;
+    --shadow: 0 8px 25px rgba(156,175,136,0.15);
 }
 
 [data-theme="lavender"] {
-    --bg-color:#F5F2F9;
-    --primary:#B5A0D0;
-    --primary-hover:#A38DC0;
-    --accent-bg:#E8E1F2;
-    --border-color:#D3C7E3;
-    --shadow:0 8px 25px rgba(181,160,208,0.15);
+    --bg-color: #F5F2F9;
+    --primary: #B5A0D0;
+    --primary-hover: #A38DC0;
+    --accent-bg: #E8E1F2;
+    --border-color: #D3C7E3;
+    --shadow: 0 8px 25px rgba(181,160,208,0.15);
 }
 
 [data-theme="peach"] {
-    --bg-color:#FDF5EF;
-    --primary:#E8A87C;
-    --primary-hover:#D7976B;
-    --accent-bg:#F9E5D8;
-    --border-color:#EECDBC;
-    --shadow:0 8px 25px rgba(232,168,124,0.15);
+    --bg-color: #FDF5EF;
+    --primary: #E8A87C;
+    --primary-hover: #D7976B;
+    --accent-bg: #F9E5D8;
+    --border-color: #EECDBC;
+    --shadow: 0 8px 25px rgba(232,168,124,0.15);
 }
 
 * {
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
 
 body {
@@ -83,585 +84,616 @@ body {
         Roboto,
         sans-serif;
 
-    background:var(--bg-color);
-    color:var(--text-main);
+    background: var(--bg-color);
+    color: var(--text-main);
 
-    margin:0;
-    padding:20px;
+    margin: 0;
+    padding: 20px;
 
-    transition:all .3s ease;
+    transition: all 0.3s ease;
 }
 
 .header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    max-width:1100px;
-    margin:0 auto 20px auto;
+    max-width: 1200px;
+    margin: 0 auto 20px auto;
 
-    background:var(--card-bg);
+    background: var(--card-bg);
+    padding: 12px 25px;
 
-    padding:12px 25px;
+    border-radius: 16px;
 
-    border-radius:16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
 
-    box-shadow:var(--shadow);
-
-    border:1px solid var(--border-color);
-
-    gap:15px;
+    gap: 15px;
 }
 
 .user-profile-section {
-    display:flex;
-    align-items:center;
-    gap:8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .profile-badge {
-    display:flex;
-    align-items:center;
-    gap:6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 
-    background:var(--accent-bg);
+    background: var(--accent-bg);
 
-    padding:5px 10px;
+    padding: 5px 10px;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    font-size:13px;
-    font-weight:500;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 .avatar-icon {
-    width:22px;
-    height:22px;
+    width: 22px;
+    height: 22px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:var(--primary);
+    background: var(--primary);
+    color: white;
 
-    color:white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-size:11px;
-    font-weight:bold;
+    font-size: 11px;
+    font-weight: bold;
 }
 
 .compact-lang-btn {
-    background:var(--card-bg);
+    background: var(--card-bg);
+    color: var(--text-main);
 
-    color:var(--text-main);
+    border: 1px solid var(--border-color);
 
-    border:1px solid var(--border-color);
+    padding: 5px 10px;
 
-    padding:5px 10px;
+    border-radius: 8px;
 
-    border-radius:8px;
+    font-size: 12px;
+    font-weight: 600;
 
-    font-size:12px;
-    font-weight:600;
-
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .app-layout {
-    display:grid;
+    display: grid;
 
-    grid-template-columns:270px 1fr;
+    grid-template-columns: 290px 1fr;
 
-    gap:20px;
+    gap: 20px;
 
-    max-width:1100px;
+    max-width: 1200px;
 
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .sidebar,
 .main-panel {
-    background:var(--card-bg);
+    background: var(--card-bg);
 
-    padding:22px;
+    padding: 22px;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    box-shadow:var(--shadow);
+    box-shadow: var(--shadow);
 
-    border:1px solid var(--border-color);
+    border: 1px solid var(--border-color);
 }
 
 .function-nav {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
 
-    gap:8px;
+    gap: 8px;
 
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .function-btn {
-    background:var(--accent-bg);
+    background: var(--accent-bg);
 
-    color:var(--text-main);
+    color: var(--text-main);
 
-    text-align:left;
+    text-align: left;
 
-    border:1px solid transparent;
+    border: 1px solid transparent;
 }
 
 .function-btn.active {
-    background:var(--primary);
-
-    color:white;
+    background: var(--primary);
+    color: white;
 }
 
 .function-panel {
-    display:none;
+    display: none;
 }
 
 .function-panel.active {
-    display:block;
+    display: block;
 }
 
 h2,
 h3 {
-    color:var(--primary);
+    color: var(--primary);
 
-    margin-top:0;
+    margin-top: 0;
 
-    font-weight:700;
-}
-
-.type-grid {
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:10px;
-
-    margin:15px 0;
-}
-
-.type-card {
-    background:var(--accent-bg);
-
-    padding:12px 14px;
-
-    border-radius:10px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    font-size:14px;
-
-    font-weight:500;
-}
-
-.type-card select {
-    width:75px;
-
-    padding:6px;
-
-    border-radius:6px;
-}
-
-.file-item {
-    padding:10px;
-
-    background:var(--accent-bg);
-
-    border-radius:10px;
-
-    margin-bottom:8px;
-
-    font-size:13px;
-}
-
-.file-row {
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-    gap:8px;
-}
-
-.file-name {
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
-
-    cursor:pointer;
-}
-
-.file-actions {
-    display:flex;
-
-    gap:4px;
-}
-
-.small-btn {
-    width:auto;
-
-    padding:4px 8px;
-
-    margin:0;
-
-    font-size:11px;
-}
-
-.sub-files {
-    margin-left:22px;
-
-    margin-top:8px;
-
-    padding-left:10px;
-
-    border-left:2px solid var(--primary);
-}
-
-.sub-file {
-    background:rgba(255,255,255,.5);
-
-    padding:7px;
-
-    border-radius:7px;
-
-    margin-bottom:5px;
-
-    font-size:12px;
-}
-
-.upload-zone {
-    border:2px dashed var(--primary);
-
-    background:var(--accent-bg);
-
-    padding:25px;
-
-    border-radius:14px;
-
-    text-align:center;
-
-    cursor:pointer;
-
-    margin-bottom:20px;
-}
-
-.upload-zone:hover {
-    opacity:.85;
-}
-
-.upload-info {
-    font-size:12px;
-
-    color:var(--text-sub);
-
-    margin-top:7px;
+    font-weight: 700;
 }
 
 input[type="text"],
 textarea,
 select,
 button {
-    width:100%;
+    width: 100%;
 
-    padding:12px;
+    padding: 12px;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    border:1px solid var(--border-color);
+    border: 1px solid var(--border-color);
 
-    font-size:14px;
+    font-size: 14px;
 
-    outline:none;
+    outline: none;
 }
 
 textarea {
-    resize:vertical;
-
-    font-family:inherit;
+    resize: vertical;
+    font-family: inherit;
 }
 
 button {
-    background:var(--primary);
+    background: var(--primary);
 
-    color:white;
+    color: white;
 
-    border:none;
+    border: none;
 
-    font-weight:600;
+    font-weight: 600;
 
-    margin-top:10px;
+    margin-top: 10px;
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
 button:hover {
-    background:var(--primary-hover);
-}
-
-.swatch-grid {
-    display:flex;
-
-    gap:8px;
-
-    margin-bottom:20px;
-
-    flex-wrap:wrap;
-}
-
-.swatch {
-    width:26px;
-    height:26px;
-
-    border-radius:50%;
-
-    border:2px solid white;
-
-    cursor:pointer;
-
-    box-shadow:0 2px 5px rgba(0,0,0,.1);
+    background: var(--primary-hover);
 }
 
 .hidden {
-    display:none !important;
+    display: none !important;
 }
 
+/* ---------------- THEMES ---------------- */
+
+.swatch-grid {
+    display: flex;
+
+    gap: 8px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+.swatch {
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    border: 2px solid white;
+
+    cursor: pointer;
+
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ---------------- FILE TREE ---------------- */
+
+.file-tree {
+    margin-top: 10px;
+}
+
+.folder {
+    margin-bottom: 8px;
+}
+
+.folder-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: var(--accent-bg);
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.folder-header:hover {
+    opacity: 0.85;
+}
+
+.folder-files {
+    margin-left: 16px;
+
+    margin-top: 5px;
+
+    border-left: 2px solid var(--border-color);
+
+    padding-left: 8px;
+}
+
+.file-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 8px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+}
+
+.file-item:hover {
+    background: var(--accent-bg);
+}
+
+.file-item.active {
+    background: var(--primary);
+
+    color: white;
+}
+
+.file-icon {
+    font-size: 16px;
+}
+
+.file-name {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+/* ---------------- UPLOAD ---------------- */
+
+.upload-zone {
+    border: 2px dashed var(--primary);
+
+    background: var(--accent-bg);
+
+    padding: 25px;
+
+    border-radius: 14px;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    margin-bottom: 20px;
+}
+
+.upload-zone:hover {
+    opacity: 0.85;
+}
+
+.upload-zone small {
+    color: var(--text-sub);
+}
+
+/* ---------------- CONFIG ---------------- */
+
+.type-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin: 15px 0;
+}
+
+.type-card {
+    background: var(--accent-bg);
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-size: 14px;
+
+    font-weight: 500;
+}
+
+.type-card select {
+    width: 90px;
+
+    padding: 7px;
+}
+
+/* ---------------- QUIZ ---------------- */
+
 .quiz-question {
-    background:white;
+    background: white;
 
-    padding:16px;
+    padding: 16px;
 
-    margin-top:12px;
+    margin-top: 12px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    border:1px solid var(--border-color);
+    border: 1px solid var(--border-color);
 }
 
 .question-type {
-    font-size:12px;
+    font-size: 12px;
 
-    color:var(--text-sub);
+    color: var(--text-sub);
 
-    margin-bottom:7px;
+    margin-bottom: 7px;
 }
 
 .option {
-    display:block;
+    display: block;
 
-    padding:8px;
+    padding: 8px;
 
-    margin-top:5px;
+    margin-top: 5px;
 
-    background:var(--bg-color);
+    background: var(--bg-color);
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .option:hover {
-    background:var(--accent-bg);
+    background: var(--accent-bg);
 }
 
 .answer-box {
-    margin-top:10px;
+    margin-top: 10px;
 
-    padding:10px;
+    padding: 10px;
 
-    background:var(--accent-bg);
+    background: var(--accent-bg);
 
-    border-radius:8px;
+    border-radius: 8px;
 
-    font-size:13px;
+    font-size: 13px;
 }
 
 .score-box {
-    background:var(--accent-bg);
+    background: var(--accent-bg);
 
-    padding:15px;
+    padding: 15px;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    margin-bottom:15px;
+    margin-bottom: 15px;
 
-    text-align:center;
+    text-align: center;
 }
 
-/* DOCUMENT STYLE */
+/* ---------------- NOTES DOCS ---------------- */
 
-.document {
-    background:#fff;
+.notes-layout {
+    display: grid;
 
-    border:1px solid var(--border-color);
+    grid-template-columns: 230px 1fr;
 
-    border-radius:14px;
+    min-height: 650px;
 
-    padding:30px;
+    border: 1px solid var(--border-color);
 
-    margin-top:15px;
+    border-radius: 14px;
 
-    box-shadow:0 4px 15px rgba(0,0,0,.04);
+    overflow: hidden;
 
-    line-height:1.7;
+    background: #fafafa;
+}
+
+.notes-sidebar {
+    background: #f4f1ed;
+
+    border-right: 1px solid var(--border-color);
+
+    padding: 15px;
+
+    overflow-y: auto;
+}
+
+.notes-sidebar-title {
+    font-weight: 700;
+
+    color: var(--primary);
+
+    margin-bottom: 12px;
+}
+
+.notes-document {
+    background: #ffffff;
+
+    padding: 30px;
+
+    overflow-y: auto;
+
+    min-height: 650px;
+}
+
+.document-header {
+    border-bottom: 1px solid var(--border-color);
+
+    padding-bottom: 15px;
+
+    margin-bottom: 20px;
 }
 
 .document-title {
-    font-size:25px;
+    font-size: 24px;
 
-    font-weight:700;
+    font-weight: 700;
 
-    color:var(--primary);
+    color: var(--text-main);
 
-    margin-bottom:6px;
+    margin-bottom: 6px;
 }
 
 .document-meta {
-    font-size:12px;
+    font-size: 12px;
 
-    color:var(--text-sub);
-
-    border-bottom:1px solid var(--border-color);
-
-    padding-bottom:12px;
-
-    margin-bottom:20px;
+    color: var(--text-sub);
 }
 
-.document-section {
-    margin-bottom:25px;
+.document-content {
+    max-width: 800px;
+
+    margin: auto;
+
+    line-height: 1.7;
+
+    font-size: 15px;
 }
 
-.document-section h4 {
-    color:var(--primary);
+.document-content h1,
+.document-content h2,
+.document-content h3 {
+    color: var(--text-main);
 
-    font-size:18px;
-
-    margin-bottom:8px;
+    margin-top: 25px;
 }
 
-.document-section p {
-    white-space:pre-wrap;
-
-    margin:0;
-
-    color:#444;
+.document-content p {
+    margin: 10px 0;
 }
 
-.document-section ul {
-    padding-left:25px;
+.document-content ul,
+.document-content ol {
+    padding-left: 25px;
+}
+
+.pdf-viewer {
+    width: 100%;
+
+    height: 700px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #eee;
 }
 
 .empty-document {
-    text-align:center;
+    text-align: center;
 
-    color:var(--text-sub);
+    color: var(--text-sub);
 
-    padding:40px;
+    padding: 80px 20px;
 }
 
-/* PROGRESS */
+.file-preview-toolbar {
+    display: flex;
 
-.loading-box {
-    padding:15px;
+    gap: 8px;
 
-    border-radius:12px;
+    margin-bottom: 15px;
 
-    background:var(--accent-bg);
-
-    text-align:center;
-
-    margin-top:15px;
+    flex-wrap: wrap;
 }
 
-/* SUBFILE MODAL */
+.file-preview-toolbar button {
+    width: auto;
 
-.modal-overlay {
-    position:fixed;
+    padding: 8px 12px;
 
-    inset:0;
-
-    background:rgba(0,0,0,.35);
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    z-index:1000;
+    margin: 0;
 }
 
-.modal {
-    width:min(500px,90%);
+/* ---------------- ESSAY ---------------- */
 
-    background:white;
+#essay-result {
+    margin-top: 15px;
 
-    padding:25px;
+    padding: 15px;
 
-    border-radius:18px;
+    background: var(--accent-bg);
 
-    box-shadow:0 15px 40px rgba(0,0,0,.2);
+    border-radius: 12px;
 }
 
-.modal h3 {
-    margin-bottom:15px;
-}
+/* ---------------- RESPONSIVE ---------------- */
 
-.modal-buttons {
-    display:flex;
-
-    gap:10px;
-
-    margin-top:10px;
-}
-
-.modal-buttons button {
-    flex:1;
-}
-
-/* MOBILE */
-
-@media(max-width:760px) {
+@media (max-width: 850px) {
 
     body {
-        padding:10px;
+        padding: 10px;
     }
 
     .header {
-        flex-direction:column;
+        flex-direction: column;
 
-        align-items:stretch;
+        align-items: stretch;
     }
 
     .user-profile-section {
-        justify-content:space-between;
+        justify-content: space-between;
 
-        flex-wrap:wrap;
+        flex-wrap: wrap;
     }
 
     .app-layout {
-        grid-template-columns:1fr;
+        grid-template-columns: 1fr;
+    }
+
+    .notes-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .notes-sidebar {
+        border-right: none;
+
+        border-bottom: 1px solid var(--border-color);
+
+        max-height: 250px;
     }
 
     .type-grid {
-        grid-template-columns:1fr;
-    }
-
-    .document {
-        padding:20px;
+        grid-template-columns: 1fr;
     }
 }
 
@@ -669,6 +701,8 @@ button:hover {
 </head>
 
 <body data-theme="rose">
+
+<!-- HEADER -->
 
 <div class="header">
 
@@ -680,7 +714,9 @@ button:hover {
 
         <div class="profile-badge">
 
-            <div class="avatar-icon" id="user-avatar">
+            <div
+                class="avatar-icon"
+                id="user-avatar">
                 ?
             </div>
 
@@ -721,7 +757,7 @@ button:hover {
 
 <div class="app-layout">
 
-<!-- SIDEBAR -->
+<!-- ================= SIDEBAR ================= -->
 
 <div class="sidebar">
 
@@ -733,7 +769,7 @@ button:hover {
 
         <button
             class="function-btn active"
-            onclick="showPanel('test',this)">
+            onclick="showPanel('test', this)">
 
             📝 Practice Test
 
@@ -741,7 +777,7 @@ button:hover {
 
         <button
             class="function-btn"
-            onclick="showPanel('essay',this)">
+            onclick="showPanel('essay', this)">
 
             ✍️ Essay Marker
 
@@ -749,9 +785,9 @@ button:hover {
 
         <button
             class="function-btn"
-            onclick="showPanel('notes',this)">
+            onclick="showPanel('notes', this)">
 
-            📚 Notes
+            📚 Notes / Docs
 
         </button>
 
@@ -766,91 +802,143 @@ button:hover {
 
         <span
             class="swatch"
-            style="background:#D5A1A3"
-            onclick="setTheme('rose')"
-            title="Blush Rose">
+            style="background:#D5A1A3;"
+            onclick="setTheme('rose')">
         </span>
 
         <span
             class="swatch"
-            style="background:#80ADBC"
-            onclick="setTheme('blue')"
-            title="Soft Blue">
+            style="background:#80ADBC;"
+            onclick="setTheme('blue')">
         </span>
 
         <span
             class="swatch"
-            style="background:#CAB08B"
-            onclick="setTheme('nude')"
-            title="Warm Nude">
+            style="background:#CAB08B;"
+            onclick="setTheme('nude')">
         </span>
 
         <span
             class="swatch"
-            style="background:#9CAF88"
-            onclick="setTheme('sage')"
-            title="Sage Green">
+            style="background:#9CAF88;"
+            onclick="setTheme('sage')">
         </span>
 
         <span
             class="swatch"
-            style="background:#B5A0D0"
-            onclick="setTheme('lavender')"
-            title="Lavender">
+            style="background:#B5A0D0;"
+            onclick="setTheme('lavender')">
         </span>
 
         <span
             class="swatch"
-            style="background:#E8A87C"
-            onclick="setTheme('peach')"
-            title="Peach">
+            style="background:#E8A87C;"
+            onclick="setTheme('peach')">
         </span>
 
     </div>
 
 
-    <h3 id="lbl-files">
-        📂 Topic Files
+    <!-- FILE TREE -->
+
+    <h3>
+        📂 My Topics
     </h3>
 
-    <div id="file-container"></div>
+    <div
+        id="file-tree"
+        class="file-tree">
 
+        <div class="empty-document"
+             style="padding:20px;font-size:13px;">
+
+            No files uploaded yet.
+
+        </div>
+
+    </div>
+
+
+    <!-- ADD FOLDER -->
 
     <h4
         style="
             margin-top:20px;
             color:var(--primary);
-        "
-        id="lbl-add-file">
+        ">
 
-        + Add Topic File
+        📁 Create Parent Topic
 
     </h4>
 
     <input
         type="text"
-        id="file-title"
-        placeholder="File Name..."
-        style="margin-bottom:8px;">
-
-    <textarea
-        id="file-content"
-        rows="5"
-        placeholder="Paste notes...">
-    </textarea>
+        id="folder-title"
+        placeholder="e.g. Biology">
 
     <button
-        onclick="addTopicFile()"
-        id="btn-save-file">
+        onclick="addFolder()">
 
-        Save File
+        + Create Topic
 
     </button>
+
+
+    <!-- UPLOAD -->
+
+    <h4
+        style="
+            margin-top:20px;
+            color:var(--primary);
+        ">
+
+        📎 Add File
+
+    </h4>
+
+    <select
+        id="upload-folder"
+        style="margin-bottom:8px;">
+
+        <option value="General">
+            General
+        </option>
+
+    </select>
+
+    <div
+        class="upload-zone"
+        onclick="document.getElementById('file-upload-input').click()"
+        style="padding:15px;margin-bottom:8px;">
+
+        <div style="font-size:22px;">
+            📄
+        </div>
+
+        <strong>
+            Upload File
+        </strong>
+
+        <br>
+
+        <small>
+            PDF · DOCX · TXT
+        </small>
+
+        <input
+            type="file"
+            id="file-upload-input"
+            accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            multiple
+            style="display:none;"
+            onchange="handleFileUpload(event)">
+
+    </div>
 
 </div>
 
 
-<!-- MAIN -->
+<!-- ================= MAIN ================= -->
 
 <div class="main-panel">
 
@@ -880,74 +968,59 @@ button:hover {
 </div>
 
 
-<!-- TEST -->
+<!-- ================= TEST ================= -->
 
 <div
     id="panel-test"
     class="function-panel active">
 
-    <h2 id="lbl-upload-heading">
-        📥 Upload Revision Material
+    <h2>
+        📥 Upload Material
     </h2>
+
+    <p style="color:var(--text-sub);">
+
+        Upload your revision material as PDF, DOCX or TXT.
+        The files will automatically appear in your Notes library.
+
+    </p>
+
 
     <div
         class="upload-zone"
-        onclick="
-            document
-            .getElementById('file-upload-input')
-            .click()
-        "
-        ondragover="event.preventDefault()"
-        ondrop="handleDrop(event)">
+        onclick="document.getElementById('main-file-upload').click()">
 
-        <div style="font-size:30px;">
+        <span style="font-size:28px;">
             📄
-        </div>
+        </span>
 
-        <p
-            style="
-                margin:5px 0;
-                font-weight:600;
-            "
-            id="lbl-drag-text">
+        <p style="margin:5px 0;font-weight:600;">
 
             Click or Drop Files Here
 
         </p>
 
-        <div class="upload-info">
-
-            PDF, TXT, DOC or DOCX
-
-        </div>
+        <small>
+            PDF · DOCX · TXT
+        </small>
 
         <input
             type="file"
-            id="file-upload-input"
-            accept=".pdf,.txt,.doc,.docx,text/plain,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            id="main-file-upload"
+            accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             multiple
-            style="display:none"
+            style="display:none;"
             onchange="handleFileUpload(event)">
 
     </div>
 
 
-    <div
-        id="loading-box"
-        class="loading-box hidden">
-
-        📖 Reading your document...
-
-    </div>
-
-
-    <h2 id="lbl-config">
+    <h2>
         ⚙️ Test Configurator
     </h2>
 
 
     <div class="type-grid">
-
 
         <!-- MCQ -->
 
@@ -960,24 +1033,17 @@ button:hover {
                     id="cb-mcq"
                     checked>
 
-                <span id="opt-mcq">
-                    Multiple Choice
-                </span>
+                Multiple Choice
 
             </label>
 
             <select id="count-mcq">
 
                 <option value="0">0</option>
-
                 <option value="1">1</option>
-
                 <option value="5" selected>5</option>
-
                 <option value="10">10</option>
-
-                <option value="20">20</option>
-
+                <option value="25">25</option>
                 <option value="50">50</option>
 
             </select>
@@ -996,24 +1062,17 @@ button:hover {
                     id="cb-tf"
                     checked>
 
-                <span id="opt-tf">
-                    True / False
-                </span>
+                True / False
 
             </label>
 
             <select id="count-tf">
 
                 <option value="0">0</option>
-
                 <option value="1">1</option>
-
                 <option value="5" selected>5</option>
-
                 <option value="10">10</option>
-
-                <option value="20">20</option>
-
+                <option value="25">25</option>
                 <option value="50">50</option>
 
             </select>
@@ -1032,24 +1091,17 @@ button:hover {
                     id="cb-sa"
                     checked>
 
-                <span id="opt-sa">
-                    Short Answer
-                </span>
+                Short Answer
 
             </label>
 
             <select id="count-sa">
 
                 <option value="0">0</option>
-
                 <option value="1">1</option>
-
-                <option value="5" selected>5</option>
-
-                <option value="10">10</option>
-
-                <option value="20">20</option>
-
+                <option value="5">5</option>
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
                 <option value="50">50</option>
 
             </select>
@@ -1068,24 +1120,17 @@ button:hover {
                     id="cb-essay"
                     checked>
 
-                <span id="opt-essay">
-                    Essay Prompts
-                </span>
+                Essay Prompts
 
             </label>
 
             <select id="count-essay">
 
                 <option value="0">0</option>
-
-                <option value="1">1</option>
-
-                <option value="5" selected>5</option>
-
+                <option value="1" selected>1</option>
+                <option value="5">5</option>
                 <option value="10">10</option>
-
-                <option value="20">20</option>
-
+                <option value="25">25</option>
                 <option value="50">50</option>
 
             </select>
@@ -1100,8 +1145,7 @@ button:hover {
         style="
             padding:14px;
             font-size:16px;
-        "
-        id="btn-generate">
+        ">
 
         🧠 Generate Practice Test
 
@@ -1115,12 +1159,8 @@ button:hover {
 
         <div class="score-box">
 
-            <h3
-                id="lbl-quiz-result"
-                style="margin-bottom:5px;">
-
+            <h3>
                 Generated Practice Questions
-
             </h3>
 
             <span id="question-count">
@@ -1136,13 +1176,13 @@ button:hover {
 </div>
 
 
-<!-- ESSAY -->
+<!-- ================= ESSAY ================= -->
 
 <div
     id="panel-essay"
     class="function-panel">
 
-    <h2 id="lbl-essay-heading">
+    <h2>
         📝 Instant Essay Marker
     </h2>
 
@@ -1154,27 +1194,21 @@ button:hover {
 
     <textarea
         id="essay-text"
-        rows="8"
+        rows="10"
         placeholder="Write or paste essay...">
     </textarea>
 
     <button
-        onclick="markEssay()"
-        id="btn-mark">
+        onclick="markEssay()">
 
         Submit & Mark Essay
 
     </button>
 
+
     <div
         id="essay-result"
-        class="hidden"
-        style="
-            margin-top:15px;
-            padding:15px;
-            background:var(--accent-bg);
-            border-radius:12px;
-        ">
+        class="hidden">
 
         <strong
             id="essay-grade"
@@ -1198,7 +1232,7 @@ button:hover {
 </div>
 
 
-<!-- NOTES -->
+<!-- ================= NOTES ================= -->
 
 <div
     id="panel-notes"
@@ -1208,21 +1242,59 @@ button:hover {
         📚 Notes & Documents
     </h2>
 
-    <p>
-        Your uploaded files are organised as documents below.
-        Select a topic from the sidebar to view it.
+    <p style="color:var(--text-sub);">
+
+        Your uploaded documents are organised below.
+        Select a file to view its contents.
+
     </p>
 
-    <div id="document-viewer">
 
-        <div class="empty-document">
+    <div class="notes-layout">
 
-            📄
+        <!-- DOCUMENT TREE -->
 
-            <br><br>
+        <div class="notes-sidebar">
 
-            Select a topic and click
-            <strong>View</strong>.
+            <div class="notes-sidebar-title">
+                📂 Documents
+            </div>
+
+            <div id="notes-file-list">
+
+                <div class="empty-document"
+                     style="padding:30px 5px;">
+
+                    No documents yet.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DOCUMENT VIEWER -->
+
+        <div
+            class="notes-document"
+            id="document-viewer">
+
+            <div class="empty-document">
+
+                <div style="font-size:50px;">
+                    📚
+                </div>
+
+                <h3>
+                    Your Notes
+                </h3>
+
+                <p>
+                    Upload a PDF, DOCX or TXT file to begin.
+                </p>
+
+            </div>
 
         </div>
 
@@ -1231,54 +1303,6 @@ button:hover {
 </div>
 
 </div>
-
-</div>
-
-
-<!-- SUBFILE MODAL -->
-
-<div
-    id="subfile-modal"
-    class="modal-overlay hidden">
-
-    <div class="modal">
-
-        <h3>
-            📁 Add Sub-file
-        </h3>
-
-        <p id="subfile-parent-name"></p>
-
-        <input
-            type="text"
-            id="subfile-name"
-            placeholder="Sub-file name...">
-
-        <textarea
-            id="subfile-content"
-            rows="6"
-            placeholder="Paste notes for this sub-file...">
-        </textarea>
-
-        <div class="modal-buttons">
-
-            <button onclick="saveSubFile()">
-                Save Sub-file
-            </button>
-
-            <button
-                onclick="closeSubFileModal()"
-                style="
-                    background:#999;
-                ">
-
-                Cancel
-
-            </button>
-
-        </div>
-
-    </div>
 
 </div>
 
@@ -1291,9 +1315,11 @@ button:hover {
 
 let currentLang = 'en';
 
-const uploadedNotes = {};
+const folders = {
+    General: []
+};
 
-let subFileParent = null;
+const uploadedNotes = {};
 
 
 /* =========================================================
@@ -1304,123 +1330,21 @@ const translations = {
 
     en: {
 
-        appTitle:
-            "🌸 Pastel Revision Studio",
+        title: "🌸 Pastel Revision Studio",
 
-        langBtn:
-            "🌐 廣東話",
+        lang: "🌐 廣東話",
 
-        userDefault:
-            "Guest User",
-
-        authBtn:
-            "Log In",
-
-        lblTheme:
-            "🎨 Theme Swatches",
-
-        lblFiles:
-            "📂 Topic Files",
-
-        lblAddFile:
-            "+ Add Topic File",
-
-        btnSaveFile:
-            "Save File",
-
-        lblUploadHeading:
-            "📥 Upload Revision Material",
-
-        lblDragText:
-            "Click or Drop Files Here",
-
-        lblConfig:
-            "⚙️ Test Configurator",
-
-        optMcq:
-            "Multiple Choice",
-
-        optTf:
-            "True / False",
-
-        optSa:
-            "Short Answer",
-
-        optEssay:
-            "Essay Prompts",
-
-        btnGenerate:
-            "🧠 Generate Practice Test",
-
-        lblQuizResult:
-            "Generated Practice Questions",
-
-        lblEssayHeading:
-            "📝 Instant Essay Marker",
-
-        btnMark:
-            "Submit & Mark Essay"
+        guest: "Guest User"
 
     },
 
     zh: {
 
-        appTitle:
-            "🌸 溫習筆記與測驗生成器",
+        title: "🌸 溫習筆記與測驗生成器",
 
-        langBtn:
-            "🌐 English",
+        lang: "🌐 English",
 
-        userDefault:
-            "訪客",
-
-        authBtn:
-            "登入 / 註冊",
-
-        lblTheme:
-            "🎨 主題配色",
-
-        lblFiles:
-            "📂 溫習檔案庫",
-
-        lblAddFile:
-            "+ 新增主題檔案",
-
-        btnSaveFile:
-            "儲存檔案",
-
-        lblUploadHeading:
-            "📥 上傳溫習文件",
-
-        lblDragText:
-            "按此上傳或拖放文件",
-
-        lblConfig:
-            "⚙️ 測驗自訂選項",
-
-        optMcq:
-            "多項選擇題",
-
-        optTf:
-            "是非題",
-
-        optSa:
-            "短答題",
-
-        optEssay:
-            "問答題 / 文章題目",
-
-        btnGenerate:
-            "🧠 生成溫習測驗",
-
-        lblQuizResult:
-            "已生成的溫習題目",
-
-        lblEssayHeading:
-            "📝 智能文章批改工具",
-
-        btnMark:
-            "提交並批改文章"
+        guest: "訪客"
 
     }
 
@@ -1441,73 +1365,204 @@ function toggleLanguage() {
     const t =
         translations[currentLang];
 
-    document.getElementById('app-title')
-        .innerText = t.appTitle;
+    document.getElementById(
+        'app-title'
+    ).innerText = t.title;
 
-    document.getElementById('lang-toggle-btn')
-        .innerText = t.langBtn;
+    document.getElementById(
+        'lang-toggle-btn'
+    ).innerText = t.lang;
 
     const user =
-        document.getElementById('user-display');
+        document.getElementById(
+            'user-display'
+        );
 
     if (
         user.innerText === 'Guest User' ||
         user.innerText === '訪客'
     ) {
 
-        user.innerText =
-            t.userDefault;
+        user.innerText = t.guest;
+
     }
 
-    document.getElementById('auth-btn')
-        .innerText = t.authBtn;
+}
 
-    document.getElementById('lbl-theme')
-        .innerText = t.lblTheme;
 
-    document.getElementById('lbl-files')
-        .innerText = t.lblFiles;
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-    document.getElementById('lbl-add-file')
-        .innerText = t.lblAddFile;
+function showPanel(name, button) {
 
-    document.getElementById('btn-save-file')
-        .innerText = t.btnSaveFile;
+    document
+        .querySelectorAll('.function-panel')
+        .forEach(panel => {
 
-    document.getElementById('lbl-upload-heading')
-        .innerText = t.lblUploadHeading;
+            panel.classList.remove('active');
 
-    document.getElementById('lbl-drag-text')
-        .innerText = t.lblDragText;
+        });
 
-    document.getElementById('lbl-config')
-        .innerText = t.lblConfig;
+    document
+        .querySelectorAll('.function-btn')
+        .forEach(btn => {
 
-    document.getElementById('opt-mcq')
-        .innerText = t.optMcq;
+            btn.classList.remove('active');
 
-    document.getElementById('opt-tf')
-        .innerText = t.optTf;
+        });
 
-    document.getElementById('opt-sa')
-        .innerText = t.optSa;
+    document
+        .getElementById('panel-' + name)
+        .classList.add('active');
 
-    document.getElementById('opt-essay')
-        .innerText = t.optEssay;
+    if (button) {
 
-    document.getElementById('btn-generate')
-        .innerText = t.btnGenerate;
+        button.classList.add('active');
 
-    document.getElementById('lbl-quiz-result')
-        .innerText = t.lblQuizResult;
+    }
 
-    document.getElementById('lbl-essay-heading')
-        .innerText = t.lblEssayHeading;
+}
 
-    document.getElementById('btn-mark')
-        .innerText = t.btnMark;
 
-    renderFileList();
+/* =========================================================
+   THEMES
+========================================================= */
+
+function setTheme(theme) {
+
+    document.body.setAttribute(
+        'data-theme',
+        theme
+    );
+
+}
+
+
+/* =========================================================
+   AUTH
+========================================================= */
+
+function toggleAuthModal() {
+
+    document
+        .getElementById('auth-box')
+        .classList
+        .toggle('hidden');
+
+}
+
+
+function loginUser() {
+
+    const username =
+        document
+            .getElementById('user-input')
+            .value
+            .trim();
+
+    if (!username) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter a username.'
+                : '請輸入使用者名稱。'
+        );
+
+        return;
+
+    }
+
+    document
+        .getElementById('user-display')
+        .innerText = username;
+
+    document
+        .getElementById('user-avatar')
+        .innerText =
+        username
+            .charAt(0)
+            .toUpperCase();
+
+    document
+        .getElementById('auth-box')
+        .classList
+        .add('hidden');
+
+}
+
+
+/* =========================================================
+   CREATE FOLDER
+========================================================= */
+
+function addFolder() {
+
+    const input =
+        document.getElementById(
+            'folder-title'
+        );
+
+    const name =
+        input.value.trim();
+
+    if (!name) {
+
+        alert('Please enter a topic name.');
+
+        return;
+
+    }
+
+    if (folders[name]) {
+
+        alert('This topic already exists.');
+
+        return;
+
+    }
+
+    folders[name] = [];
+
+    input.value = '';
+
+    updateFolderSelectors();
+
+    renderFileTree();
+
+}
+
+
+/* =========================================================
+   UPDATE FOLDER SELECT
+========================================================= */
+
+function updateFolderSelectors() {
+
+    const select =
+        document.getElementById(
+            'upload-folder'
+        );
+
+    select.innerHTML = '';
+
+    Object.keys(folders)
+        .forEach(folder => {
+
+            const option =
+                document.createElement(
+                    'option'
+                );
+
+            option.value = folder;
+
+            option.innerText =
+                folder;
+
+            select.appendChild(option);
+
+        });
+
 }
 
 
@@ -1515,124 +1570,146 @@ function toggleLanguage() {
    FILE UPLOAD
 ========================================================= */
 
-async function handleFileUpload(event) {
+function handleFileUpload(event) {
 
     const files =
-        Array.from(event.target.files);
-
-    for (const file of files) {
-
-        await processFile(file);
-    }
-
-    event.target.value = '';
-}
-
-
-async function processFile(file) {
-
-    const extension =
-        file.name
-            .split('.')
-            .pop()
-            .toLowerCase();
-
-    const allowed = [
-        'pdf',
-        'txt',
-        'doc',
-        'docx'
-    ];
-
-    if (!allowed.includes(extension)) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please upload PDF, TXT, DOC or DOCX files.'
-                : '請上傳 PDF、TXT、DOC 或 DOCX 文件。'
+        Array.from(
+            event.target.files
         );
 
-        return;
-    }
+    if (!files.length) return;
 
-    document
-        .getElementById('loading-box')
-        .classList
-        .remove('hidden');
+    const folder =
+        document.getElementById(
+            'upload-folder'
+        ).value || 'General';
 
-    try {
+    files.forEach(file => {
 
-        let text = '';
+        const extension =
+            file.name
+                .split('.')
+                .pop()
+                .toLowerCase();
 
-        if (extension === 'pdf') {
-
-            text =
-                await readPDF(file);
-
-        }
-
-        else if (extension === 'txt') {
-
-            text =
-                await readTXT(file);
-
-        }
-
-        else if (extension === 'docx') {
-
-            text =
-                await readDOCX(file);
-
-        }
-
-        else if (extension === 'doc') {
+        if (
+            !['pdf','docx','txt']
+                .includes(extension)
+        ) {
 
             alert(
-                currentLang === 'en'
-                    ? 'Old .DOC files may not be readable directly in the browser. Please save it as .DOCX or PDF.'
-                    : '舊式 .DOC 文件可能無法直接讀取，請先轉換成 .DOCX 或 PDF。'
+                `${file.name}: Unsupported file type.`
             );
 
             return;
+
         }
 
-        text =
-            cleanExtractedText(text);
+        const id =
+            'file_' +
+            Date.now() +
+            '_' +
+            Math.random()
+                .toString(36)
+                .substring(2);
 
-        if (!text) {
+        const fileObject = {
 
-            alert(
-                currentLang === 'en'
-                    ? 'No readable text was found in this file.'
-                    : '找不到可讀取的文字。'
-            );
+            id: id,
 
-            return;
-        }
+            name: file.name,
 
-        uploadedNotes[file.name] = {
+            type: extension,
 
-            name:file.name,
+            size: file.size,
 
-            content:text,
+            folder: folder,
 
-            type:extension,
+            originalFile: file,
 
-            children:{},
+            text: '',
 
-            created:new Date().toLocaleString()
+            url: URL.createObjectURL(file)
 
         };
 
-        renderFileList();
+        uploadedNotes[id] =
+            fileObject;
 
-        showDocument(file.name);
+        if (!folders[folder]) {
 
-        alert(
-            currentLang === 'en'
-                ? `"${file.name}" has been added to your topics.`
-                : `"${file.name}" 已加入你的主題。`
+            folders[folder] = [];
+
+        }
+
+        folders[folder].push(id);
+
+        processUploadedFile(
+            fileObject
         );
+
+    });
+
+    renderFileTree();
+
+    renderNotesFileList();
+
+    event.target.value = '';
+
+}
+
+
+/* =========================================================
+   PROCESS UPLOAD
+========================================================= */
+
+async function processUploadedFile(fileObject) {
+
+    try {
+
+        if (fileObject.type === 'txt') {
+
+            fileObject.text =
+                await fileObject.originalFile.text();
+
+        }
+
+
+        else if (fileObject.type === 'pdf') {
+
+            fileObject.text =
+                await extractPDFText(
+                    fileObject.originalFile
+                );
+
+        }
+
+
+        else if (fileObject.type === 'docx') {
+
+            const arrayBuffer =
+                await fileObject.originalFile.arrayBuffer();
+
+            const result =
+                await mammoth.extractRawText({
+                    arrayBuffer:
+                        arrayBuffer
+                });
+
+            fileObject.text =
+                result.value;
+
+        }
+
+        renderFileTree();
+
+        renderNotesFileList();
+
+        /*
+            Automatically show newly uploaded document
+        */
+
+        openDocument(fileObject.id);
 
     }
 
@@ -1641,70 +1718,19 @@ async function processFile(file) {
         console.error(error);
 
         alert(
-            currentLang === 'en'
-                ? 'Could not read this file.'
-                : '無法讀取這個文件。'
+            `Could not read ${fileObject.name}.`
         );
 
     }
 
-    finally {
-
-        document
-            .getElementById('loading-box')
-            .classList
-            .add('hidden');
-
-    }
 }
 
 
 /* =========================================================
-   DROP FILES
+   PDF TEXT EXTRACTION
 ========================================================= */
 
-async function handleDrop(event) {
-
-    event.preventDefault();
-
-    const files =
-        Array.from(event.dataTransfer.files);
-
-    for (const file of files) {
-
-        await processFile(file);
-    }
-}
-
-
-/* =========================================================
-   READ TXT
-========================================================= */
-
-function readTXT(file) {
-
-    return new Promise((resolve,reject) => {
-
-        const reader =
-            new FileReader();
-
-        reader.onload =
-            e => resolve(e.target.result);
-
-        reader.onerror =
-            reject;
-
-        reader.readAsText(file);
-
-    });
-}
-
-
-/* =========================================================
-   READ PDF
-========================================================= */
-
-async function readPDF(file) {
+async function extractPDFText(file) {
 
     const arrayBuffer =
         await file.arrayBuffer();
@@ -1712,7 +1738,7 @@ async function readPDF(file) {
     const pdf =
         await pdfjsLib
             .getDocument({
-                data:arrayBuffer
+                data: arrayBuffer
             })
             .promise;
 
@@ -1725,550 +1751,618 @@ async function readPDF(file) {
     ) {
 
         const page =
-            await pdf.getPage(pageNumber);
+            await pdf.getPage(
+                pageNumber
+            );
 
         const content =
             await page.getTextContent();
 
         const pageText =
             content.items
-                .map(item => item.str)
+                .map(
+                    item => item.str
+                )
                 .join(' ');
 
         text +=
-            `\n\nPage ${pageNumber}\n${pageText}`;
+            pageText +
+            '\n\n';
 
     }
 
-    return text;
+    return text.trim();
+
 }
 
 
 /* =========================================================
-   READ DOCX
+   FILE ICON
 ========================================================= */
 
-async function readDOCX(file) {
+function getFileIcon(type) {
 
-    const arrayBuffer =
-        await file.arrayBuffer();
+    if (type === 'pdf') return '📕';
 
-    const result =
-        await mammoth.extractRawText({
-            arrayBuffer
-        });
+    if (type === 'docx') return '📘';
 
-    return result.value;
+    if (type === 'txt') return '📄';
+
+    return '📎';
+
 }
 
 
 /* =========================================================
-   CLEAN TEXT
+   FILE TREE
 ========================================================= */
 
-function cleanExtractedText(text) {
+function renderFileTree() {
 
-    return String(text)
-
-        .replace(/\r/g,' ')
-
-        .replace(/[ \t]+/g,' ')
-
-        .replace(/\n{3,}/g,'\n\n')
-
-        .trim();
-}
-
-
-/* =========================================================
-   FILE LIST
-========================================================= */
-
-function renderFileList() {
-
-    const container =
+    const tree =
         document.getElementById(
-            'file-container'
+            'file-tree'
         );
 
-    container.innerHTML = '';
+    tree.innerHTML = '';
 
-    Object.keys(uploadedNotes)
-        .forEach(fileName => {
+    Object.keys(folders)
+        .forEach(folderName => {
 
-            const file =
-                uploadedNotes[fileName];
+            const folder =
+                document.createElement(
+                    'div'
+                );
 
-            const item =
-                document.createElement('div');
+            folder.className =
+                'folder';
 
-            item.className =
-                'file-item';
 
-            const row =
-                document.createElement('div');
+            const header =
+                document.createElement(
+                    'div'
+                );
 
-            row.className =
-                'file-row';
+            header.className =
+                'folder-header';
 
+            header.innerHTML =
+                `
+                <span>
+                    📁 ${escapeHTML(folderName)}
+                </span>
 
-            const label =
-                document.createElement('label');
+                <span>
+                    ${folders[folderName].length}
+                </span>
+                `;
 
-            label.className =
-                'file-name';
 
+            const fileContainer =
+                document.createElement(
+                    'div'
+                );
 
-            const checkbox =
-                document.createElement('input');
+            fileContainer.className =
+                'folder-files';
 
-            checkbox.type =
-                'checkbox';
 
-            checkbox.className =
-                'topic-cb';
+            folders[folderName]
+                .forEach(id => {
 
-            checkbox.value =
-                fileName;
+                    const file =
+                        uploadedNotes[id];
 
-            checkbox.checked =
-                true;
+                    if (!file) return;
 
 
-            const icon =
-                document.createElement('span');
+                    const item =
+                        document.createElement(
+                            'div'
+                        );
 
-            icon.innerText =
-                file.type === 'pdf'
-                    ? '📕'
-                    : file.type === 'docx' ||
-                      file.type === 'doc'
-                        ? '📘'
-                        : '📄';
+                    item.className =
+                        'file-item';
 
+                    item.onclick =
+                        () => {
 
-            const text =
-                document.createElement('span');
-
-            text.innerText =
-                file.name;
-
-
-            label.appendChild(
-                checkbox
-            );
-
-            label.appendChild(
-                icon
-            );
-
-            label.appendChild(
-                text
-            );
-
-
-            const actions =
-                document.createElement('div');
-
-            actions.className =
-                'file-actions';
-
-
-            const viewButton =
-                document.createElement('button');
-
-            viewButton.className =
-                'small-btn';
-
-            viewButton.innerText =
-                'View';
-
-            viewButton.onclick =
-                () => showDocument(fileName);
-
-
-            const subButton =
-                document.createElement('button');
-
-            subButton.className =
-                'small-btn';
-
-            subButton.innerText =
-                '+ Sub';
-
-            subButton.onclick =
-                () => openSubFileModal(fileName);
-
-
-            actions.appendChild(
-                viewButton
-            );
-
-            actions.appendChild(
-                subButton
-            );
-
-
-            row.appendChild(
-                label
-            );
-
-            row.appendChild(
-                actions
-            );
-
-            item.appendChild(
-                row
-            );
-
-
-            /*
-                SUB FILES
-            */
-
-            const subContainer =
-                document.createElement('div');
-
-            subContainer.className =
-                'sub-files';
-
-
-            Object.keys(file.children || {})
-                .forEach(subName => {
-
-                    const sub =
-                        file.children[subName];
-
-                    const subDiv =
-                        document.createElement('div');
-
-                    subDiv.className =
-                        'sub-file';
-
-
-                    const subLabel =
-                        document.createElement('label');
-
-                    const subCheckbox =
-                        document.createElement('input');
-
-                    subCheckbox.type =
-                        'checkbox';
-
-                    subCheckbox.className =
-                        'topic-cb';
-
-                    subCheckbox.value =
-                        fileName +
-                        '::' +
-                        subName;
-
-                    subCheckbox.checked =
-                        true;
-
-
-                    subCheckbox.onchange =
-                        function() {};
-
-                    subLabel.appendChild(
-                        subCheckbox
-                    );
-
-                    subLabel.appendChild(
-                        document.createTextNode(
-                            ' 📄 ' + subName
-                        )
-                    );
-
-
-                    const subView =
-                        document.createElement('button');
-
-                    subView.className =
-                        'small-btn';
-
-                    subView.innerText =
-                        'View';
-
-                    subView.onclick =
-                        () =>
-                            showSubDocument(
-                                fileName,
-                                subName
+                            openDocument(
+                                file.id
                             );
 
+                            showPanelByName(
+                                'notes'
+                            );
 
-                    subDiv.appendChild(
-                        subLabel
-                    );
+                        };
 
-                    subDiv.appendChild(
-                        subView
-                    );
 
-                    subContainer.appendChild(
-                        subDiv
+                    item.innerHTML =
+                        `
+                        <span class="file-icon">
+                            ${getFileIcon(file.type)}
+                        </span>
+
+                        <span class="file-name">
+                            ${escapeHTML(file.name)}
+                        </span>
+                        `;
+
+
+                    fileContainer.appendChild(
+                        item
                     );
 
                 });
 
 
-            item.appendChild(
-                subContainer
+            folder.appendChild(header);
+
+            folder.appendChild(
+                fileContainer
             );
 
-            container.appendChild(
-                item
+            tree.appendChild(folder);
+
+        });
+
+
+    if (
+        Object.keys(uploadedNotes)
+            .length === 0
+    ) {
+
+        tree.innerHTML =
+            `
+            <div class="empty-document"
+                 style="padding:20px;font-size:13px;">
+                No files uploaded yet.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   NOTES FILE LIST
+========================================================= */
+
+function renderNotesFileList() {
+
+    const list =
+        document.getElementById(
+            'notes-file-list'
+        );
+
+    list.innerHTML = '';
+
+
+    Object.keys(folders)
+        .forEach(folderName => {
+
+            const folderTitle =
+                document.createElement(
+                    'div'
+                );
+
+            folderTitle.style =
+                `
+                font-size:12px;
+                font-weight:700;
+                color:var(--text-sub);
+                margin:12px 4px 5px;
+                `;
+
+            folderTitle.innerText =
+                '📁 ' + folderName;
+
+            list.appendChild(
+                folderTitle
+            );
+
+
+            folders[folderName]
+                .forEach(id => {
+
+                    const file =
+                        uploadedNotes[id];
+
+                    if (!file) return;
+
+
+                    const item =
+                        document.createElement(
+                            'div'
+                        );
+
+                    item.className =
+                        'file-item';
+
+                    item.onclick =
+                        () => openDocument(
+                            file.id
+                        );
+
+
+                    item.innerHTML =
+                        `
+                        <span class="file-icon">
+                            ${getFileIcon(file.type)}
+                        </span>
+
+                        <span class="file-name">
+                            ${escapeHTML(file.name)}
+                        </span>
+                        `;
+
+
+                    list.appendChild(item);
+
+                });
+
+        });
+
+
+    if (
+        Object.keys(uploadedNotes)
+            .length === 0
+    ) {
+
+        list.innerHTML =
+            `
+            <div class="empty-document"
+                 style="padding:30px 5px;">
+                No documents yet.
+            </div>
+            `;
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN DOCUMENT
+========================================================= */
+
+function openDocument(id) {
+
+    const file =
+        uploadedNotes[id];
+
+    if (!file) return;
+
+
+    const viewer =
+        document.getElementById(
+            'document-viewer'
+        );
+
+
+    let html = '';
+
+
+    /*
+        PDF
+        Display the actual uploaded PDF.
+    */
+
+    if (file.type === 'pdf') {
+
+        html =
+            `
+            <div class="document-header">
+
+                <div class="document-title">
+                    📕 ${escapeHTML(file.name)}
+                </div>
+
+                <div class="document-meta">
+                    PDF · Original uploaded document
+                </div>
+
+            </div>
+
+            <div class="file-preview-toolbar">
+
+                <button
+                    onclick="downloadFile('${file.id}')">
+
+                    ⬇️ Download PDF
+
+                </button>
+
+                <button
+                    onclick="openOriginalFile('${file.id}')">
+
+                    ↗️ Open Original
+
+                </button>
+
+            </div>
+
+            <iframe
+                class="pdf-viewer"
+                src="${file.url}">
+            </iframe>
+
+            <details style="margin-top:20px;">
+
+                <summary>
+                    📖 Extracted text for revision
+                </summary>
+
+                <div
+                    class="document-content"
+                    style="
+                        margin-top:15px;
+                        white-space:pre-wrap;
+                    ">
+
+                    ${escapeHTML(
+                        file.text ||
+                        'No text could be extracted from this PDF.'
+                    )}
+
+                </div>
+
+            </details>
+            `;
+
+    }
+
+
+    /*
+        DOCX
+    */
+
+    else if (file.type === 'docx') {
+
+        html =
+            `
+            <div class="document-header">
+
+                <div class="document-title">
+                    📘 ${escapeHTML(file.name)}
+                </div>
+
+                <div class="document-meta">
+                    DOCX · Structured document preview
+                </div>
+
+            </div>
+
+            <div class="file-preview-toolbar">
+
+                <button
+                    onclick="downloadFile('${file.id}')">
+
+                    ⬇️ Download Original DOCX
+
+                </button>
+
+                <button
+                    onclick="openOriginalFile('${file.id}')">
+
+                    ↗️ Open Original
+
+                </button>
+
+            </div>
+
+            <div
+                class="document-content"
+                style="white-space:pre-wrap;">
+
+                ${escapeHTML(
+                    file.text ||
+                    'Loading document...'
+                )}
+
+            </div>
+            `;
+
+    }
+
+
+    /*
+        TXT
+    */
+
+    else {
+
+        html =
+            `
+            <div class="document-header">
+
+                <div class="document-title">
+                    📄 ${escapeHTML(file.name)}
+                </div>
+
+                <div class="document-meta">
+                    TXT · Uploaded notes
+                </div>
+
+            </div>
+
+            <div class="file-preview-toolbar">
+
+                <button
+                    onclick="downloadFile('${file.id}')">
+
+                    ⬇️ Download
+
+                </button>
+
+                <button
+                    onclick="openOriginalFile('${file.id}')">
+
+                    ↗️ Open Original
+
+                </button>
+
+            </div>
+
+            <div
+                class="document-content"
+                style="white-space:pre-wrap;">
+
+                ${escapeHTML(
+                    file.text
+                )}
+
+            </div>
+            `;
+
+    }
+
+
+    viewer.innerHTML = html;
+
+
+    /*
+        Highlight selected file
+    */
+
+    document
+        .querySelectorAll(
+            '#notes-file-list .file-item'
+        )
+        .forEach(item => {
+
+            item.classList.remove(
+                'active'
             );
 
         });
+
 }
 
 
 /* =========================================================
-   ADD MANUAL TOPIC FILE
+   DOWNLOAD
 ========================================================= */
 
-function addTopicFile() {
+function downloadFile(id) {
 
-    const title =
-        document
-            .getElementById('file-title')
-            .value
-            .trim();
+    const file =
+        uploadedNotes[id];
 
-    const content =
-        document
-            .getElementById('file-content')
-            .value
-            .trim();
+    if (!file) return;
 
-    if (!title) {
+    const link =
+        document.createElement('a');
 
-        alert(
-            currentLang === 'en'
-                ? 'Please enter a file name.'
-                : '請輸入檔案名稱。'
-        );
+    link.href =
+        file.url;
 
-        return;
-    }
+    link.download =
+        file.name;
 
-    if (!content) {
+    document.body.appendChild(link);
 
-        alert(
-            currentLang === 'en'
-                ? 'Please enter some notes.'
-                : '請輸入一些筆記內容。'
-        );
+    link.click();
 
-        return;
-    }
-
-    let fileName =
-        title;
-
-    if (
-        !fileName
-            .toLowerCase()
-            .endsWith('.txt')
-    ) {
-
-        fileName += '.txt';
-    }
-
-    uploadedNotes[fileName] = {
-
-        name:fileName,
-
-        content:content,
-
-        type:'txt',
-
-        children:{},
-
-        created:new Date().toLocaleString()
-
-    };
-
-    renderFileList();
-
-    showDocument(fileName);
-
-    document.getElementById(
-        'file-title'
-    ).value = '';
-
-    document.getElementById(
-        'file-content'
-    ).value = '';
+    document.body.removeChild(link);
 
 }
 
 
 /* =========================================================
-   SUB FILE
+   OPEN ORIGINAL
 ========================================================= */
 
-function openSubFileModal(parentName) {
+function openOriginalFile(id) {
 
-    subFileParent =
-        parentName;
+    const file =
+        uploadedNotes[id];
 
-    document.getElementById(
-        'subfile-parent-name'
-    ).innerText =
-        currentLang === 'en'
-            ? `Adding a sub-file under: ${parentName}`
-            : `新增子文件至：${parentName}`;
+    if (!file) return;
 
-    document.getElementById(
-        'subfile-name'
-    ).value = '';
-
-    document.getElementById(
-        'subfile-content'
-    ).value = '';
-
-    document.getElementById(
-        'subfile-modal'
-    ).classList
-    .remove('hidden');
-}
-
-
-function closeSubFileModal() {
-
-    document.getElementById(
-        'subfile-modal'
-    ).classList
-    .add('hidden');
-
-    subFileParent = null;
-}
-
-
-function saveSubFile() {
-
-    const name =
-        document
-            .getElementById('subfile-name')
-            .value
-            .trim();
-
-    const content =
-        document
-            .getElementById('subfile-content')
-            .value
-            .trim();
-
-    if (!name || !content) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please enter both a sub-file name and notes.'
-                : '請輸入子文件名稱及內容。'
-        );
-
-        return;
-    }
-
-    const parent =
-        uploadedNotes[subFileParent];
-
-    if (!parent) return;
-
-    if (!parent.children) {
-
-        parent.children = {};
-    }
-
-    parent.children[name] = {
-
-        name:name,
-
-        content:content,
-
-        created:new Date().toLocaleString()
-
-    };
-
-    renderFileList();
-
-    closeSubFileModal();
+    window.open(
+        file.url,
+        '_blank'
+    );
 
 }
 
 
 /* =========================================================
-   GET SELECTED NOTES
+   SHOW NOTES PANEL
+========================================================= */
+
+function showPanelByName(name) {
+
+    document
+        .querySelectorAll('.function-panel')
+        .forEach(panel => {
+
+            panel.classList.remove(
+                'active'
+            );
+
+        });
+
+    document
+        .getElementById(
+            'panel-' + name
+        )
+        .classList
+        .add('active');
+
+}
+
+
+/* =========================================================
+   GET ALL NOTES FOR TEST
 ========================================================= */
 
 function getSelectedNotes() {
 
-    const selected =
-        Array.from(
-            document.querySelectorAll(
-                '.topic-cb:checked'
-            )
+    return Object.values(
+        uploadedNotes
+    )
+
+    .map(file => file.text)
+
+    .filter(Boolean)
+
+    .join('\n\n');
+
+}
+
+
+/* =========================================================
+   SENTENCE EXTRACTION
+========================================================= */
+
+function extractSentences(notes) {
+
+    return notes
+
+        .replace(/\r/g, ' ')
+
+        .replace(/\n+/g, ' ')
+
+        .replace(/\s+/g, ' ')
+
+        .split(
+            /(?<=[.!?])\s+/
+        )
+
+        .map(
+            sentence =>
+                sentence.trim()
+        )
+
+        .filter(
+            sentence =>
+                sentence.length >= 30
         );
 
-    let notes = [];
-
-    selected.forEach(cb => {
-
-        const value =
-            cb.value;
-
-        if (value.includes('::')) {
-
-            const parts =
-                value.split('::');
-
-            const parent =
-                uploadedNotes[parts[0]];
-
-            if (
-                parent &&
-                parent.children &&
-                parent.children[parts[1]]
-            ) {
-
-                notes.push(
-                    parent.children[parts[1]].content
-                );
-            }
-
-        }
-
-        else {
-
-            const file =
-                uploadedNotes[value];
-
-            if (file) {
-
-                notes.push(
-                    file.content
-                );
-
-                Object.values(
-                    file.children || {}
-                ).forEach(sub => {
-
-                    notes.push(
-                        sub.content
-                    );
-
-                });
-
-            }
-
-        }
-
-    });
-
-    return notes.join('\n\n');
 }
 
 
@@ -2281,59 +2375,83 @@ function generatePracticeTest() {
     const notes =
         getSelectedNotes();
 
-    if (!notes.trim()) {
+
+    if (!notes) {
 
         alert(
-            currentLang === 'en'
-                ? 'Select at least one topic.'
-                : '請至少選擇一個溫習主題。'
+            'Upload at least one PDF, DOCX or TXT file first.'
         );
 
         return;
+
     }
 
 
     const settings = {
 
         mcq:
-            getCount('cb-mcq','count-mcq'),
+            document.getElementById(
+                'cb-mcq'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-mcq'
+                    ).value
+                )
+                : 0,
 
         tf:
-            getCount('cb-tf','count-tf'),
+            document.getElementById(
+                'cb-tf'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-tf'
+                    ).value
+                )
+                : 0,
 
         sa:
-            getCount('cb-sa','count-sa'),
+            document.getElementById(
+                'cb-sa'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-sa'
+                    ).value
+                )
+                : 0,
 
         essay:
-            getCount('cb-essay','count-essay')
+            document.getElementById(
+                'cb-essay'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-essay'
+                    ).value
+                )
+                : 0
 
     };
 
 
-    if (
+    const total =
         settings.mcq +
         settings.tf +
         settings.sa +
-        settings.essay === 0
-    ) {
+        settings.essay;
+
+
+    if (total === 0) {
 
         alert(
-            currentLang === 'en'
-                ? 'Choose at least one question type.'
-                : '請至少選擇一種題型。'
+            'Set at least one question type above 0.'
         );
 
         return;
+
     }
-
-
-    const topics =
-        Array.from(
-            document.querySelectorAll(
-                '.topic-cb:checked'
-            )
-        )
-        .map(cb => cb.value);
 
 
     const sentences =
@@ -2343,21 +2461,24 @@ function generatePracticeTest() {
     if (!sentences.length) {
 
         alert(
-            currentLang === 'en'
-                ? 'Not enough readable information was found.'
-                : '找不到足夠的可讀資料。'
+            'Not enough readable text was found in your uploaded documents.'
         );
 
         return;
+
     }
 
 
     const questions = [];
 
 
+    /*
+        MCQ
+    */
+
     for (
-        let i=0;
-        i<settings.mcq;
+        let i = 0;
+        i < settings.mcq;
         i++
     ) {
 
@@ -2369,21 +2490,25 @@ function generatePracticeTest() {
         const q =
             createMCQ(
                 sentence,
-                topics[i % topics.length],
                 sentences
             );
 
         if (q) {
 
             questions.push(q);
+
         }
 
     }
 
 
+    /*
+        TRUE / FALSE
+    */
+
     for (
-        let i=0;
-        i<settings.tf;
+        let i = 0;
+        i < settings.tf;
         i++
     ) {
 
@@ -2400,9 +2525,6 @@ function generatePracticeTest() {
         questions.push(
             createTrueFalse(
                 sentence,
-                topics[
-                    i % topics.length
-                ],
                 i
             )
         );
@@ -2410,9 +2532,13 @@ function generatePracticeTest() {
     }
 
 
+    /*
+        SHORT ANSWER
+    */
+
     for (
-        let i=0;
-        i<settings.sa;
+        let i = 0;
+        i < settings.sa;
         i++
     ) {
 
@@ -2427,22 +2553,15 @@ function generatePracticeTest() {
                 sentences.length
             ];
 
+
         questions.push({
 
-            type:
-                'Short Answer',
+            type: 'Short Answer',
 
-            topic:
-                topics[
-                    i % topics.length
-                ],
+            topic: 'Uploaded Notes',
 
             question:
-                currentLang === 'en'
-
-                    ? `Explain this idea from your notes: "${sentence}"`
-
-                    : `請解釋筆記中的以下概念：「${sentence}」`,
+                `Explain this idea from your notes: "${sentence}"`,
 
             answer:
                 sentence
@@ -2452,28 +2571,24 @@ function generatePracticeTest() {
     }
 
 
+    /*
+        ESSAY
+    */
+
     for (
-        let i=0;
-        i<settings.essay;
+        let i = 0;
+        i < settings.essay;
         i++
     ) {
 
         questions.push({
 
-            type:
-                'Essay',
+            type: 'Essay',
 
-            topic:
-                topics[
-                    i % topics.length
-                ],
+            topic: 'Uploaded Notes',
 
             question:
-                currentLang === 'en'
-
-                    ? `Discuss ${topics[i % topics.length]}, using evidence and ideas from your notes.`
-
-                    : `運用筆記中的資料及例子，討論${topics[i % topics.length]}。`,
+                'Discuss the key ideas from your uploaded revision material. Use evidence and examples from the notes.',
 
             answer:
                 sentences
@@ -2492,8 +2607,7 @@ function generatePracticeTest() {
 
 
     questions.sort(
-        () =>
-            Math.random() - .5
+        () => Math.random() - 0.5
     );
 
 
@@ -2504,67 +2618,12 @@ function generatePracticeTest() {
 }
 
 
-function getCount(
-    checkboxId,
-    selectId
-) {
-
-    const checkbox =
-        document.getElementById(
-            checkboxId
-        );
-
-    if (!checkbox.checked) {
-
-        return 0;
-    }
-
-    return Number(
-        document.getElementById(
-            selectId
-        ).value
-    );
-
-}
-
-
-/* =========================================================
-   EXTRACT SENTENCES
-========================================================= */
-
-function extractSentences(notes) {
-
-    return notes
-
-        .replace(/\r/g,' ')
-
-        .replace(/\n+/g,' ')
-
-        .replace(/\s+/g,' ')
-
-        .split(
-            /(?<=[.!?])\s+/
-        )
-
-        .map(
-            s => s.trim()
-        )
-
-        .filter(
-            s =>
-                s.length >= 25
-        );
-
-}
-
-
 /* =========================================================
    MCQ
 ========================================================= */
 
 function createMCQ(
     sentence,
-    topic,
     allSentences
 ) {
 
@@ -2587,13 +2646,15 @@ function createMCQ(
     if (words.length < 4) {
 
         return null;
+
     }
 
 
     const answer =
         words[
             Math.floor(
-                Math.random() *
+                Math.random()
+                *
                 words.length
             )
         ];
@@ -2609,7 +2670,7 @@ function createMCQ(
         );
 
 
-    const wrong =
+    const wrongAnswers =
         allSentences
 
             .flatMap(
@@ -2628,20 +2689,25 @@ function createMCQ(
                     word.toLowerCase()
                     !==
                     answer.toLowerCase()
-            );
+            )
 
+            .filter(
+                (word, index, array) =>
+                    array
+                        .findIndex(
+                            x =>
+                                x.toLowerCase()
+                                ===
+                                word.toLowerCase()
+                        )
+                    === index
+            )
 
-    const wrongAnswers =
-        [
-            ...new Set(wrong)
-        ]
+            .sort(
+                () => Math.random() - 0.5
+            )
 
-        .sort(
-            () =>
-                Math.random() - .5
-        )
-
-        .slice(0,3);
+            .slice(0,3);
 
 
     if (
@@ -2649,6 +2715,7 @@ function createMCQ(
     ) {
 
         return null;
+
     }
 
 
@@ -2657,9 +2724,9 @@ function createMCQ(
             answer,
             ...wrongAnswers
         ]
+
         .sort(
-            () =>
-                Math.random() - .5
+            () => Math.random() - 0.5
         );
 
 
@@ -2669,14 +2736,10 @@ function createMCQ(
             'Multiple Choice',
 
         topic:
-            topic,
+            'Uploaded Notes',
 
         question:
-            currentLang === 'en'
-
-                ? `Which word correctly completes this statement? "${questionText}"`
-
-                : `哪一個詞語最適合填入以下句子？「${questionText}」`,
+            `Which word correctly completes this statement? "${questionText}"`,
 
         options:
             options,
@@ -2698,20 +2761,22 @@ function createMCQ(
 
 function createTrueFalse(
     sentence,
-    topic,
     index
 ) {
 
     const makeFalse =
         index % 2 === 1;
 
+
     let statement =
         sentence;
+
 
     if (makeFalse) {
 
         const words =
             sentence.split(/\s+/);
+
 
         if (words.length > 5) {
 
@@ -2726,6 +2791,7 @@ function createTrueFalse(
 
             statement =
                 words.join(' ');
+
         }
 
     }
@@ -2737,14 +2803,10 @@ function createTrueFalse(
             'True / False',
 
         topic:
-            topic,
+            'Uploaded Notes',
 
         question:
-            currentLang === 'en'
-
-                ? `True or False: ${statement}`
-
-                : `正確或錯誤：${statement}`,
+            `True or False: ${statement}`,
 
         answer:
             makeFalse
@@ -2773,7 +2835,7 @@ function renderQuestions(
 
 
     questions.forEach(
-        (question,index) => {
+        (question, index) => {
 
             const box =
                 document.createElement(
@@ -2804,7 +2866,7 @@ function renderQuestions(
                 );
 
             title.innerText =
-                `Q${index+1}. ${question.question}`;
+                `Q${index + 1}. ${question.question}`;
 
             box.appendChild(title);
 
@@ -2816,7 +2878,7 @@ function renderQuestions(
 
                 question.options
                     .forEach(
-                        (option,optionIndex) => {
+                        (option, optionIndex) => {
 
                             const label =
                                 document.createElement(
@@ -2849,7 +2911,8 @@ function renderQuestions(
                             label.appendChild(
                                 document.createTextNode(
                                     ` ${String.fromCharCode(
-                                        65+optionIndex
+                                        65 +
+                                        optionIndex
                                     )}. ${option}`
                                 )
                             );
@@ -2860,6 +2923,7 @@ function renderQuestions(
 
                         }
                     );
+
 
                 addAnswerButton(
                     box,
@@ -2874,57 +2938,80 @@ function renderQuestions(
                 'True / False'
             ) {
 
-                [
-                    'True',
-                    'False'
-                ]
-                .forEach(
-                    value => {
+                ['True','False']
+                    .forEach(
+                        value => {
 
-                        const label =
-                            document.createElement(
-                                'label'
+                            const label =
+                                document.createElement(
+                                    'label'
+                                );
+
+                            label.className =
+                                'option';
+
+
+                            const radio =
+                                document.createElement(
+                                    'input'
+                                );
+
+                            radio.type =
+                                'radio';
+
+                            radio.name =
+                                `question-${index}`;
+
+                            radio.value =
+                                value;
+
+
+                            label.appendChild(
+                                radio
                             );
 
-                        label.className =
-                            'option';
-
-
-                        const radio =
-                            document.createElement(
-                                'input'
+                            label.appendChild(
+                                document.createTextNode(
+                                    ` ${value}`
+                                )
                             );
 
-                        radio.type =
-                            'radio';
+                            box.appendChild(
+                                label
+                            );
 
-                        radio.name =
-                            `question-${index}`;
-
-                        radio.value =
-                            value;
+                        }
+                    );
 
 
-                        label.appendChild(
-                            radio
-                        );
+                addAnswerButton(
+                    box,
+                    question.answer
+                );
 
-                        label.appendChild(
-                            document.createTextNode(
-                                currentLang === 'en'
-                                    ? ` ${value}`
-                                    : value === 'True'
-                                        ? ' 正確'
-                                        : ' 錯誤'
-                            )
-                        );
+            }
 
 
-                        box.appendChild(
-                            label
-                        );
+            else if (
+                question.type ===
+                'Short Answer'
+            ) {
 
-                    }
+                const textarea =
+                    document.createElement(
+                        'textarea'
+                    );
+
+                textarea.rows = 4;
+
+                textarea.placeholder =
+                    'Write your answer here...';
+
+                textarea.style.marginTop =
+                    '10px';
+
+                box.appendChild(
+                    textarea
                 );
 
 
@@ -2943,37 +3030,22 @@ function renderQuestions(
                         'textarea'
                     );
 
-                textarea.rows =
-                    question.type ===
-                    'Essay'
-                        ? 7
-                        : 4;
+                textarea.rows = 8;
 
                 textarea.placeholder =
-                    currentLang === 'en'
-                        ? 'Write your answer here...'
-                        : '在此輸入答案...';
+                    'Plan your essay here...';
 
                 textarea.style.marginTop =
                     '10px';
-
 
                 box.appendChild(
                     textarea
                 );
 
-
-                if (
-                    question.type !==
-                    'Essay'
-                ) {
-
-                    addAnswerButton(
-                        box,
-                        question.answer
-                    );
-
-                }
+                addAnswerButton(
+                    box,
+                    question.answer
+                );
 
             }
 
@@ -2989,11 +3061,7 @@ function renderQuestions(
     document.getElementById(
         'question-count'
     ).innerText =
-        currentLang === 'en'
-
-            ? `${questions.length} questions generated from your notes`
-
-            : `已根據你的筆記生成 ${questions.length} 題`;
+        `${questions.length} questions generated`;
 
 
     document
@@ -3041,17 +3109,15 @@ function addAnswerButton(
         'answer-box hidden';
 
     answerBox.innerText =
-        currentLang === 'en'
-            ? `Answer: ${answer}`
-            : `答案：${answer}`;
+        `Answer: ${answer}`;
 
 
     button.onclick =
-        () => {
+        function() {
 
-            answerBox
-                .classList
-                .toggle('hidden');
+            answerBox.classList.toggle(
+                'hidden'
+            );
 
         };
 
@@ -3063,511 +3129,6 @@ function addAnswerButton(
     box.appendChild(
         answerBox
     );
-
-}
-
-
-/* =========================================================
-   DOCUMENT VIEWER
-========================================================= */
-
-function showDocument(
-    fileName
-) {
-
-    const file =
-        uploadedNotes[fileName];
-
-    if (!file) return;
-
-
-    const viewer =
-        document.getElementById(
-            'document-viewer'
-        );
-
-
-    viewer.innerHTML = '';
-
-
-    const documentBox =
-        document.createElement(
-            'div'
-        );
-
-    documentBox.className =
-        'document';
-
-
-    const title =
-        document.createElement(
-            'div'
-        );
-
-    title.className =
-        'document-title';
-
-    title.innerText =
-        '📄 ' + file.name;
-
-
-    const meta =
-        document.createElement(
-            'div'
-        );
-
-    meta.className =
-        'document-meta';
-
-    meta.innerText =
-        `${file.type.toUpperCase()} · ${file.created}`;
-
-
-    documentBox.appendChild(
-        title
-    );
-
-    documentBox.appendChild(
-        meta
-    );
-
-
-    createDocumentSections(
-        documentBox,
-        file.content
-    );
-
-
-    /*
-        CHILD DOCUMENTS
-    */
-
-    const children =
-        Object.values(
-            file.children || {}
-        );
-
-
-    if (children.length) {
-
-        const subHeading =
-            document.createElement(
-                'div'
-            );
-
-        subHeading.className =
-            'document-section';
-
-
-        const h =
-            document.createElement(
-                'h4'
-            );
-
-        h.innerText =
-            currentLang === 'en'
-                ? '📁 Sub-files'
-                : '📁 子文件';
-
-
-        subHeading.appendChild(h);
-
-
-        children.forEach(
-            child => {
-
-                const childTitle =
-                    document.createElement(
-                        'strong'
-                    );
-
-                childTitle.innerText =
-                    '📄 ' + child.name;
-
-
-                const childText =
-                    document.createElement(
-                        'p'
-                    );
-
-                childText.innerText =
-                    child.content;
-
-
-                subHeading.appendChild(
-                    childTitle
-                );
-
-                subHeading.appendChild(
-                    childText
-                );
-
-            }
-        );
-
-
-        documentBox.appendChild(
-            subHeading
-        );
-
-    }
-
-
-    viewer.appendChild(
-        documentBox
-    );
-
-
-    showPanelByName(
-        'notes'
-    );
-
-}
-
-
-/* =========================================================
-   SUB DOCUMENT
-========================================================= */
-
-function showSubDocument(
-    parentName,
-    subName
-) {
-
-    const parent =
-        uploadedNotes[parentName];
-
-    if (!parent) return;
-
-    const sub =
-        parent.children[subName];
-
-    if (!sub) return;
-
-
-    const viewer =
-        document.getElementById(
-            'document-viewer'
-        );
-
-    viewer.innerHTML = '';
-
-
-    const box =
-        document.createElement(
-            'div'
-        );
-
-    box.className =
-        'document';
-
-
-    const title =
-        document.createElement(
-            'div'
-        );
-
-    title.className =
-        'document-title';
-
-    title.innerText =
-        '📄 ' + sub.name;
-
-
-    const meta =
-        document.createElement(
-            'div'
-        );
-
-    meta.className =
-        'document-meta';
-
-    meta.innerText =
-        `Sub-file · ${parentName}`;
-
-
-    box.appendChild(title);
-
-    box.appendChild(meta);
-
-
-    createDocumentSections(
-        box,
-        sub.content
-    );
-
-
-    viewer.appendChild(box);
-
-    showPanelByName('notes');
-
-}
-
-
-/* =========================================================
-   DOCUMENT SECTIONS
-========================================================= */
-
-function createDocumentSections(
-    container,
-    content
-) {
-
-    const lines =
-        content
-            .split(/\n+/)
-            .map(
-                line =>
-                    line.trim()
-            )
-            .filter(Boolean);
-
-
-    if (!lines.length) {
-
-        return;
-    }
-
-
-    let currentSection = null;
-
-
-    lines.forEach(
-        line => {
-
-            /*
-                Detect headings.
-                Lines that are short and do not end
-                with punctuation are treated as headings.
-            */
-
-            const isHeading =
-                line.length < 90 &&
-                !/[.!?]$/.test(line);
-
-
-            if (isHeading) {
-
-                currentSection =
-                    document.createElement(
-                        'div'
-                    );
-
-                currentSection.className =
-                    'document-section';
-
-
-                const heading =
-                    document.createElement(
-                        'h4'
-                    );
-
-                heading.innerText =
-                    line;
-
-
-                currentSection.appendChild(
-                    heading
-                );
-
-                container.appendChild(
-                    currentSection
-                );
-
-            }
-
-            else {
-
-                if (!currentSection) {
-
-                    currentSection =
-                        document.createElement(
-                            'div'
-                        );
-
-                    currentSection.className =
-                        'document-section';
-
-                    container.appendChild(
-                        currentSection
-                    );
-
-                }
-
-
-                const paragraph =
-                    document.createElement(
-                        'p'
-                    );
-
-                paragraph.innerText =
-                    line;
-
-
-                currentSection.appendChild(
-                    paragraph
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   NOTES / NAVIGATION
-========================================================= */
-
-function showPanel(
-    name,
-    button
-) {
-
-    document
-        .querySelectorAll(
-            '.function-panel'
-        )
-        .forEach(
-            panel =>
-                panel.classList
-                .remove('active')
-        );
-
-
-    document
-        .querySelectorAll(
-            '.function-btn'
-        )
-        .forEach(
-            btn =>
-                btn.classList
-                .remove('active')
-        );
-
-
-    document
-        .getElementById(
-            'panel-' + name
-        )
-        .classList
-        .add('active');
-
-
-    if (button) {
-
-        button.classList
-            .add('active');
-
-    }
-
-}
-
-
-function showPanelByName(
-    name
-) {
-
-    const button =
-        Array.from(
-            document.querySelectorAll(
-                '.function-btn'
-            )
-        )
-        .find(
-            btn =>
-                btn
-                .getAttribute('onclick')
-                ?.includes(
-                    `'${name}'`
-                )
-        );
-
-
-    showPanel(
-        name,
-        button
-    );
-
-}
-
-
-/* =========================================================
-   THEMES
-========================================================= */
-
-function setTheme(
-    theme
-) {
-
-    document.body.setAttribute(
-        'data-theme',
-        theme
-    );
-
-}
-
-
-/* =========================================================
-   LOGIN
-========================================================= */
-
-function toggleAuthModal() {
-
-    document
-        .getElementById(
-            'auth-box'
-        )
-        .classList
-        .toggle('hidden');
-
-}
-
-
-function loginUser() {
-
-    const username =
-        document
-            .getElementById(
-                'user-input'
-            )
-            .value
-            .trim();
-
-
-    if (!username) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please enter a username.'
-                : '請輸入使用者名稱。'
-        );
-
-        return;
-    }
-
-
-    document.getElementById(
-        'user-display'
-    ).innerText =
-        username;
-
-
-    document.getElementById(
-        'user-avatar'
-    ).innerText =
-        username
-            .charAt(0)
-            .toUpperCase();
-
-
-    document
-        .getElementById(
-            'auth-box'
-        )
-        .classList
-        .add('hidden');
 
 }
 
@@ -3590,12 +3151,11 @@ function markEssay() {
     if (!text) {
 
         alert(
-            currentLang === 'en'
-                ? 'Please enter essay text.'
-                : '請先輸入文章內容。'
+            'Please enter essay text.'
         );
 
         return;
+
     }
 
 
@@ -3604,6 +3164,7 @@ function markEssay() {
 
 
     let grade;
+
     let feedback;
 
 
@@ -3667,14 +3228,45 @@ function markEssay() {
 
 
 /* =========================================================
-   ESCAPE REGEXP
+   HTML ESCAPING
 ========================================================= */
 
-function escapeRegExp(
-    text
-) {
+function escapeHTML(text) {
 
     return String(text)
+
+        .replace(
+            /&/g,
+            '&amp;'
+        )
+
+        .replace(
+            /</g,
+            '&lt;'
+        )
+
+        .replace(
+            />/g,
+            '&gt;'
+        )
+
+        .replace(
+            /"/g,
+            '&quot;'
+        )
+
+        .replace(
+            /'/g,
+            '&#039;'
+        );
+
+}
+
+
+function escapeRegExp(text) {
+
+    return String(text)
+
         .replace(
             /[.*+?^${}()|[\]\\]/g,
             '\\$&'
@@ -3687,9 +3279,14 @@ function escapeRegExp(
    INITIALISE
 ========================================================= */
 
-renderFileList();
+updateFolderSelectors();
+
+renderFileTree();
+
+renderNotesFileList();
 
 </script>
 
 </body>
+
 </html>

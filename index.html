@@ -6,6 +6,9 @@
 
     <title>Pastel Revision Studio</title>
 
+    <!-- PDF.js for reading PDF files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
     <style>
         :root {
             --bg-color: #F6F3EE;
@@ -278,10 +281,13 @@
             cursor: pointer;
 
             margin-bottom: 20px;
+
+            transition: 0.2s ease;
         }
 
         .upload-zone:hover {
             opacity: 0.85;
+            transform: translateY(-1px);
         }
 
         input[type="text"],
@@ -318,6 +324,8 @@
             margin-top: 10px;
 
             cursor: pointer;
+
+            transition: 0.2s ease;
         }
 
         button:hover {
@@ -346,6 +354,12 @@
 
             box-shadow:
                 0 2px 5px rgba(0,0,0,0.1);
+
+            transition: 0.2s ease;
+        }
+
+        .swatch:hover {
+            transform: scale(1.1);
         }
 
         .hidden {
@@ -412,6 +426,15 @@
             margin-bottom: 15px;
 
             text-align: center;
+        }
+
+        .loading-box {
+            background: var(--accent-bg);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--text-sub);
         }
 
         @media (max-width: 760px) {
@@ -717,14 +740,18 @@
                     "
                     id="lbl-drag-text">
 
-                    Click or Drop Files Here (.txt)
+                    Click or Drop Files Here (.txt / .pdf)
 
                 </p>
+
+                <small style="color:var(--text-sub);">
+                    PDF text will be extracted automatically
+                </small>
 
                 <input
                     type="file"
                     id="file-upload-input"
-                    accept=".txt,text/plain"
+                    accept=".txt,.pdf,text/plain,application/pdf"
                     style="display:none;"
                     onchange="handleFileUpload(event)">
 
@@ -965,7 +992,7 @@
                         color:var(--primary);
                     ">
 
-                    Grade: B+ (Good)
+                    Grade: B+
 
                 </strong>
 
@@ -976,8 +1003,7 @@
                         font-size:13px;
                     ">
 
-                    Feedback: Clear structure and good terminology.
-                    Expand on examples for top marks.
+                        Feedback will appear here.
 
                 </p>
 
@@ -1025,15 +1051,18 @@
 
 let currentLang = 'en';
 
+
 /*
-    Stores the actual contents of uploaded notes.
+    STORES UPLOADED NOTES
 */
+
 const uploadedNotes = {};
 
 
 /*
-    Built-in demo notes.
+    BUILT-IN DEMO NOTES
 */
+
 const builtInNotes = {
 
     "Photosynthesis": `
@@ -1072,27 +1101,35 @@ const translations = {
 
     en: {
 
-        appTitle: "🌸 Pastel Revision Studio",
+        appTitle:
+            "🌸 Pastel Revision Studio",
 
-        langBtn: "🌐 廣東話",
+        langBtn:
+            "🌐 廣東話",
 
-        userDefault: "Guest User",
+        userDefault:
+            "Guest User",
 
-        authBtn: "Log In",
+        authBtn:
+            "Log In",
 
-        lblTheme: "🎨 Theme Swatches",
+        lblTheme:
+            "🎨 Theme Swatches",
 
-        lblFiles: "📂 Topic Files",
+        lblFiles:
+            "📂 Topic Files",
 
-        lblAddFile: "+ Add Topic File",
+        lblAddFile:
+            "+ Add Topic File",
 
-        btnSaveFile: "Save File",
+        btnSaveFile:
+            "Save File",
 
         lblUploadHeading:
             "📥 Upload Material to Notes",
 
         lblDragText:
-            "Click or Drop Files Here (.txt)",
+            "Click or Drop Files Here (.txt / .pdf)",
 
         lblConfig:
             "⚙️ Test Configurator",
@@ -1154,7 +1191,7 @@ const translations = {
             "📥 上傳文件並生成測驗",
 
         lblDragText:
-            "按此上傳或拖放文字檔 (.txt)",
+            "按此上傳或拖放文字檔 / PDF (.txt / .pdf)",
 
         lblConfig:
             "⚙️ 測驗自訂選項",
@@ -1202,14 +1239,20 @@ function toggleLanguage() {
     const t =
         translations[currentLang];
 
+
     document.getElementById('app-title')
-        .innerText = t.appTitle;
+        .innerText =
+        t.appTitle;
+
 
     document.getElementById('lang-toggle-btn')
-        .innerText = t.langBtn;
+        .innerText =
+        t.langBtn;
+
 
     const userElem =
         document.getElementById('user-display');
+
 
     if (
         userElem.innerText === 'Guest User' ||
@@ -1221,58 +1264,91 @@ function toggleLanguage() {
 
     }
 
+
     document.getElementById('auth-btn')
-        .innerText = t.authBtn;
+        .innerText =
+        t.authBtn;
+
 
     document.getElementById('lbl-theme')
-        .innerText = t.lblTheme;
+        .innerText =
+        t.lblTheme;
+
 
     document.getElementById('lbl-files')
-        .innerText = t.lblFiles;
+        .innerText =
+        t.lblFiles;
+
 
     document.getElementById('lbl-add-file')
-        .innerText = t.lblAddFile;
+        .innerText =
+        t.lblAddFile;
+
 
     document.getElementById('btn-save-file')
-        .innerText = t.btnSaveFile;
+        .innerText =
+        t.btnSaveFile;
+
 
     document.getElementById('lbl-upload-heading')
-        .innerText = t.lblUploadHeading;
+        .innerText =
+        t.lblUploadHeading;
+
 
     document.getElementById('lbl-drag-text')
-        .innerText = t.lblDragText;
+        .innerText =
+        t.lblDragText;
+
 
     document.getElementById('lbl-config')
-        .innerText = t.lblConfig;
+        .innerText =
+        t.lblConfig;
+
 
     document.getElementById('opt-mcq')
-        .innerText = t.optMcq;
+        .innerText =
+        t.optMcq;
+
 
     document.getElementById('opt-tf')
-        .innerText = t.optTf;
+        .innerText =
+        t.optTf;
+
 
     document.getElementById('opt-sa')
-        .innerText = t.optSa;
+        .innerText =
+        t.optSa;
+
 
     document.getElementById('opt-essay')
-        .innerText = t.optEssay;
+        .innerText =
+        t.optEssay;
+
 
     document.getElementById('btn-generate')
-        .innerText = t.btnGenerate;
+        .innerText =
+        t.btnGenerate;
+
 
     document.getElementById('lbl-quiz-result')
-        .innerText = t.lblQuizResult;
+        .innerText =
+        t.lblQuizResult;
+
 
     document.getElementById('lbl-essay-heading')
-        .innerText = t.lblEssayHeading;
+        .innerText =
+        t.lblEssayHeading;
+
 
     document.getElementById('btn-mark')
-        .innerText = t.btnMark;
+        .innerText =
+        t.btnMark;
 }
 
 
 /*
     FILE UPLOAD
+    Supports TXT and PDF
 */
 
 function handleFileUpload(event) {
@@ -1282,67 +1358,340 @@ function handleFileUpload(event) {
 
     if (!file) return;
 
-    if (
-        !file.name
-            .toLowerCase()
-            .endsWith('.txt')
-    ) {
+
+    const fileName =
+        file.name.toLowerCase();
+
+
+    const isTxt =
+        fileName.endsWith('.txt');
+
+
+    const isPdf =
+        fileName.endsWith('.pdf');
+
+
+    if (!isTxt && !isPdf) {
 
         alert(
             currentLang === 'en'
-                ? 'Please upload a .txt file.'
-                : '請上傳 .txt 文字檔。'
+                ? 'Please upload a .txt or .pdf file.'
+                : '請上傳 .txt 或 .pdf 檔案。'
         );
+
+        event.target.value = '';
 
         return;
     }
 
-    const reader =
-        new FileReader();
 
-    reader.onload = function(e) {
+    /*
+        TXT
+    */
 
-        const content =
-            e.target.result.trim();
+    if (isTxt) {
 
-        if (!content) {
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e) {
+
+                const content =
+                    e.target.result.trim();
+
+
+                if (!content) {
+
+                    alert(
+                        currentLang === 'en'
+                            ? 'This file is empty.'
+                            : '這個檔案是空的。'
+                    );
+
+                    event.target.value = '';
+
+                    return;
+                }
+
+
+                uploadedNotes[file.name] =
+                    content;
+
+
+                addFileToSidebar(
+                    file.name
+                );
+
+
+                alert(
+                    currentLang === 'en'
+                        ? `"${file.name}" loaded successfully!`
+                        : `"${file.name}" 已成功載入！`
+                );
+
+
+                event.target.value = '';
+            };
+
+
+        reader.onerror =
+            function() {
+
+                alert(
+                    currentLang === 'en'
+                        ? 'Could not read this file.'
+                        : '無法讀取這個檔案。'
+                );
+
+                event.target.value = '';
+            };
+
+
+        reader.readAsText(file);
+
+        return;
+    }
+
+
+    /*
+        PDF
+    */
+
+    if (isPdf) {
+
+        readPDFFile(
+            file,
+            event
+        );
+
+    }
+}
+
+
+/*
+    READ PDF
+*/
+
+async function readPDFFile(
+    file,
+    event
+) {
+
+    try {
+
+        /*
+            Show loading message
+        */
+
+        const loading =
+            document.createElement(
+                'div'
+            );
+
+        loading.id =
+            'pdf-loading';
+
+        loading.className =
+            'loading-box';
+
+        loading.innerText =
+            currentLang === 'en'
+                ? `📖 Reading "${file.name}"...`
+                : `📖 正在讀取「${file.name}」...`;
+
+
+        const uploadZone =
+            document.querySelector(
+                '.upload-zone'
+            );
+
+
+        uploadZone.insertAdjacentElement(
+            'afterend',
+            loading
+        );
+
+
+        /*
+            Read PDF
+        */
+
+        const arrayBuffer =
+            await file.arrayBuffer();
+
+
+        /*
+            Load PDF using PDF.js
+        */
+
+        const pdf =
+            await pdfjsLib
+                .getDocument({
+                    data: arrayBuffer
+                })
+                .promise;
+
+
+        let extractedText =
+            '';
+
+
+        /*
+            Extract every page
+        */
+
+        for (
+            let pageNumber = 1;
+            pageNumber <= pdf.numPages;
+            pageNumber++
+        ) {
+
+            const page =
+                await pdf.getPage(
+                    pageNumber
+                );
+
+
+            const textContent =
+                await page.getTextContent();
+
+
+            const pageText =
+                textContent.items
+                    .map(
+                        item => item.str
+                    )
+                    .join(' ');
+
+
+            extractedText +=
+                pageText + '\n\n';
+
+
+            loading.innerText =
+                currentLang === 'en'
+                    ? `📖 Reading "${file.name}"... Page ${pageNumber} of ${pdf.numPages}`
+                    : `📖 正在讀取「${file.name}」... 第 ${pageNumber} / ${pdf.numPages} 頁`;
+        }
+
+
+        /*
+            Clean extracted text
+        */
+
+        extractedText =
+            extractedText
+                .replace(/\s+/g, ' ')
+                .trim();
+
+
+        /*
+            Remove loading box
+        */
+
+        loading.remove();
+
+
+        /*
+            No text found
+        */
+
+        if (!extractedText) {
 
             alert(
                 currentLang === 'en'
-                    ? 'This file is empty.'
-                    : '這個檔案是空的。'
+                    ? 'No readable text was found in this PDF. If it is a scanned PDF, OCR is required.'
+                    : '這個 PDF 找不到可讀取的文字。如果是掃描 PDF，需要使用 OCR。'
             );
+
+            event.target.value = '';
 
             return;
         }
 
+
+        /*
+            Save extracted notes
+        */
+
         uploadedNotes[file.name] =
-            content;
+            extractedText;
+
+
+        /*
+            Add PDF to sidebar
+        */
 
         addFileToSidebar(
             file.name
         );
 
+
+        /*
+            Automatically check new PDF
+        */
+
+        const checkbox =
+            Array.from(
+                document.querySelectorAll(
+                    '.topic-cb'
+                )
+            ).find(
+                cb =>
+                    cb.value === file.name
+            );
+
+
+        if (checkbox) {
+
+            checkbox.checked =
+                true;
+
+        }
+
+
+        /*
+            Success
+        */
+
         alert(
             currentLang === 'en'
-                ? `"${file.name}" loaded successfully!`
-                : `"${file.name}" 已成功載入！`
+                ? `"${file.name}" loaded successfully! ${pdf.numPages} page(s) extracted.`
+                : `「${file.name}」已成功載入！已提取 ${pdf.numPages} 頁內容。`
         );
 
-        event.target.value = '';
-    };
 
-    reader.onerror = function() {
+    } catch (error) {
+
+        console.error(
+            'PDF reading error:',
+            error
+        );
+
+
+        const loading =
+            document.getElementById(
+                'pdf-loading'
+            );
+
+
+        if (loading) {
+            loading.remove();
+        }
+
 
         alert(
             currentLang === 'en'
-                ? 'Could not read this file.'
-                : '無法讀取這個檔案。'
+                ? 'Could not read this PDF. Please make sure it is a valid PDF.'
+                : '無法讀取這個 PDF。請確認檔案是有效的 PDF。'
         );
 
-    };
+    }
 
-    reader.readAsText(file);
+
+    event.target.value = '';
 }
 
 
@@ -1350,12 +1699,15 @@ function handleFileUpload(event) {
     ADD FILE TO SIDEBAR
 */
 
-function addFileToSidebar(fileName) {
+function addFileToSidebar(
+    fileName
+) {
 
     const container =
         document.getElementById(
             'file-container'
         );
+
 
     const alreadyExists =
         Array.from(
@@ -1363,38 +1715,56 @@ function addFileToSidebar(fileName) {
                 '.topic-cb'
             )
         ).some(
-            cb => cb.value === fileName
+            cb =>
+                cb.value === fileName
         );
+
 
     if (alreadyExists) return;
 
+
     const div =
-        document.createElement('div');
+        document.createElement(
+            'div'
+        );
+
 
     div.className =
         'file-item';
 
+
     const label =
-        document.createElement('label');
+        document.createElement(
+            'label'
+        );
+
 
     const checkbox =
-        document.createElement('input');
+        document.createElement(
+            'input'
+        );
+
 
     checkbox.type =
         'checkbox';
 
+
     checkbox.className =
         'topic-cb';
+
 
     checkbox.value =
         fileName;
 
+
     checkbox.checked =
         true;
+
 
     label.appendChild(
         checkbox
     );
+
 
     label.appendChild(
         document.createTextNode(
@@ -1402,9 +1772,11 @@ function addFileToSidebar(fileName) {
         )
     );
 
+
     div.appendChild(
         label
     );
+
 
     container.appendChild(
         div
@@ -1424,8 +1796,10 @@ function generatePracticeTest() {
                 '.topic-cb:checked'
             )
         ).map(
-            cb => cb.value
+            cb =>
+                cb.value
         );
+
 
     if (!checkedTopics.length) {
 
@@ -1452,6 +1826,7 @@ function generatePracticeTest() {
                 )
                 : 0,
 
+
         tf:
             document.getElementById(
                 'cb-tf'
@@ -1463,6 +1838,7 @@ function generatePracticeTest() {
                 )
                 : 0,
 
+
         sa:
             document.getElementById(
                 'cb-sa'
@@ -1473,6 +1849,7 @@ function generatePracticeTest() {
                     ).value
                 )
                 : 0,
+
 
         essay:
             document.getElementById(
@@ -1487,34 +1864,42 @@ function generatePracticeTest() {
     };
 
 
-    const allQuestions = [];
+    const allQuestions =
+        [];
 
 
-    checkedTopics.forEach(topic => {
+    checkedTopics.forEach(
+        topic => {
 
-        let notes =
-            uploadedNotes[topic];
+            let notes =
+                uploadedNotes[topic];
 
-        if (!notes) {
 
-            notes =
-                builtInNotes[topic];
+            if (!notes) {
 
-        }
+                notes =
+                    builtInNotes[topic];
 
-        if (!notes) return;
+            }
 
-        const topicQuestions =
-            createQuestionsFromNotes(
-                notes,
-                topic,
-                settings
+
+            if (!notes) return;
+
+
+            const topicQuestions =
+                createQuestionsFromNotes(
+                    notes,
+                    topic,
+                    settings
+                );
+
+
+            allQuestions.push(
+                ...topicQuestions
             );
 
-        allQuestions.push(
-            ...topicQuestions
-        );
-    });
+        }
+    );
 
 
     if (!allQuestions.length) {
@@ -1529,10 +1914,9 @@ function generatePracticeTest() {
     }
 
 
-    // Shuffle final question order
-
     allQuestions.sort(
-        () => Math.random() - 0.5
+        () =>
+            Math.random() - 0.5
     );
 
 
@@ -1553,24 +1937,31 @@ function createQuestionsFromNotes(
 ) {
 
     const sentences =
-        extractSentences(notes);
+        extractSentences(
+            notes
+        );
+
 
     if (!sentences.length) {
+
         return [];
+
     }
 
 
     const shuffled =
         [...sentences].sort(
-            () => Math.random() - 0.5
+            () =>
+                Math.random() - 0.5
         );
 
 
-    const questions = [];
+    const questions =
+        [];
 
 
     /*
-        MULTIPLE CHOICE
+        MCQ
     */
 
     for (
@@ -1584,6 +1975,7 @@ function createQuestionsFromNotes(
                 i % shuffled.length
             ];
 
+
         const question =
             createMCQ(
                 sentence,
@@ -1591,9 +1983,15 @@ function createQuestionsFromNotes(
                 sentences
             );
 
+
         if (question) {
-            questions.push(question);
+
+            questions.push(
+                question
+            );
+
         }
+
     }
 
 
@@ -1609,9 +2007,13 @@ function createQuestionsFromNotes(
 
         const sentence =
             shuffled[
-                (i + settings.mcq)
-                % shuffled.length
+                (
+                    i +
+                    settings.mcq
+                ) %
+                shuffled.length
             ];
+
 
         questions.push(
             createTrueFalse(
@@ -1620,6 +2022,7 @@ function createQuestionsFromNotes(
                 i
             )
         );
+
     }
 
 
@@ -1639,15 +2042,18 @@ function createQuestionsFromNotes(
                     i +
                     settings.mcq +
                     settings.tf
-                )
-                % shuffled.length
+                ) %
+                shuffled.length
             ];
+
 
         questions.push({
 
-            type: 'Short Answer',
+            type:
+                'Short Answer',
 
-            topic: topic,
+            topic:
+                topic,
 
             question:
                 currentLang === 'en'
@@ -1658,7 +2064,9 @@ function createQuestionsFromNotes(
 
             answer:
                 sentence
+
         });
+
     }
 
 
@@ -1674,9 +2082,11 @@ function createQuestionsFromNotes(
 
         questions.push({
 
-            type: 'Essay',
+            type:
+                'Essay',
 
-            topic: topic,
+            topic:
+                topic,
 
             question:
                 currentLang === 'en'
@@ -1695,7 +2105,9 @@ function createQuestionsFromNotes(
                         )
                     )
                     .join(' ')
+
         });
+
     }
 
 
@@ -1707,15 +2119,26 @@ function createQuestionsFromNotes(
     EXTRACT SENTENCES
 */
 
-function extractSentences(notes) {
+function extractSentences(
+    notes
+) {
 
     return notes
 
-        .replace(/\r/g, ' ')
+        .replace(
+            /\r/g,
+            ' '
+        )
 
-        .replace(/\n+/g, ' ')
+        .replace(
+            /\n+/g,
+            ' '
+        )
 
-        .replace(/\s+/g, ' ')
+        .replace(
+            /\s+/g,
+            ' '
+        )
 
         .split(
             /(?<=[.!?])\s+/
@@ -1745,11 +2168,16 @@ function createMCQ(
 
     const words =
         sentence
+
             .replace(
                 /[.,!?;:()[\]{}]/g,
                 ''
             )
-            .split(/\s+/)
+
+            .split(
+                /\s+/
+            )
+
             .filter(
                 word =>
                     word.length >= 5
@@ -1757,15 +2185,17 @@ function createMCQ(
 
 
     if (words.length < 4) {
+
         return null;
+
     }
 
 
     const answer =
         words[
             Math.floor(
-                Math.random()
-                * words.length
+                Math.random() *
+                words.length
             )
         ];
 
@@ -1773,7 +2203,9 @@ function createMCQ(
     const questionText =
         sentence.replace(
             new RegExp(
-                escapeRegExp(answer),
+                escapeRegExp(
+                    answer
+                ),
                 'i'
             ),
             '_____'
@@ -1790,14 +2222,16 @@ function createMCQ(
                             /[.,!?;:()[\]{}]/g,
                             ''
                         )
-                        .split(/\s+/)
+                        .split(
+                            /\s+/
+                        )
             )
 
             .filter(
                 word =>
                     word.length >= 5 &&
-                    word.toLowerCase()
-                        !== answer.toLowerCase()
+                    word.toLowerCase() !==
+                    answer.toLowerCase()
             );
 
 
@@ -1807,14 +2241,22 @@ function createMCQ(
         )]
 
         .sort(
-            () => Math.random() - 0.5
+            () =>
+                Math.random() - 0.5
         )
 
-        .slice(0, 3);
+        .slice(
+            0,
+            3
+        );
 
 
-    if (wrongAnswers.length < 3) {
+    if (
+        wrongAnswers.length < 3
+    ) {
+
         return null;
+
     }
 
 
@@ -1823,7 +2265,8 @@ function createMCQ(
             answer,
             ...wrongAnswers
         ].sort(
-            () => Math.random() - 0.5
+            () =>
+                Math.random() - 0.5
         );
 
 
@@ -1847,14 +2290,18 @@ function createMCQ(
 
         answer:
             `${String.fromCharCode(
-                65 + options.indexOf(answer)
+                65 +
+                options.indexOf(
+                    answer
+                )
             )}. ${answer}`
+
     };
 }
 
 
 /*
-    CREATE TRUE/FALSE
+    TRUE / FALSE
 */
 
 function createTrueFalse(
@@ -1874,7 +2321,10 @@ function createTrueFalse(
     if (makeFalse) {
 
         const words =
-            sentence.split(/\s+/);
+            sentence.split(
+                /\s+/
+            );
+
 
         if (words.length > 5) {
 
@@ -1883,13 +2333,17 @@ function createTrueFalse(
                     words.length / 2
                 );
 
+
             words[position] =
                 'not ' +
                 words[position];
 
+
             statement =
                 words.join(' ');
+
         }
+
     }
 
 
@@ -1912,6 +2366,7 @@ function createTrueFalse(
             makeFalse
                 ? 'False'
                 : 'True'
+
     };
 }
 
@@ -1929,255 +2384,291 @@ function renderQuestions(
             'quiz-content-list'
         );
 
+
     container.innerHTML =
         '';
 
 
     questions.forEach(
-        (question, index) => {
+        (
+            question,
+            index
+        ) => {
 
-        const box =
-            document.createElement(
-                'div'
-            );
-
-        box.className =
-            'quiz-question';
-
-
-        const type =
-            document.createElement(
-                'div'
-            );
-
-        type.className =
-            'question-type';
-
-        type.innerText =
-            `${question.type} · ${question.topic}`;
-
-
-        box.appendChild(
-            type
-        );
-
-
-        const title =
-            document.createElement(
-                'strong'
-            );
-
-        title.innerText =
-            `Q${index + 1}. ${question.question}`;
-
-
-        box.appendChild(
-            title
-        );
-
-
-        /*
-            MCQ
-        */
-
-        if (
-            question.type ===
-            'Multiple Choice'
-        ) {
-
-            question.options.forEach(
-                (option, optionIndex) => {
-
-                const label =
-                    document.createElement(
-                        'label'
-                    );
-
-                label.className =
-                    'option';
-
-
-                const radio =
-                    document.createElement(
-                        'input'
-                    );
-
-                radio.type =
-                    'radio';
-
-                radio.name =
-                    `question-${index}`;
-
-                radio.value =
-                    option;
-
-
-                label.appendChild(
-                    radio
+            const box =
+                document.createElement(
+                    'div'
                 );
 
-                label.appendChild(
-                    document.createTextNode(
-                        ` ${String.fromCharCode(
-                            65 + optionIndex
-                        )}. ${option}`
-                    )
+
+            box.className =
+                'quiz-question';
+
+
+            const type =
+                document.createElement(
+                    'div'
                 );
+
+
+            type.className =
+                'question-type';
+
+
+            type.innerText =
+                `${question.type} · ${question.topic}`;
+
+
+            box.appendChild(
+                type
+            );
+
+
+            const title =
+                document.createElement(
+                    'strong'
+                );
+
+
+            title.innerText =
+                `Q${index + 1}. ${question.question}`;
+
+
+            box.appendChild(
+                title
+            );
+
+
+            /*
+                MCQ
+            */
+
+            if (
+                question.type ===
+                'Multiple Choice'
+            ) {
+
+                question.options.forEach(
+                    (
+                        option,
+                        optionIndex
+                    ) => {
+
+                        const label =
+                            document.createElement(
+                                'label'
+                            );
+
+
+                        label.className =
+                            'option';
+
+
+                        const radio =
+                            document.createElement(
+                                'input'
+                            );
+
+
+                        radio.type =
+                            'radio';
+
+
+                        radio.name =
+                            `question-${index}`;
+
+
+                        radio.value =
+                            option;
+
+
+                        label.appendChild(
+                            radio
+                        );
+
+
+                        label.appendChild(
+                            document.createTextNode(
+                                ` ${String.fromCharCode(
+                                    65 +
+                                    optionIndex
+                                )}. ${option}`
+                            )
+                        );
+
+
+                        box.appendChild(
+                            label
+                        );
+
+                    }
+                );
+
+
+                addAnswerButton(
+                    box,
+                    question.answer
+                );
+
+            }
+
+
+            /*
+                TRUE / FALSE
+            */
+
+            else if (
+                question.type ===
+                'True / False'
+            ) {
+
+                [
+                    'True',
+                    'False'
+                ].forEach(
+                    value => {
+
+                        const label =
+                            document.createElement(
+                                'label'
+                            );
+
+
+                        label.className =
+                            'option';
+
+
+                        const radio =
+                            document.createElement(
+                                'input'
+                            );
+
+
+                        radio.type =
+                            'radio';
+
+
+                        radio.name =
+                            `question-${index}`;
+
+
+                        radio.value =
+                            value;
+
+
+                        label.appendChild(
+                            radio
+                        );
+
+
+                        label.appendChild(
+                            document.createTextNode(
+                                currentLang === 'en'
+                                    ? ` ${value}`
+                                    : value === 'True'
+                                        ? ' 正確'
+                                        : ' 錯誤'
+                            )
+                        );
+
+
+                        box.appendChild(
+                            label
+                        );
+
+                    }
+                );
+
+
+                addAnswerButton(
+                    box,
+                    question.answer
+                );
+
+            }
+
+
+            /*
+                SHORT ANSWER
+            */
+
+            else if (
+                question.type ===
+                'Short Answer'
+            ) {
+
+                const textarea =
+                    document.createElement(
+                        'textarea'
+                    );
+
+
+                textarea.rows =
+                    4;
+
+
+                textarea.placeholder =
+                    currentLang === 'en'
+                        ? 'Write your answer here...'
+                        : '在此輸入答案...';
+
+
+                textarea.style.marginTop =
+                    '10px';
 
 
                 box.appendChild(
-                    label
+                    textarea
                 );
 
-            });
+
+                addAnswerButton(
+                    box,
+                    question.answer
+                );
+
+            }
 
 
-            addAnswerButton(
-                box,
-                question.answer
-            );
-        }
+            /*
+                ESSAY
+            */
 
+            else {
 
-        /*
-            TRUE / FALSE
-        */
-
-        else if (
-            question.type ===
-            'True / False'
-        ) {
-
-            ['True', 'False']
-                .forEach(
-                    value => {
-
-                    const label =
-                        document.createElement(
-                            'label'
-                        );
-
-                    label.className =
-                        'option';
-
-
-                    const radio =
-                        document.createElement(
-                            'input'
-                        );
-
-                    radio.type =
-                        'radio';
-
-                    radio.name =
-                        `question-${index}`;
-
-                    radio.value =
-                        value;
-
-
-                    label.appendChild(
-                        radio
-                    );
-
-                    label.appendChild(
-                        document.createTextNode(
-                            currentLang === 'en'
-                                ? ` ${value}`
-                                : value === 'True'
-                                    ? ' 正確'
-                                    : ' 錯誤'
-                        )
+                const textarea =
+                    document.createElement(
+                        'textarea'
                     );
 
 
-                    box.appendChild(
-                        label
-                    );
-
-                }
-            );
+                textarea.rows =
+                    7;
 
 
-            addAnswerButton(
-                box,
-                question.answer
-            );
-        }
+                textarea.placeholder =
+                    currentLang === 'en'
+                        ? 'Plan your essay here...'
+                        : '在此規劃你的文章...';
 
 
-        /*
-            SHORT ANSWER
-        */
+                textarea.style.marginTop =
+                    '10px';
 
-        else if (
-            question.type ===
-            'Short Answer'
-        ) {
 
-            const textarea =
-                document.createElement(
-                    'textarea'
+                box.appendChild(
+                    textarea
                 );
 
-            textarea.rows =
-                4;
-
-            textarea.placeholder =
-                currentLang === 'en'
-                    ? 'Write your answer here...'
-                    : '在此輸入答案...';
-
-            textarea.style.marginTop =
-                '10px';
+            }
 
 
-            box.appendChild(
-                textarea
+            container.appendChild(
+                box
             );
 
-
-            addAnswerButton(
-                box,
-                question.answer
-            );
         }
-
-
-        /*
-            ESSAY
-        */
-
-        else {
-
-            const textarea =
-                document.createElement(
-                    'textarea'
-                );
-
-            textarea.rows =
-                7;
-
-            textarea.placeholder =
-                currentLang === 'en'
-                    ? 'Plan your essay here...'
-                    : '在此規劃你的文章...';
-
-            textarea.style.marginTop =
-                '10px';
-
-
-            box.appendChild(
-                textarea
-            );
-        }
-
-
-        container.appendChild(
-            box
-        );
-
-    });
+    );
 
 
     document.getElementById(
@@ -2195,7 +2686,9 @@ function renderQuestions(
             'generated-quiz-output'
         )
         .classList
-        .remove('hidden');
+        .remove(
+            'hidden'
+        );
 }
 
 
@@ -2213,8 +2706,10 @@ function addAnswerButton(
             'button'
         );
 
+
     button.style.width =
         'auto';
+
 
     button.style.padding =
         '8px 12px';
@@ -2230,6 +2725,7 @@ function addAnswerButton(
         document.createElement(
             'div'
         );
+
 
     answerBox.className =
         'answer-box hidden';
@@ -2254,6 +2750,7 @@ function addAnswerButton(
     box.appendChild(
         button
     );
+
 
     box.appendChild(
         answerBox
@@ -2325,7 +2822,6 @@ function setTheme(
         'data-theme',
         theme
     );
-
 }
 
 
@@ -2463,12 +2959,14 @@ function addTopicFile() {
 
     document.getElementById(
         'file-title'
-    ).value = '';
+    ).value =
+        '';
 
 
     document.getElementById(
         'file-content'
-    ).value = '';
+    ).value =
+        '';
 
 
     alert(
@@ -2507,23 +3005,31 @@ function showSelectedNotes() {
 
     const notes =
         selected
+
             .map(
                 checkbox => {
 
                     const topic =
                         checkbox.value;
 
+
                     return (
                         uploadedNotes[topic] ||
                         builtInNotes[topic] ||
                         ''
                     );
+
                 }
             )
+
             .filter(
-                text => text
+                text =>
+                    text
             )
-            .join('\n\n');
+
+            .join(
+                '\n\n'
+            );
 
 
     document.getElementById(
@@ -2561,7 +3067,9 @@ function markEssay() {
 
 
     const wordCount =
-        text.split(/\s+/).length;
+        text.split(
+            /\s+/
+        ).length;
 
 
     let grade =
@@ -2577,25 +3085,32 @@ function markEssay() {
         grade =
             'A-';
 
+
         feedback =
             'Strong amount of detail. Try to make sure each paragraph clearly supports your argument.';
 
     }
 
-    else if (wordCount >= 180) {
+    else if (
+        wordCount >= 180
+    ) {
 
         grade =
             'B+';
+
 
         feedback =
             'Good level of detail and structure. Add more specific evidence to strengthen the argument.';
 
     }
 
-    else if (wordCount >= 100) {
+    else if (
+        wordCount >= 100
+    ) {
 
         grade =
             'B';
+
 
         feedback =
             'A reasonable structure is present. Develop your examples and explanations further.';
@@ -2606,6 +3121,7 @@ function markEssay() {
 
         grade =
             'C';
+
 
         feedback =
             'The response is quite short. Add more explanation, evidence and developed paragraphs.';

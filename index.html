@@ -1,0 +1,341 @@
+function markEssay() {
+
+    const prompt =
+        document
+            .getElementById('essay-prompt')
+            .value
+            .trim();
+
+    const text =
+        document
+            .getElementById('essay-text')
+            .value
+            .trim();
+
+    if (!prompt) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter an essay prompt.'
+                : '請輸入文章題目。'
+        );
+
+        return;
+    }
+
+    if (!text) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter essay text.'
+                : '請先輸入文章內容。'
+        );
+
+        return;
+    }
+
+
+    /*
+        Basic essay analysis
+    */
+
+    const words =
+        text
+            .split(/\s+/)
+            .filter(word => word.length > 0);
+
+    const wordCount =
+        words.length;
+
+
+    const sentences =
+        text
+            .split(/[.!?。！？]+/)
+            .map(sentence => sentence.trim())
+            .filter(Boolean);
+
+    const paragraphs =
+        text
+            .split(/\n\s*\n/)
+            .map(paragraph => paragraph.trim())
+            .filter(Boolean);
+
+
+    /*
+        Calculate basic writing indicators
+    */
+
+    let score = 0;
+
+    const feedback = [];
+
+
+    // Length
+
+    if (wordCount >= 300) {
+
+        score += 25;
+
+    } else if (wordCount >= 200) {
+
+        score += 20;
+
+    } else if (wordCount >= 120) {
+
+        score += 15;
+
+    } else if (wordCount >= 80) {
+
+        score += 10;
+
+    } else {
+
+        score += 5;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Your essay is quite short. Develop your ideas with more explanation and evidence.'
+                : '文章比較簡短，可以加入更多解釋及證據來發展你的論點。'
+        );
+    }
+
+
+    // Paragraph structure
+
+    if (paragraphs.length >= 4) {
+
+        score += 20;
+
+    } else if (paragraphs.length >= 3) {
+
+        score += 17;
+
+    } else if (paragraphs.length >= 2) {
+
+        score += 12;
+
+    } else {
+
+        score += 5;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Use clearer paragraph structure to separate your main ideas.'
+                : '建議使用更清晰的段落結構來分開不同主要論點。'
+        );
+    }
+
+
+    // Sentence development
+
+    const averageSentenceLength =
+        sentences.length
+            ? wordCount / sentences.length
+            : 0;
+
+    if (averageSentenceLength >= 12) {
+
+        score += 20;
+
+    } else if (averageSentenceLength >= 8) {
+
+        score += 15;
+
+    } else {
+
+        score += 8;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Try developing your explanations into fuller sentences.'
+                : '可以把解釋發展成更完整的句子。'
+        );
+    }
+
+
+    /*
+        Check whether the prompt appears
+        to be addressed.
+    */
+
+    const promptWords =
+        prompt
+            .toLowerCase()
+            .replace(/[^\p{L}\p{N}\s]/gu, '')
+            .split(/\s+/)
+            .filter(word => word.length >= 4);
+
+    const essayLower =
+        text.toLowerCase();
+
+    const matchedPromptWords =
+        promptWords.filter(
+            word =>
+                essayLower.includes(word)
+        );
+
+    const promptCoverage =
+        promptWords.length
+            ? matchedPromptWords.length /
+              promptWords.length
+            : 1;
+
+
+    if (promptCoverage >= 0.5) {
+
+        score += 20;
+
+    } else if (promptCoverage >= 0.25) {
+
+        score += 12;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Make sure your paragraphs directly address the essay question.'
+                : '確保每一段都直接回應文章題目。'
+        );
+
+    } else {
+
+        score += 5;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Your response may not be closely focused on the essay question.'
+                : '你的文章可能未有充分集中回應題目。'
+        );
+    }
+
+
+    /*
+        Look for evidence / explanation language.
+    */
+
+    const evidenceWords =
+        currentLang === 'en'
+            ? [
+                'because',
+                'therefore',
+                'however',
+                'for example',
+                'evidence',
+                'shows',
+                'demonstrates',
+                'this means'
+            ]
+            : [
+                '因為',
+                '因此',
+                '然而',
+                '例如',
+                '證據',
+                '顯示',
+                '反映',
+                '意思是'
+            ];
+
+    const evidenceCount =
+        evidenceWords.filter(
+            word =>
+                essayLower.includes(
+                    word.toLowerCase()
+                )
+        ).length;
+
+
+    if (evidenceCount >= 3) {
+
+        score += 15;
+
+    } else if (evidenceCount >= 1) {
+
+        score += 10;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Add more evidence and explanation to strengthen your argument.'
+                : '加入更多證據及解釋，可以令你的論點更加有力。'
+        );
+
+    } else {
+
+        score += 5;
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Try to support your ideas with specific evidence or examples.'
+                : '嘗試使用具體證據或例子支持你的論點。'
+        );
+    }
+
+
+    /*
+        Convert score into grade
+    */
+
+    let grade;
+
+    if (score >= 90) {
+
+        grade = 'A';
+
+    } else if (score >= 80) {
+
+        grade = 'A-';
+
+    } else if (score >= 70) {
+
+        grade = 'B+';
+
+    } else if (score >= 60) {
+
+        grade = 'B';
+
+    } else if (score >= 50) {
+
+        grade = 'C';
+
+    } else {
+
+        grade = 'D';
+    }
+
+
+    /*
+        Default positive feedback
+        if no problems were detected.
+    */
+
+    if (!feedback.length) {
+
+        feedback.push(
+            currentLang === 'en'
+                ? 'Strong structure, relevant ideas and good development. Keep supporting your arguments with precise evidence.'
+                : '文章結構良好，論點相關而且發展完整。繼續使用準確的證據支持你的論點。'
+        );
+    }
+
+
+    /*
+        Display result
+    */
+
+    document.getElementById('essay-grade')
+        .innerText =
+            currentLang === 'en'
+                ? `Grade: ${grade} · ${score}/100`
+                : `評級：${grade} · ${score}/100`;
+
+
+    document.getElementById('essay-feedback')
+        .innerText =
+            currentLang === 'en'
+                ? `Feedback: ${feedback.join(' ')} Word count: ${wordCount}.`
+                : `評語：${feedback.join(' ')} 字數：${wordCount}。`;
+
+
+    document
+        .getElementById('essay-result')
+        .classList
+        .remove('hidden');
+}

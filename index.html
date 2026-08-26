@@ -1,1013 +1,1343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pastel Revision Studio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root {
-    --bg-color: #F6F3EE;
-    --card-bg: #FFFFFF;
-    --primary: #D5A1A3;
-    --primary-hover: #CE9C9D;
-    --accent-bg: #F8E6E6;
-    --text-main: #333333;
-    --text-sub: #7A6F6D;
-    --border-color: #EAE8EB;
-    --shadow: 0 8px 25px rgba(213,161,163,.12);
-}
+    <title>Pastel Revision Studio</title>
 
-[data-theme="blue"] {
-    --bg-color:#EBF6FA;
-    --primary:#80ADBC;
-    --primary-hover:#A4C8D5;
-    --accent-bg:#D9E6EC;
-    --border-color:#C0D3D8;
-    --shadow:0 8px 25px rgba(128,173,188,.15);
-}
+    <style>
+        :root {
+            --bg-color: #F6F3EE;
+            --card-bg: #FFFFFF;
+            --primary: #D5A1A3;
+            --primary-hover: #CE9C9D;
+            --accent-bg: #F8E6E6;
+            --text-main: #333333;
+            --text-sub: #7A6F6D;
+            --border-color: #EAE8EB;
+            --shadow: 0 8px 25px rgba(213, 161, 163, 0.12);
+        }
 
-[data-theme="nude"] {
-    --bg-color:#FBEFE3;
-    --primary:#CAB08B;
-    --primary-hover:#D9BD9C;
-    --accent-bg:#DEC8BD;
-    --border-color:#D4C8B6;
-    --shadow:0 8px 25px rgba(202,176,139,.15);
-}
+        [data-theme="blue"] {
+            --bg-color: #EBF6FA;
+            --primary: #80ADBC;
+            --primary-hover: #A4C8D5;
+            --accent-bg: #D9E6EC;
+            --border-color: #C0D3D8;
+            --shadow: 0 8px 25px rgba(128, 173, 188, 0.15);
+        }
 
-[data-theme="sage"] {
-    --bg-color:#F1F5EF;
-    --primary:#9CAF88;
-    --primary-hover:#8B9E78;
-    --accent-bg:#E2EADF;
-    --border-color:#C8D6C4;
-    --shadow:0 8px 25px rgba(156,175,136,.15);
-}
+        [data-theme="nude"] {
+            --bg-color: #FBEFE3;
+            --primary: #CAB08B;
+            --primary-hover: #D9BD9C;
+            --accent-bg: #DEC8BD;
+            --border-color: #D4C8B6;
+            --shadow: 0 8px 25px rgba(202, 176, 139, 0.15);
+        }
 
-[data-theme="lavender"] {
-    --bg-color:#F5F2F9;
-    --primary:#B5A0D0;
-    --primary-hover:#A38DC0;
-    --accent-bg:#E8E1F2;
-    --border-color:#D3C7E3;
-    --shadow:0 8px 25px rgba(181,160,208,.15);
-}
+        [data-theme="sage"] {
+            --bg-color: #F1F5EF;
+            --primary: #9CAF88;
+            --primary-hover: #8B9E78;
+            --accent-bg: #E2EADF;
+            --border-color: #C8D6C4;
+            --shadow: 0 8px 25px rgba(156, 175, 136, 0.15);
+        }
 
-[data-theme="peach"] {
-    --bg-color:#FDF5EF;
-    --primary:#E8A87C;
-    --primary-hover:#D7976B;
-    --accent-bg:#F9E5D8;
-    --border-color:#EECDBC;
-    --shadow:0 8px 25px rgba(232,168,124,.15);
-}
+        [data-theme="lavender"] {
+            --bg-color: #F5F2F9;
+            --primary: #B5A0D0;
+            --primary-hover: #A38DC0;
+            --accent-bg: #E8E1F2;
+            --border-color: #D3C7E3;
+            --shadow: 0 8px 25px rgba(181, 160, 208, 0.15);
+        }
 
-* {
-    box-sizing:border-box;
-}
+        [data-theme="peach"] {
+            --bg-color: #FDF5EF;
+            --primary: #E8A87C;
+            --primary-hover: #D7976B;
+            --accent-bg: #F9E5D8;
+            --border-color: #EECDBC;
+            --shadow: 0 8px 25px rgba(232, 168, 124, 0.15);
+        }
 
-body {
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--bg-color);
-    color:var(--text-main);
-    margin:0;
-    padding:20px;
-    transition:.3s ease;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-.header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    max-width:1100px;
-    margin:0 auto 20px;
-    background:var(--card-bg);
-    padding:12px 25px;
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--border-color);
-    gap:15px;
-}
+        body {
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                sans-serif;
 
-.user-profile-section {
-    display:flex;
-    align-items:center;
-    gap:8px;
-}
+            background: var(--bg-color);
+            color: var(--text-main);
 
-.profile-badge {
-    display:flex;
-    align-items:center;
-    gap:6px;
-    background:var(--accent-bg);
-    padding:5px 10px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:500;
-}
+            margin: 0;
+            padding: 20px;
 
-.avatar-icon {
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    background:var(--primary);
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:11px;
-    font-weight:bold;
-}
+            transition: all 0.3s ease;
+        }
 
-.compact-lang-btn {
-    background:var(--card-bg);
-    color:var(--text-main);
-    border:1px solid var(--border-color);
-    padding:5px 10px;
-    border-radius:8px;
-    font-size:12px;
-    font-weight:600;
-    cursor:pointer;
-}
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-.app-layout {
-    display:grid;
-    grid-template-columns:270px 1fr;
-    gap:20px;
-    max-width:1100px;
-    margin:0 auto;
-}
+            max-width: 1100px;
+            margin: 0 auto 20px auto;
 
-.sidebar,
-.main-panel {
-    background:var(--card-bg);
-    padding:22px;
-    border-radius:20px;
-    box-shadow:var(--shadow);
-    border:1px solid var(--border-color);
-}
+            background: var(--card-bg);
+            padding: 12px 25px;
 
-.function-nav {
-    display:flex;
-    flex-direction:column;
-    gap:8px;
-    margin-bottom:20px;
-}
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
 
-.function-btn {
-    background:var(--accent-bg);
-    color:var(--text-main);
-    text-align:left;
-    border:1px solid transparent;
-}
+            gap: 15px;
+        }
 
-.function-btn.active {
-    background:var(--primary);
-    color:white;
-}
+        .user-profile-section {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-.function-panel {
-    display:none;
-}
+        .profile-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
 
-.function-panel.active {
-    display:block;
-}
+            background: var(--accent-bg);
+            padding: 5px 10px;
 
-h2,h3 {
-    color:var(--primary);
-    margin-top:0;
-    font-weight:700;
-}
+            border-radius: 20px;
 
-.type-grid {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-    margin:15px 0;
-}
+            font-size: 13px;
+            font-weight: 500;
+        }
 
-.type-card {
-    background:var(--accent-bg);
-    padding:12px 14px;
-    border-radius:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-size:14px;
-    font-weight:500;
-}
+        .avatar-icon {
+            width: 22px;
+            height: 22px;
 
-.type-card select {
-    width:65px;
-    padding:4px;
-    border-radius:6px;
-}
+            border-radius: 50%;
 
-.file-item {
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:10px;
-    background:var(--accent-bg);
-    border-radius:10px;
-    margin-bottom:8px;
-    font-size:13px;
-}
+            background: var(--primary);
+            color: white;
 
-.upload-zone {
-    border:2px dashed var(--primary);
-    background:var(--accent-bg);
-    padding:20px;
-    border-radius:14px;
-    text-align:center;
-    cursor:pointer;
-    margin-bottom:20px;
-}
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-.upload-zone:hover {
-    opacity:.85;
-}
+            font-size: 11px;
+            font-weight: bold;
+        }
 
-input[type="text"],
-textarea,
-select,
-button {
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid var(--border-color);
-    font-size:14px;
-    outline:none;
-}
+        .compact-lang-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
 
-textarea {
-    resize:vertical;
-    font-family:inherit;
-}
+            border: 1px solid var(--border-color);
 
-button {
-    background:var(--primary);
-    color:white;
-    border:none;
-    font-weight:600;
-    margin-top:10px;
-    cursor:pointer;
-}
+            padding: 5px 10px;
+            border-radius: 8px;
 
-button:hover {
-    background:var(--primary-hover);
-}
+            font-size: 12px;
+            font-weight: 600;
 
-.swatch-grid {
-    display:flex;
-    gap:8px;
-    margin-bottom:20px;
-    flex-wrap:wrap;
-}
+            cursor: pointer;
+        }
 
-.swatch {
-    width:26px;
-    height:26px;
-    border-radius:50%;
-    border:2px solid white;
-    cursor:pointer;
-    box-shadow:0 2px 5px rgba(0,0,0,.1);
-}
+        .app-layout {
+            display: grid;
+            grid-template-columns: 270px 1fr;
 
-.hidden {
-    display:none !important;
-}
+            gap: 20px;
 
-.quiz-question {
-    background:white;
-    padding:16px;
-    margin-top:12px;
-    border-radius:12px;
-    border:1px solid var(--border-color);
-}
+            max-width: 1100px;
+            margin: 0 auto;
+        }
 
-.question-type {
-    font-size:12px;
-    color:var(--text-sub);
-    margin-bottom:7px;
-}
+        .sidebar,
+        .main-panel {
+            background: var(--card-bg);
 
-.option {
-    display:block;
-    padding:8px;
-    margin-top:5px;
-    background:var(--bg-color);
-    border-radius:8px;
-    cursor:pointer;
-}
+            padding: 22px;
 
-.option:hover {
-    background:var(--accent-bg);
-}
+            border-radius: 20px;
 
-.answer-box {
-    margin-top:10px;
-    padding:10px;
-    background:var(--accent-bg);
-    border-radius:8px;
-    font-size:13px;
-}
+            box-shadow: var(--shadow);
 
-.score-box {
-    background:var(--accent-bg);
-    padding:15px;
-    border-radius:12px;
-    margin-bottom:15px;
-    text-align:center;
-}
+            border: 1px solid var(--border-color);
+        }
 
-.essay-stats {
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:12px;
-}
+        .function-nav {
+            display: flex;
+            flex-direction: column;
 
-.stat {
-    background:var(--card-bg);
-    border:1px solid var(--border-color);
-    border-radius:10px;
-    padding:12px;
-    text-align:center;
-}
+            gap: 8px;
 
-.stat strong {
-    display:block;
-    color:var(--primary);
-    font-size:20px;
-}
+            margin-bottom: 20px;
+        }
 
-.feedback-list {
-    margin:10px 0 0;
-    padding-left:20px;
-}
+        .function-btn {
+            background: var(--accent-bg);
+            color: var(--text-main);
 
-.success {
-    border-left:4px solid var(--primary);
-}
+            text-align: left;
 
-@media(max-width:760px) {
-    body {
-        padding:10px;
-    }
+            border: 1px solid transparent;
+        }
 
-    .header {
-        flex-direction:column;
-        align-items:stretch;
-    }
+        .function-btn.active {
+            background: var(--primary);
+            color: white;
+        }
 
-    .user-profile-section {
-        justify-content:space-between;
-        flex-wrap:wrap;
-    }
+        .function-panel {
+            display: none;
+        }
 
-    .app-layout {
-        grid-template-columns:1fr;
-    }
+        .function-panel.active {
+            display: block;
+        }
 
-    .type-grid {
-        grid-template-columns:1fr;
-    }
+        h2,
+        h3 {
+            color: var(--primary);
+            margin-top: 0;
+            font-weight: 700;
+        }
 
-    .essay-stats {
-        grid-template-columns:1fr;
-    }
-}
-</style>
+        .type-grid {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin: 15px 0;
+        }
+
+        .type-card {
+            background: var(--accent-bg);
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .type-card select {
+            width: 65px;
+            padding: 4px;
+            border-radius: 6px;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 10px;
+
+            background: var(--accent-bg);
+
+            border-radius: 10px;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+        }
+
+        .upload-zone {
+            border: 2px dashed var(--primary);
+
+            background: var(--accent-bg);
+
+            padding: 20px;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            margin-bottom: 20px;
+        }
+
+        .upload-zone:hover {
+            opacity: 0.85;
+        }
+
+        input[type="text"],
+        textarea,
+        select,
+        button {
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            border: 1px solid var(--border-color);
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        button {
+            background: var(--primary);
+
+            color: white;
+
+            border: none;
+
+            font-weight: 600;
+
+            margin-top: 10px;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--primary-hover);
+        }
+
+        .swatch-grid {
+            display: flex;
+
+            gap: 8px;
+
+            margin-bottom: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .swatch {
+            width: 26px;
+            height: 26px;
+
+            border-radius: 50%;
+
+            border: 2px solid white;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .quiz-question {
+            background: white;
+
+            padding: 16px;
+
+            margin-top: 12px;
+
+            border-radius: 12px;
+
+            border: 1px solid var(--border-color);
+        }
+
+        .question-type {
+            font-size: 12px;
+
+            color: var(--text-sub);
+
+            margin-bottom: 7px;
+        }
+
+        .option {
+            display: block;
+
+            padding: 8px;
+
+            margin-top: 5px;
+
+            background: var(--bg-color);
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: var(--accent-bg);
+        }
+
+        .answer-box {
+            margin-top: 10px;
+
+            padding: 10px;
+
+            background: var(--accent-bg);
+
+            border-radius: 8px;
+
+            font-size: 13px;
+        }
+
+        .score-box {
+            background: var(--accent-bg);
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            margin-bottom: 15px;
+
+            text-align: center;
+        }
+
+        @media (max-width: 760px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .user-profile-section {
+                justify-content: space-between;
+                flex-wrap: wrap;
+            }
+
+            .app-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body data-theme="rose">
 
 <div class="header">
 
-    <h3 style="margin:0" id="app-title">
+    <h3 style="margin:0;" id="app-title">
         🌸 Pastel Revision Studio
     </h3>
 
     <div class="user-profile-section">
 
         <div class="profile-badge">
-            <div class="avatar-icon" id="user-avatar">?</div>
-            <span id="user-display">Guest User</span>
+
+            <div
+                class="avatar-icon"
+                id="user-avatar">
+                ?
+            </div>
+
+            <span id="user-display">
+                Guest User
+            </span>
+
         </div>
 
         <button
             class="compact-lang-btn"
             onclick="toggleLanguage()"
             id="lang-toggle-btn"
-            style="width:auto;margin:0">
+            style="width:auto; margin:0;">
+
             🌐 廣東話
+
         </button>
 
         <button
             id="auth-btn"
             onclick="toggleAuthModal()"
-            style="width:auto;padding:5px 12px;margin:0;font-size:12px">
+            style="
+                width:auto;
+                padding:5px 12px;
+                margin:0;
+                font-size:12px;
+            ">
+
             Log In
+
         </button>
 
     </div>
+
 </div>
 
 
 <div class="app-layout">
 
-<div class="sidebar">
+    <!-- SIDEBAR -->
 
-    <h3>🧭 Functions</h3>
+    <div class="sidebar">
 
-    <div class="function-nav">
+        <h3>
+            🧭 Functions
+        </h3>
 
-        <button
-            class="function-btn active"
-            onclick="showPanel('test',this)">
-            📝 Practice Test
-        </button>
+        <div class="function-nav">
 
-        <button
-            class="function-btn"
-            onclick="showPanel('essay',this)">
-            ✍️ Essay Marker
-        </button>
+            <button
+                class="function-btn active"
+                onclick="showPanel('test', this)">
 
-        <button
-            class="function-btn"
-            onclick="showPanel('notes',this)">
-            📚 Notes
-        </button>
+                📝 Practice Test
 
-    </div>
+            </button>
 
+            <button
+                class="function-btn"
+                onclick="showPanel('essay', this)">
 
-    <h3 id="lbl-theme">🎨 Theme Swatches</h3>
+                ✍️ Essay Marker
 
-    <div class="swatch-grid">
+            </button>
 
-        <span class="swatch"
-            style="background:#D5A1A3"
-            onclick="setTheme('rose')"
-            title="Blush Rose"></span>
+            <button
+                class="function-btn"
+                onclick="showPanel('notes', this)">
 
-        <span class="swatch"
-            style="background:#80ADBC"
-            onclick="setTheme('blue')"
-            title="Soft Blue"></span>
+                📚 Notes
 
-        <span class="swatch"
-            style="background:#CAB08B"
-            onclick="setTheme('nude')"
-            title="Warm Nude"></span>
+            </button>
 
-        <span class="swatch"
-            style="background:#9CAF88"
-            onclick="setTheme('sage')"
-            title="Sage Green"></span>
-
-        <span class="swatch"
-            style="background:#B5A0D0"
-            onclick="setTheme('lavender')"
-            title="Lavender Mist"></span>
-
-        <span class="swatch"
-            style="background:#E8A87C"
-            onclick="setTheme('peach')"
-            title="Peach Coral"></span>
-
-    </div>
-
-
-    <h3 id="lbl-files">📂 Topic Files</h3>
-
-    <div id="file-container">
-
-        <div class="file-item">
-            <label>
-                <input
-                    type="checkbox"
-                    class="topic-cb"
-                    value="Photosynthesis"
-                    checked>
-                Photosynthesis
-            </label>
         </div>
 
-        <div class="file-item">
-            <label>
-                <input
-                    type="checkbox"
-                    class="topic-cb"
-                    value="Cold War"
-                    checked>
-                Cold War
-            </label>
+
+        <h3 id="lbl-theme">
+            🎨 Theme Swatches
+        </h3>
+
+        <div class="swatch-grid">
+
+            <span
+                class="swatch"
+                style="background:#D5A1A3;"
+                onclick="setTheme('rose')"
+                title="Blush Rose">
+            </span>
+
+            <span
+                class="swatch"
+                style="background:#80ADBC;"
+                onclick="setTheme('blue')"
+                title="Soft Blue">
+            </span>
+
+            <span
+                class="swatch"
+                style="background:#CAB08B;"
+                onclick="setTheme('nude')"
+                title="Warm Nude">
+            </span>
+
+            <span
+                class="swatch"
+                style="background:#9CAF88;"
+                onclick="setTheme('sage')"
+                title="Sage Green">
+            </span>
+
+            <span
+                class="swatch"
+                style="background:#B5A0D0;"
+                onclick="setTheme('lavender')"
+                title="Lavender Mist">
+            </span>
+
+            <span
+                class="swatch"
+                style="background:#E8A87C;"
+                onclick="setTheme('peach')"
+                title="Peach Coral">
+            </span>
+
         </div>
 
-    </div>
+
+        <h3 id="lbl-files">
+            📂 Topic Files
+        </h3>
+
+        <div id="file-container">
+
+            <div class="file-item">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        class="topic-cb"
+                        value="Photosynthesis"
+                        checked>
+
+                    Photosynthesis.txt
+
+                </label>
+
+            </div>
+
+            <div class="file-item">
+
+                <label>
+
+                    <input
+                        type="checkbox"
+                        class="topic-cb"
+                        value="Cold War"
+                        checked>
+
+                    Cold_War.txt
+
+                </label>
+
+            </div>
+
+        </div>
 
 
-    <h4
-        style="margin-top:20px;color:var(--primary)"
-        id="lbl-add-file">
-        + Add Topic File
-    </h4>
+        <h4
+            style="
+                margin-top:20px;
+                color:var(--primary);
+            "
+            id="lbl-add-file">
 
-    <input
-        type="text"
-        id="file-title"
-        placeholder="File Name..."
-        style="margin-bottom:8px">
+            + Add Topic File
 
-    <textarea
-        id="file-content"
-        rows="4"
-        placeholder="Paste notes..."></textarea>
-
-    <button
-        onclick="addTopicFile()"
-        id="btn-save-file">
-        Save File
-    </button>
-
-</div>
-
-
-<div class="main-panel">
-
-    <!-- AUTH -->
-
-    <div
-        id="auth-box"
-        class="hidden"
-        style="background:var(--accent-bg);padding:15px;border-radius:12px;margin-bottom:20px">
+        </h4>
 
         <input
             type="text"
-            id="user-input"
-            placeholder="Enter Username"
-            style="margin-bottom:8px">
+            id="file-title"
+            placeholder="File Name..."
+            style="margin-bottom:8px;">
 
-        <button onclick="loginUser()">
-            Sign In / Register
+        <textarea
+            id="file-content"
+            rows="4"
+            placeholder="Paste notes...">
+        </textarea>
+
+        <button
+            onclick="addTopicFile()"
+            id="btn-save-file">
+
+            Save File
+
         </button>
 
     </div>
 
 
-    <!-- TEST -->
+    <!-- MAIN -->
 
-    <div id="panel-test" class="function-panel active">
+    <div class="main-panel">
 
-        <h2 id="lbl-upload-heading">
-            📥 Upload Material to Notes
-        </h2>
+        <!-- AUTH -->
 
         <div
-            class="upload-zone"
-            onclick="document.getElementById('file-upload-input').click()">
-
-            <span style="font-size:24px">📄</span>
-
-            <p
-                style="margin:5px 0 0;font-weight:600"
-                id="lbl-drag-text">
-                Click or Drop Files Here (.txt)
-            </p>
+            id="auth-box"
+            class="hidden"
+            style="
+                background:var(--accent-bg);
+                padding:15px;
+                border-radius:12px;
+                margin-bottom:20px;
+            ">
 
             <input
-                type="file"
-                id="file-upload-input"
-                accept=".txt,text/plain"
-                style="display:none"
-                onchange="handleFileUpload(event)">
+                type="text"
+                id="user-input"
+                placeholder="Enter Username"
+                style="margin-bottom:8px;">
+
+            <button onclick="loginUser()">
+                Sign In / Register
+            </button>
 
         </div>
 
 
-        <h2 id="lbl-config">
-            ⚙️ Test Configurator
-        </h2>
-
-
-        <div class="type-grid">
-
-            <div class="type-card">
-
-                <label>
-                    <input type="checkbox" checked id="cb-mcq">
-                    <span id="opt-mcq">Multiple Choice</span>
-                </label>
-
-                <select id="count-mcq">
-                    <option value="3">3</option>
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                </select>
-
-            </div>
-
-
-            <div class="type-card">
-
-                <label>
-                    <input type="checkbox" checked id="cb-tf">
-                    <span id="opt-tf">True / False</span>
-                </label>
-
-                <select id="count-tf">
-                    <option value="3">3</option>
-                    <option value="5" selected>5</option>
-                    <option value="10">10</option>
-                </select>
-
-            </div>
-
-
-            <div class="type-card">
-
-                <label>
-                    <input type="checkbox" checked id="cb-sa">
-                    <span id="opt-sa">Short Answer</span>
-                </label>
-
-                <select id="count-sa">
-                    <option value="2">2</option>
-                    <option value="4" selected>4</option>
-                    <option value="6">6</option>
-                </select>
-
-            </div>
-
-
-            <div class="type-card">
-
-                <label>
-                    <input type="checkbox" checked id="cb-essay">
-                    <span id="opt-essay">Essay Prompts</span>
-                </label>
-
-                <select id="count-essay">
-                    <option value="1">1</option>
-                    <option value="2" selected>2</option>
-                    <option value="3">3</option>
-                </select>
-
-            </div>
-
-        </div>
-
-
-        <button
-            onclick="generatePracticeTest()"
-            style="padding:14px;font-size:16px"
-            id="btn-generate">
-            🧠 Generate Practice Test
-        </button>
-
+        <!-- PRACTICE TEST -->
 
         <div
-            id="generated-quiz-output"
-            class="hidden"
-            style="margin-top:20px">
+            id="panel-test"
+            class="function-panel active">
 
-            <div class="score-box">
+            <h2 id="lbl-upload-heading">
+                📥 Upload Material to Notes
+            </h2>
 
-                <h3 id="lbl-quiz-result" style="margin-bottom:5px">
-                    Generated Practice Questions
-                </h3>
+            <div
+                class="upload-zone"
+                onclick="
+                    document
+                        .getElementById('file-upload-input')
+                        .click()
+                ">
 
-                <span id="question-count">
-                    0 questions generated
+                <span style="font-size:24px;">
+                    📄
                 </span>
 
+                <p
+                    style="
+                        margin:5px 0 0 0;
+                        font-weight:600;
+                    "
+                    id="lbl-drag-text">
+
+                    Click or Drop Files Here (.txt)
+
+                </p>
+
+                <input
+                    type="file"
+                    id="file-upload-input"
+                    accept=".txt,text/plain"
+                    style="display:none;"
+                    onchange="handleFileUpload(event)">
+
             </div>
 
-            <div id="quiz-content-list"></div>
+
+            <h2 id="lbl-config">
+                ⚙️ Test Configurator
+            </h2>
+
+
+            <div class="type-grid">
+
+                <div class="type-card">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            checked
+                            id="cb-mcq">
+
+                        <span id="opt-mcq">
+                            Multiple Choice
+                        </span>
+
+                    </label>
+
+                    <select id="count-mcq">
+
+                        <option value="3">
+                            3
+                        </option>
+
+                        <option value="5" selected>
+                            5
+                        </option>
+
+                        <option value="10">
+                            10
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="type-card">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            checked
+                            id="cb-tf">
+
+                        <span id="opt-tf">
+                            True / False
+                        </span>
+
+                    </label>
+
+                    <select id="count-tf">
+
+                        <option value="3">
+                            3
+                        </option>
+
+                        <option value="5" selected>
+                            5
+                        </option>
+
+                        <option value="10">
+                            10
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="type-card">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            checked
+                            id="cb-sa">
+
+                        <span id="opt-sa">
+                            Short Answer
+                        </span>
+
+                    </label>
+
+                    <select id="count-sa">
+
+                        <option value="2">
+                            2
+                        </option>
+
+                        <option value="4" selected>
+                            4
+                        </option>
+
+                        <option value="6">
+                            6
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="type-card">
+
+                    <label>
+
+                        <input
+                            type="checkbox"
+                            checked
+                            id="cb-essay">
+
+                        <span id="opt-essay">
+                            Essay Prompts
+                        </span>
+
+                    </label>
+
+                    <select id="count-essay">
+
+                        <option value="1">
+                            1
+                        </option>
+
+                        <option value="2" selected>
+                            2
+                        </option>
+
+                        <option value="3">
+                            3
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <button
+                onclick="generatePracticeTest()"
+                style="
+                    padding:14px;
+                    font-size:16px;
+                "
+                id="btn-generate">
+
+                🧠 Generate Practice Test
+
+            </button>
+
+
+            <div
+                id="generated-quiz-output"
+                class="hidden"
+                style="margin-top:20px;">
+
+                <div class="score-box">
+
+                    <h3
+                        id="lbl-quiz-result"
+                        style="margin-bottom:5px;">
+
+                        Generated Practice Questions
+
+                    </h3>
+
+                    <span id="question-count">
+                        0 questions generated
+                    </span>
+
+                </div>
+
+                <div id="quiz-content-list"></div>
+
+            </div>
 
         </div>
 
-    </div>
 
-
-    <!-- ESSAY MARKER -->
-
-    <div id="panel-essay" class="function-panel">
-
-        <h2 id="lbl-essay-heading">
-            📝 Instant Essay Marker
-        </h2>
-
-        <input
-            type="text"
-            id="essay-prompt"
-            placeholder="Essay Prompt Title..."
-            style="margin-bottom:10px">
-
-        <textarea
-            id="essay-text"
-            rows="10"
-            placeholder="Write or paste essay..."></textarea>
-
-        <button
-            onclick="markEssay()"
-            id="btn-mark">
-            Submit & Mark Essay
-        </button>
-
+        <!-- ESSAY -->
 
         <div
-            id="essay-result"
-            class="hidden"
-            style="margin-top:15px;padding:15px;background:var(--accent-bg);border-radius:12px">
+            id="panel-essay"
+            class="function-panel">
 
-            <strong
-                id="essay-grade"
-                style="font-size:20px;color:var(--primary)">
-            </strong>
+            <h2 id="lbl-essay-heading">
+                📝 Instant Essay Marker
+            </h2>
 
-            <p
-                id="essay-feedback"
-                style="margin:8px 0 0;font-size:13px">
-            </p>
+            <input
+                type="text"
+                id="essay-prompt"
+                placeholder="Essay Prompt Title..."
+                style="margin-bottom:10px;">
 
-            <div class="essay-stats">
+            <textarea
+                id="essay-text"
+                rows="8"
+                placeholder="Write or paste essay...">
+            </textarea>
 
-                <div class="stat">
-                    <strong id="essay-word-count">0</strong>
-                    Words
-                </div>
+            <button
+                onclick="markEssay()"
+                id="btn-mark">
 
-                <div class="stat">
-                    <strong id="essay-sentence-count">0</strong>
-                    Sentences
-                </div>
+                Submit & Mark Essay
 
-                <div class="stat">
-                    <strong id="essay-paragraph-count">0</strong>
-                    Paragraphs
-                </div>
+            </button>
+
+
+            <div
+                id="essay-result"
+                class="hidden"
+                style="
+                    margin-top:15px;
+                    padding:15px;
+                    background:var(--accent-bg);
+                    border-radius:12px;
+                ">
+
+                <strong
+                    id="essay-grade"
+                    style="
+                        font-size:16px;
+                        color:var(--primary);
+                    ">
+
+                    Grade: B+ (Good)
+
+                </strong>
+
+                <p
+                    id="essay-feedback"
+                    style="
+                        margin:8px 0 0 0;
+                        font-size:13px;
+                    ">
+
+                    Feedback: Clear structure and good terminology.
+                    Expand on examples for top marks.
+
+                </p>
 
             </div>
 
-            <div id="essay-feedback-list"></div>
+        </div>
+
+
+        <!-- NOTES -->
+
+        <div
+            id="panel-notes"
+            class="function-panel">
+
+            <h2>
+                📚 Notes & Topics
+            </h2>
+
+            <p>
+                Your uploaded notes appear here.
+                Select topics from the sidebar and generate a test.
+            </p>
+
+            <textarea
+                id="notes-preview"
+                rows="12"
+                placeholder="Your notes will appear here when you select a topic...">
+            </textarea>
+
+            <button
+                onclick="showSelectedNotes()">
+
+                View Selected Notes
+
+            </button>
 
         </div>
 
     </div>
 
-
-    <!-- NOTES -->
-
-    <div id="panel-notes" class="function-panel">
-
-        <h2>📚 Notes & Topics</h2>
-
-        <p>
-            Your uploaded notes appear here.
-            Select topics from the sidebar and generate a test.
-        </p>
-
-        <textarea
-            id="notes-preview"
-            rows="12"
-            placeholder="Your notes will appear here when you select a topic..."></textarea>
-
-        <button onclick="showSelectedNotes()">
-            View Selected Notes
-        </button>
-
-    </div>
-
-</div>
 </div>
 
 
 <script>
 
-"use strict";
+let currentLang = 'en';
 
-/* =========================
-   DATA
-========================= */
-
-let currentLang = "en";
-
+/*
+    Stores the actual contents of uploaded notes.
+*/
 const uploadedNotes = {};
 
+
+/*
+    Built-in demo notes.
+*/
 const builtInNotes = {
 
     "Photosynthesis": `
-    Photosynthesis is the process by which green plants convert light energy into chemical energy.
-    Chlorophyll absorbs light energy in plant cells.
-    Carbon dioxide enters the plant through tiny openings called stomata.
-    Water is absorbed by the roots and transported through the plant.
-    Glucose is produced during photosynthesis.
-    Plants can use glucose as an energy source.
-    Oxygen is released as a by-product of photosynthesis.
+        Photosynthesis is the process by which green plants
+        convert light energy into chemical energy.
+        Chlorophyll absorbs light energy in plant cells.
+        Carbon dioxide enters the plant through tiny openings
+        called stomata.
+        Water is absorbed by the roots and transported through
+        the plant.
+        Glucose is produced during photosynthesis.
+        Plants can use glucose as an energy source.
+        Oxygen is released as a by-product of photosynthesis.
     `,
 
     "Cold War": `
-    The Cold War was a period of political tension between the United States and the Soviet Union.
-    The conflict developed after the Second World War.
-    The United States generally supported capitalism.
-    The Soviet Union generally supported communism.
-    NATO was established in 1949 as a military alliance.
-    The Soviet Union and its allies later created the Warsaw Pact.
-    The Berlin Wall became a major symbol of the division between communist and capitalist Europe.
+        The Cold War was a period of political tension between
+        the United States and the Soviet Union.
+        The conflict developed after the Second World War.
+        The United States generally supported capitalism.
+        The Soviet Union generally supported communism.
+        NATO was established in 1949 as a military alliance.
+        The Soviet Union and its allies later created the
+        Warsaw Pact.
+        The Berlin Wall became a major symbol of the division
+        between communist and capitalist Europe.
     `
 };
 
 
-/* =========================
-   TRANSLATIONS
-========================= */
+/*
+    TRANSLATIONS
+*/
 
 const translations = {
 
     en: {
-        appTitle:"🌸 Pastel Revision Studio",
-        langBtn:"🌐 廣東話",
-        userDefault:"Guest User",
-        authBtn:"Log In",
-        lblTheme:"🎨 Theme Swatches",
-        lblFiles:"📂 Topic Files",
-        lblAddFile:"+ Add Topic File",
-        btnSaveFile:"Save File",
-        lblUploadHeading:"📥 Upload Material to Notes",
-        lblDragText:"Click or Drop Files Here (.txt)",
-        lblConfig:"⚙️ Test Configurator",
-        optMcq:"Multiple Choice",
-        optTf:"True / False",
-        optSa:"Short Answer",
-        optEssay:"Essay Prompts",
-        btnGenerate:"🧠 Generate Practice Test",
-        lblQuizResult:"Generated Practice Questions",
-        lblEssayHeading:"📝 Instant Essay Marker",
-        btnMark:"Submit & Mark Essay"
+
+        appTitle: "🌸 Pastel Revision Studio",
+
+        langBtn: "🌐 廣東話",
+
+        userDefault: "Guest User",
+
+        authBtn: "Log In",
+
+        lblTheme: "🎨 Theme Swatches",
+
+        lblFiles: "📂 Topic Files",
+
+        lblAddFile: "+ Add Topic File",
+
+        btnSaveFile: "Save File",
+
+        lblUploadHeading:
+            "📥 Upload Material to Notes",
+
+        lblDragText:
+            "Click or Drop Files Here (.txt)",
+
+        lblConfig:
+            "⚙️ Test Configurator",
+
+        optMcq:
+            "Multiple Choice",
+
+        optTf:
+            "True / False",
+
+        optSa:
+            "Short Answer",
+
+        optEssay:
+            "Essay Prompts",
+
+        btnGenerate:
+            "🧠 Generate Practice Test",
+
+        lblQuizResult:
+            "Generated Practice Questions",
+
+        lblEssayHeading:
+            "📝 Instant Essay Marker",
+
+        btnMark:
+            "Submit & Mark Essay"
+
     },
 
+
     zh: {
-        appTitle:"🌸 溫習筆記與測驗生成器",
-        langBtn:"🌐 English",
-        userDefault:"訪客",
-        authBtn:"登入 / 註冊",
-        lblTheme:"🎨 主題配色",
-        lblFiles:"📂 溫習檔案庫",
-        lblAddFile:"+ 新增主題檔案",
-        btnSaveFile:"儲存檔案",
-        lblUploadHeading:"📥 上傳文件並生成測驗",
-        lblDragText:"按此上傳或拖放文字檔 (.txt)",
-        lblConfig:"⚙️ 測驗自訂選項",
-        optMcq:"多項選擇題",
-        optTf:"是非題",
-        optSa:"短答題",
-        optEssay:"問答題 / 文章題目",
-        btnGenerate:"🧠 生成溫習測驗",
-        lblQuizResult:"已生成的溫習題目",
-        lblEssayHeading:"📝 智能文章批改工具",
-        btnMark:"提交並批改文章"
+
+        appTitle:
+            "🌸 溫習筆記與測驗生成器",
+
+        langBtn:
+            "🌐 English",
+
+        userDefault:
+            "訪客",
+
+        authBtn:
+            "登入 / 註冊",
+
+        lblTheme:
+            "🎨 主題配色",
+
+        lblFiles:
+            "📂 溫習檔案庫",
+
+        lblAddFile:
+            "+ 新增主題檔案",
+
+        btnSaveFile:
+            "儲存檔案",
+
+        lblUploadHeading:
+            "📥 上傳文件並生成測驗",
+
+        lblDragText:
+            "按此上傳或拖放文字檔 (.txt)",
+
+        lblConfig:
+            "⚙️ 測驗自訂選項",
+
+        optMcq:
+            "多項選擇題",
+
+        optTf:
+            "是非題",
+
+        optSa:
+            "短答題",
+
+        optEssay:
+            "問答題 / 文章題目",
+
+        btnGenerate:
+            "🧠 生成溫習測驗",
+
+        lblQuizResult:
+            "已生成的溫習題目",
+
+        lblEssayHeading:
+            "📝 智能文章批改工具",
+
+        btnMark:
+            "提交並批改文章"
+
     }
 
 };
 
 
-/* =========================
-   LANGUAGE
-========================= */
+/*
+    LANGUAGE
+*/
 
 function toggleLanguage() {
 
-    currentLang = currentLang === "en" ? "zh" : "en";
+    currentLang =
+        currentLang === 'en'
+            ? 'zh'
+            : 'en';
 
-    const t = translations[currentLang];
+    const t =
+        translations[currentLang];
 
-    const ids = [
-        "app-title",
-        "lang-toggle-btn",
-        "auth-btn",
-        "lbl-theme",
-        "lbl-files",
-        "lbl-add-file",
-        "btn-save-file",
-        "lbl-upload-heading",
-        "lbl-drag-text",
-        "lbl-config",
-        "opt-mcq",
-        "opt-tf",
-        "opt-sa",
-        "opt-essay",
-        "btn-generate",
-        "lbl-quiz-result",
-        "lbl-essay-heading",
-        "btn-mark"
-    ];
+    document.getElementById('app-title')
+        .innerText = t.appTitle;
 
-    const keys = [
-        "appTitle",
-        "langBtn",
-        "authBtn",
-        "lblTheme",
-        "lblFiles",
-        "lblAddFile",
-        "btnSaveFile",
-        "lblUploadHeading",
-        "lblDragText",
-        "lblConfig",
-        "optMcq",
-        "optTf",
-        "optSa",
-        "optEssay",
-        "btnGenerate",
-        "lblQuizResult",
-        "lblEssayHeading",
-        "btnMark"
-    ];
+    document.getElementById('lang-toggle-btn')
+        .innerText = t.langBtn;
 
-    ids.forEach((id,index) => {
-
-        const element = document.getElementById(id);
-
-        if (element) {
-            element.innerText = t[keys[index]];
-        }
-
-    });
-
-    const user = document.getElementById("user-display");
+    const userElem =
+        document.getElementById('user-display');
 
     if (
-        user.innerText === "Guest User" ||
-        user.innerText === "訪客"
+        userElem.innerText === 'Guest User' ||
+        userElem.innerText === '訪客'
     ) {
-        user.innerText = t.userDefault;
+
+        userElem.innerText =
+            t.userDefault;
+
     }
+
+    document.getElementById('auth-btn')
+        .innerText = t.authBtn;
+
+    document.getElementById('lbl-theme')
+        .innerText = t.lblTheme;
+
+    document.getElementById('lbl-files')
+        .innerText = t.lblFiles;
+
+    document.getElementById('lbl-add-file')
+        .innerText = t.lblAddFile;
+
+    document.getElementById('btn-save-file')
+        .innerText = t.btnSaveFile;
+
+    document.getElementById('lbl-upload-heading')
+        .innerText = t.lblUploadHeading;
+
+    document.getElementById('lbl-drag-text')
+        .innerText = t.lblDragText;
+
+    document.getElementById('lbl-config')
+        .innerText = t.lblConfig;
+
+    document.getElementById('opt-mcq')
+        .innerText = t.optMcq;
+
+    document.getElementById('opt-tf')
+        .innerText = t.optTf;
+
+    document.getElementById('opt-sa')
+        .innerText = t.optSa;
+
+    document.getElementById('opt-essay')
+        .innerText = t.optEssay;
+
+    document.getElementById('btn-generate')
+        .innerText = t.btnGenerate;
+
+    document.getElementById('lbl-quiz-result')
+        .innerText = t.lblQuizResult;
+
+    document.getElementById('lbl-essay-heading')
+        .innerText = t.lblEssayHeading;
+
+    document.getElementById('btn-mark')
+        .innerText = t.btnMark;
 }
 
 
-/* =========================
-   FILE UPLOAD
-========================= */
+/*
+    FILE UPLOAD
+*/
 
 function handleFileUpload(event) {
 
-    const file = event.target.files[0];
+    const file =
+        event.target.files[0];
 
     if (!file) return;
 
-    if (!file.name.toLowerCase().endsWith(".txt")) {
+    if (
+        !file.name
+            .toLowerCase()
+            .endsWith('.txt')
+    ) {
 
         alert(
-            currentLang === "en"
-            ? "Please upload a .txt file."
-            : "請上傳 .txt 文字檔。"
+            currentLang === 'en'
+                ? 'Please upload a .txt file.'
+                : '請上傳 .txt 文字檔。'
         );
 
-        event.target.value = "";
         return;
     }
 
-    const reader = new FileReader();
+    const reader =
+        new FileReader();
 
     reader.onload = function(e) {
 
-        const content = String(e.target.result || "").trim();
+        const content =
+            e.target.result.trim();
 
         if (!content) {
 
             alert(
-                currentLang === "en"
-                ? "This file is empty."
-                : "這個檔案是空的。"
+                currentLang === 'en'
+                    ? 'This file is empty.'
+                    : '這個檔案是空的。'
             );
 
             return;
         }
 
-        uploadedNotes[file.name] = content;
+        uploadedNotes[file.name] =
+            content;
 
-        addFileToSidebar(file.name);
-
-        alert(
-            currentLang === "en"
-            ? `"${file.name}" loaded successfully!`
-            : `"${file.name}" 已成功載入！`
+        addFileToSidebar(
+            file.name
         );
 
-        event.target.value = "";
+        alert(
+            currentLang === 'en'
+                ? `"${file.name}" loaded successfully!`
+                : `"${file.name}" 已成功載入！`
+        );
+
+        event.target.value = '';
     };
 
     reader.onerror = function() {
 
         alert(
-            currentLang === "en"
-            ? "Could not read this file."
-            : "無法讀取這個檔案。"
+            currentLang === 'en'
+                ? 'Could not read this file.'
+                : '無法讀取這個檔案。'
         );
 
     };
@@ -1016,152 +1346,271 @@ function handleFileUpload(event) {
 }
 
 
+/*
+    ADD FILE TO SIDEBAR
+*/
+
 function addFileToSidebar(fileName) {
 
-    const container = document.getElementById("file-container");
+    const container =
+        document.getElementById(
+            'file-container'
+        );
 
-    const exists = Array.from(
-        container.querySelectorAll(".topic-cb")
-    ).some(cb => cb.value === fileName);
+    const alreadyExists =
+        Array.from(
+            container.querySelectorAll(
+                '.topic-cb'
+            )
+        ).some(
+            cb => cb.value === fileName
+        );
 
-    if (exists) return;
+    if (alreadyExists) return;
 
-    const div = document.createElement("div");
-    div.className = "file-item";
+    const div =
+        document.createElement('div');
 
-    const label = document.createElement("label");
+    div.className =
+        'file-item';
 
-    const checkbox = document.createElement("input");
+    const label =
+        document.createElement('label');
 
-    checkbox.type = "checkbox";
-    checkbox.className = "topic-cb";
-    checkbox.value = fileName;
-    checkbox.checked = true;
+    const checkbox =
+        document.createElement('input');
 
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(" " + fileName));
+    checkbox.type =
+        'checkbox';
 
-    div.appendChild(label);
-    container.appendChild(div);
+    checkbox.className =
+        'topic-cb';
+
+    checkbox.value =
+        fileName;
+
+    checkbox.checked =
+        true;
+
+    label.appendChild(
+        checkbox
+    );
+
+    label.appendChild(
+        document.createTextNode(
+            ' ' + fileName
+        )
+    );
+
+    div.appendChild(
+        label
+    );
+
+    container.appendChild(
+        div
+    );
 }
 
 
-/* =========================
-   PRACTICE TEST
-========================= */
+/*
+    GENERATE PRACTICE TEST
+*/
 
 function generatePracticeTest() {
 
-    const checkedTopics = Array.from(
-        document.querySelectorAll(".topic-cb:checked")
-    ).map(cb => cb.value);
+    const checkedTopics =
+        Array.from(
+            document.querySelectorAll(
+                '.topic-cb:checked'
+            )
+        ).map(
+            cb => cb.value
+        );
 
     if (!checkedTopics.length) {
 
         alert(
-            currentLang === "en"
-            ? "Select at least one topic."
-            : "請至少選擇一個溫習主題。"
+            currentLang === 'en'
+                ? 'Select at least one topic.'
+                : '請至少選擇一個溫習主題。'
         );
 
         return;
     }
 
+
     const settings = {
 
-        mcq: getCount("cb-mcq","count-mcq"),
+        mcq:
+            document.getElementById(
+                'cb-mcq'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-mcq'
+                    ).value
+                )
+                : 0,
 
-        tf: getCount("cb-tf","count-tf"),
+        tf:
+            document.getElementById(
+                'cb-tf'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-tf'
+                    ).value
+                )
+                : 0,
 
-        sa: getCount("cb-sa","count-sa"),
+        sa:
+            document.getElementById(
+                'cb-sa'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-sa'
+                    ).value
+                )
+                : 0,
 
-        essay: getCount("cb-essay","count-essay")
-
+        essay:
+            document.getElementById(
+                'cb-essay'
+            ).checked
+                ? Number(
+                    document.getElementById(
+                        'count-essay'
+                    ).value
+                )
+                : 0
     };
+
 
     const allQuestions = [];
 
+
     checkedTopics.forEach(topic => {
 
-        const notes =
-            uploadedNotes[topic] ||
-            builtInNotes[topic] ||
-            "";
+        let notes =
+            uploadedNotes[topic];
+
+        if (!notes) {
+
+            notes =
+                builtInNotes[topic];
+
+        }
 
         if (!notes) return;
 
-        allQuestions.push(
-            ...createQuestionsFromNotes(
+        const topicQuestions =
+            createQuestionsFromNotes(
                 notes,
                 topic,
                 settings
-            )
-        );
+            );
 
+        allQuestions.push(
+            ...topicQuestions
+        );
     });
+
 
     if (!allQuestions.length) {
 
         alert(
-            currentLang === "en"
-            ? "Not enough information was found in your notes."
-            : "你的筆記沒有足夠資料生成題目。"
+            currentLang === 'en'
+                ? 'Not enough information was found in your notes.'
+                : '你的筆記沒有足夠資料生成題目。'
         );
 
         return;
     }
 
-    shuffle(allQuestions);
 
-    renderQuestions(allQuestions);
+    // Shuffle final question order
+
+    allQuestions.sort(
+        () => Math.random() - 0.5
+    );
+
+
+    renderQuestions(
+        allQuestions
+    );
 }
 
 
-function getCount(checkId,countId) {
+/*
+    CREATE QUESTIONS
+*/
 
-    const checked = document.getElementById(checkId).checked;
+function createQuestionsFromNotes(
+    notes,
+    topic,
+    settings
+) {
 
-    if (!checked) return 0;
+    const sentences =
+        extractSentences(notes);
 
-    return Number(document.getElementById(countId).value) || 0;
-}
+    if (!sentences.length) {
+        return [];
+    }
 
 
-function createQuestionsFromNotes(notes,topic,settings) {
+    const shuffled =
+        [...sentences].sort(
+            () => Math.random() - 0.5
+        );
 
-    const sentences = extractSentences(notes);
-
-    if (!sentences.length) return [];
-
-    const shuffled = shuffle([...sentences]);
 
     const questions = [];
 
 
-    /* MCQ */
+    /*
+        MULTIPLE CHOICE
+    */
 
-    for (let i=0; i<settings.mcq; i++) {
-
-        const sentence = shuffled[i % shuffled.length];
-
-        const question = createMCQ(
-            sentence,
-            topic,
-            sentences
-        );
-
-        if (question) questions.push(question);
-    }
-
-
-    /* TRUE / FALSE */
-
-    for (let i=0; i<settings.tf; i++) {
+    for (
+        let i = 0;
+        i < settings.mcq;
+        i++
+    ) {
 
         const sentence =
             shuffled[
-                (i + settings.mcq) %
-                shuffled.length
+                i % shuffled.length
+            ];
+
+        const question =
+            createMCQ(
+                sentence,
+                topic,
+                sentences
+            );
+
+        if (question) {
+            questions.push(question);
+        }
+    }
+
+
+    /*
+        TRUE / FALSE
+    */
+
+    for (
+        let i = 0;
+        i < settings.tf;
+        i++
+    ) {
+
+        const sentence =
+            shuffled[
+                (i + settings.mcq)
+                % shuffled.length
             ];
 
         questions.push(
@@ -1174,9 +1623,15 @@ function createQuestionsFromNotes(notes,topic,settings) {
     }
 
 
-    /* SHORT ANSWER */
+    /*
+        SHORT ANSWER
+    */
 
-    for (let i=0; i<settings.sa; i++) {
+    for (
+        let i = 0;
+        i < settings.sa;
+        i++
+    ) {
 
         const sentence =
             shuffled[
@@ -1184,588 +1639,911 @@ function createQuestionsFromNotes(notes,topic,settings) {
                     i +
                     settings.mcq +
                     settings.tf
-                ) %
-                shuffled.length
+                )
+                % shuffled.length
             ];
 
         questions.push({
 
-            type:"Short Answer",
+            type: 'Short Answer',
 
-            topic,
+            topic: topic,
 
             question:
-                currentLang === "en"
-                ? `Explain this idea from your notes: "${sentence}"`
-                : `請解釋筆記中的以下概念：「${sentence}」`,
+                currentLang === 'en'
 
-            answer:sentence
+                    ? `Explain this idea from your notes: "${sentence}"`
 
+                    : `請解釋筆記中的以下概念：「${sentence}」`,
+
+            answer:
+                sentence
         });
     }
 
 
-    /* ESSAY */
+    /*
+        ESSAY
+    */
 
-    for (let i=0; i<settings.essay; i++) {
+    for (
+        let i = 0;
+        i < settings.essay;
+        i++
+    ) {
 
         questions.push({
 
-            type:"Essay",
+            type: 'Essay',
 
-            topic,
+            topic: topic,
 
             question:
-                currentLang === "en"
-                ? `Discuss ${topic}, using evidence and ideas from your notes.`
-                : `運用筆記中的資料及例子，討論${topic}。`,
+                currentLang === 'en'
 
-            answer:shuffled
-                .slice(0,Math.min(4,shuffled.length))
-                .join(" ")
+                    ? `Discuss ${topic}, using evidence and ideas from your notes.`
 
+                    : `運用筆記中的資料及例子，討論${topic}。`,
+
+            answer:
+                shuffled
+                    .slice(
+                        0,
+                        Math.min(
+                            4,
+                            shuffled.length
+                        )
+                    )
+                    .join(' ')
         });
     }
+
 
     return questions;
 }
 
 
+/*
+    EXTRACT SENTENCES
+*/
+
 function extractSentences(notes) {
 
     return notes
-        .replace(/\r/g," ")
-        .replace(/\n+/g," ")
-        .replace(/\s+/g," ")
-        .split(/(?<=[.!?])\s+/)
-        .map(s => s.trim())
-        .filter(s => s.length >= 20);
+
+        .replace(/\r/g, ' ')
+
+        .replace(/\n+/g, ' ')
+
+        .replace(/\s+/g, ' ')
+
+        .split(
+            /(?<=[.!?])\s+/
+        )
+
+        .map(
+            sentence =>
+                sentence.trim()
+        )
+
+        .filter(
+            sentence =>
+                sentence.length >= 30
+        );
 }
 
 
-/* =========================
-   MCQ
-========================= */
+/*
+    CREATE MCQ
+*/
 
-function createMCQ(sentence,topic,allSentences) {
+function createMCQ(
+    sentence,
+    topic,
+    allSentences
+) {
 
-    const words = sentence
-        .replace(/[.,!?;:()[\]{}]/g,"")
-        .split(/\s+/)
-        .filter(word => word.length >= 5);
+    const words =
+        sentence
+            .replace(
+                /[.,!?;:()[\]{}]/g,
+                ''
+            )
+            .split(/\s+/)
+            .filter(
+                word =>
+                    word.length >= 5
+            );
 
-    if (words.length < 4) return null;
+
+    if (words.length < 4) {
+        return null;
+    }
+
 
     const answer =
-        words[Math.floor(Math.random() * words.length)];
+        words[
+            Math.floor(
+                Math.random()
+                * words.length
+            )
+        ];
 
-    const questionText = sentence.replace(
-        new RegExp(escapeRegExp(answer),"i"),
-        "_____"
-    );
+
+    const questionText =
+        sentence.replace(
+            new RegExp(
+                escapeRegExp(answer),
+                'i'
+            ),
+            '_____'
+        );
+
 
     const possibleWrongAnswers =
         allSentences
-        .flatMap(s =>
-            s
-            .replace(/[.,!?;:()[\]{}]/g,"")
-            .split(/\s+/)
+
+            .flatMap(
+                s =>
+                    s
+                        .replace(
+                            /[.,!?;:()[\]{}]/g,
+                            ''
+                        )
+                        .split(/\s+/)
+            )
+
+            .filter(
+                word =>
+                    word.length >= 5 &&
+                    word.toLowerCase()
+                        !== answer.toLowerCase()
+            );
+
+
+    const wrongAnswers =
+        [...new Set(
+            possibleWrongAnswers
+        )]
+
+        .sort(
+            () => Math.random() - 0.5
         )
-        .filter(word =>
-            word.length >= 5 &&
-            word.toLowerCase() !== answer.toLowerCase()
+
+        .slice(0, 3);
+
+
+    if (wrongAnswers.length < 3) {
+        return null;
+    }
+
+
+    const options =
+        [
+            answer,
+            ...wrongAnswers
+        ].sort(
+            () => Math.random() - 0.5
         );
 
-    const wrongAnswers = [
-        ...new Set(possibleWrongAnswers)
-    ];
-
-    shuffle(wrongAnswers);
-
-    const selectedWrong = wrongAnswers.slice(0,3);
-
-    if (selectedWrong.length < 3) return null;
-
-    const options = shuffle([
-        answer,
-        ...selectedWrong
-    ]);
 
     return {
 
-        type:"Multiple Choice",
+        type:
+            'Multiple Choice',
 
-        topic,
+        topic:
+            topic,
 
         question:
-            currentLang === "en"
-            ? `Which word correctly completes this statement? "${questionText}"`
-            : `哪一個詞語最適合填入以下句子？「${questionText}」`,
+            currentLang === 'en'
 
-        options,
+                ? `Which word correctly completes this statement? "${questionText}"`
+
+                : `哪一個詞語最適合填入以下句子？「${questionText}」`,
+
+        options:
+            options,
 
         answer:
             `${String.fromCharCode(
                 65 + options.indexOf(answer)
             )}. ${answer}`
-
     };
 }
 
 
-/* =========================
-   TRUE / FALSE
-========================= */
+/*
+    CREATE TRUE/FALSE
+*/
 
-function createTrueFalse(sentence,topic,index) {
+function createTrueFalse(
+    sentence,
+    topic,
+    index
+) {
 
-    const makeFalse = index % 2 === 1;
+    const makeFalse =
+        index % 2 === 1;
 
-    let statement = sentence;
+
+    let statement =
+        sentence;
+
 
     if (makeFalse) {
 
-        const words = sentence.split(/\s+/);
+        const words =
+            sentence.split(/\s+/);
 
         if (words.length > 5) {
 
             const position =
-                Math.floor(words.length / 2);
+                Math.floor(
+                    words.length / 2
+                );
 
             words[position] =
-                "not " + words[position];
+                'not ' +
+                words[position];
 
-            statement = words.join(" ");
+            statement =
+                words.join(' ');
         }
-
     }
+
 
     return {
 
-        type:"True / False",
+        type:
+            'True / False',
 
-        topic,
+        topic:
+            topic,
 
         question:
-            currentLang === "en"
-            ? `True or False: ${statement}`
-            : `正確或錯誤：${statement}`,
+            currentLang === 'en'
 
-        answer:makeFalse ? "False" : "True"
+                ? `True or False: ${statement}`
 
+                : `正確或錯誤：${statement}`,
+
+        answer:
+            makeFalse
+                ? 'False'
+                : 'True'
     };
 }
 
 
-/* =========================
-   RENDER QUESTIONS
-========================= */
+/*
+    RENDER QUESTIONS
+*/
 
-function renderQuestions(questions) {
+function renderQuestions(
+    questions
+) {
 
     const container =
-        document.getElementById("quiz-content-list");
+        document.getElementById(
+            'quiz-content-list'
+        );
 
-    container.innerHTML = "";
-
-    questions.forEach((question,index) => {
-
-        const box = document.createElement("div");
-
-        box.className = "quiz-question";
+    container.innerHTML =
+        '';
 
 
-        const type = document.createElement("div");
+    questions.forEach(
+        (question, index) => {
 
-        type.className = "question-type";
+        const box =
+            document.createElement(
+                'div'
+            );
+
+        box.className =
+            'quiz-question';
+
+
+        const type =
+            document.createElement(
+                'div'
+            );
+
+        type.className =
+            'question-type';
 
         type.innerText =
             `${question.type} · ${question.topic}`;
 
-        box.appendChild(type);
+
+        box.appendChild(
+            type
+        );
 
 
-        const title = document.createElement("strong");
+        const title =
+            document.createElement(
+                'strong'
+            );
 
         title.innerText =
             `Q${index + 1}. ${question.question}`;
 
-        box.appendChild(title);
+
+        box.appendChild(
+            title
+        );
 
 
-        if (question.type === "Multiple Choice") {
+        /*
+            MCQ
+        */
 
-            question.options.forEach((option,optionIndex) => {
+        if (
+            question.type ===
+            'Multiple Choice'
+        ) {
 
-                const label = document.createElement("label");
-
-                label.className = "option";
-
-                const radio = document.createElement("input");
-
-                radio.type = "radio";
-                radio.name = `question-${index}`;
-                radio.value = option;
-
-                label.appendChild(radio);
-
-                label.appendChild(
-                    document.createTextNode(
-                        ` ${String.fromCharCode(65 + optionIndex)}. ${option}`
-                    )
-                );
-
-                box.appendChild(label);
-
-            });
-
-            addAnswerButton(box,question.answer);
-
-        }
-
-        else if (question.type === "True / False") {
-
-            ["True","False"].forEach(value => {
+            question.options.forEach(
+                (option, optionIndex) => {
 
                 const label =
-                    document.createElement("label");
+                    document.createElement(
+                        'label'
+                    );
 
-                label.className = "option";
+                label.className =
+                    'option';
+
 
                 const radio =
-                    document.createElement("input");
+                    document.createElement(
+                        'input'
+                    );
 
-                radio.type = "radio";
-                radio.name = `question-${index}`;
-                radio.value = value;
+                radio.type =
+                    'radio';
 
-                label.appendChild(radio);
+                radio.name =
+                    `question-${index}`;
+
+                radio.value =
+                    option;
+
+
+                label.appendChild(
+                    radio
+                );
 
                 label.appendChild(
                     document.createTextNode(
-                        currentLang === "en"
-                        ? ` ${value}`
-                        : value === "True"
-                            ? " 正確"
-                            : " 錯誤"
+                        ` ${String.fromCharCode(
+                            65 + optionIndex
+                        )}. ${option}`
                     )
                 );
 
-                box.appendChild(label);
+
+                box.appendChild(
+                    label
+                );
 
             });
 
-            addAnswerButton(box,question.answer);
 
+            addAnswerButton(
+                box,
+                question.answer
+            );
         }
 
-        else if (question.type === "Short Answer") {
+
+        /*
+            TRUE / FALSE
+        */
+
+        else if (
+            question.type ===
+            'True / False'
+        ) {
+
+            ['True', 'False']
+                .forEach(
+                    value => {
+
+                    const label =
+                        document.createElement(
+                            'label'
+                        );
+
+                    label.className =
+                        'option';
+
+
+                    const radio =
+                        document.createElement(
+                            'input'
+                        );
+
+                    radio.type =
+                        'radio';
+
+                    radio.name =
+                        `question-${index}`;
+
+                    radio.value =
+                        value;
+
+
+                    label.appendChild(
+                        radio
+                    );
+
+                    label.appendChild(
+                        document.createTextNode(
+                            currentLang === 'en'
+                                ? ` ${value}`
+                                : value === 'True'
+                                    ? ' 正確'
+                                    : ' 錯誤'
+                        )
+                    );
+
+
+                    box.appendChild(
+                        label
+                    );
+
+                }
+            );
+
+
+            addAnswerButton(
+                box,
+                question.answer
+            );
+        }
+
+
+        /*
+            SHORT ANSWER
+        */
+
+        else if (
+            question.type ===
+            'Short Answer'
+        ) {
 
             const textarea =
-                document.createElement("textarea");
+                document.createElement(
+                    'textarea'
+                );
 
-            textarea.rows = 4;
+            textarea.rows =
+                4;
 
             textarea.placeholder =
-                currentLang === "en"
-                ? "Write your answer here..."
-                : "在此輸入答案...";
+                currentLang === 'en'
+                    ? 'Write your answer here...'
+                    : '在此輸入答案...';
 
-            textarea.style.marginTop = "10px";
+            textarea.style.marginTop =
+                '10px';
 
-            box.appendChild(textarea);
 
-            addAnswerButton(box,question.answer);
+            box.appendChild(
+                textarea
+            );
 
+
+            addAnswerButton(
+                box,
+                question.answer
+            );
         }
+
+
+        /*
+            ESSAY
+        */
 
         else {
 
             const textarea =
-                document.createElement("textarea");
+                document.createElement(
+                    'textarea'
+                );
 
-            textarea.rows = 7;
+            textarea.rows =
+                7;
 
             textarea.placeholder =
-                currentLang === "en"
-                ? "Plan your essay here..."
-                : "在此規劃你的文章...";
+                currentLang === 'en'
+                    ? 'Plan your essay here...'
+                    : '在此規劃你的文章...';
 
-            textarea.style.marginTop = "10px";
+            textarea.style.marginTop =
+                '10px';
 
-            box.appendChild(textarea);
 
-            addAnswerButton(box,question.answer);
-
+            box.appendChild(
+                textarea
+            );
         }
 
-        container.appendChild(box);
+
+        container.appendChild(
+            box
+        );
 
     });
 
 
-    document.getElementById("question-count").innerText =
-        currentLang === "en"
-        ? `${questions.length} questions generated from your notes`
-        : `已根據你的筆記生成 ${questions.length} 題`;
+    document.getElementById(
+        'question-count'
+    ).innerText =
+        currentLang === 'en'
+
+            ? `${questions.length} questions generated from your notes`
+
+            : `已根據你的筆記生成 ${questions.length} 題`;
+
 
     document
-        .getElementById("generated-quiz-output")
-        .classList.remove("hidden");
+        .getElementById(
+            'generated-quiz-output'
+        )
+        .classList
+        .remove('hidden');
 }
 
 
-function addAnswerButton(box,answer) {
+/*
+    ANSWER BUTTON
+*/
+
+function addAnswerButton(
+    box,
+    answer
+) {
 
     const button =
-        document.createElement("button");
+        document.createElement(
+            'button'
+        );
 
-    button.style.width = "auto";
-    button.style.padding = "8px 12px";
+    button.style.width =
+        'auto';
+
+    button.style.padding =
+        '8px 12px';
+
 
     button.innerText =
-        currentLang === "en"
-        ? "Show Answer"
-        : "顯示答案";
+        currentLang === 'en'
+            ? 'Show Answer'
+            : '顯示答案';
+
 
     const answerBox =
-        document.createElement("div");
+        document.createElement(
+            'div'
+        );
 
-    answerBox.className = "answer-box hidden";
+    answerBox.className =
+        'answer-box hidden';
+
 
     answerBox.innerText =
-        currentLang === "en"
-        ? `Answer: ${answer}`
-        : `答案：${answer}`;
+        currentLang === 'en'
+            ? `Answer: ${answer}`
+            : `答案：${answer}`;
 
-    button.onclick = () => {
 
-        answerBox.classList.toggle("hidden");
+    button.onclick =
+        function() {
 
-    };
+            answerBox.classList.toggle(
+                'hidden'
+            );
 
-    box.appendChild(button);
-    box.appendChild(answerBox);
+        };
+
+
+    box.appendChild(
+        button
+    );
+
+    box.appendChild(
+        answerBox
+    );
 }
 
 
-/* =========================
-   NAVIGATION
-========================= */
+/*
+    NAVIGATION
+*/
 
-function showPanel(name,button) {
-
-    document
-        .querySelectorAll(".function-panel")
-        .forEach(panel =>
-            panel.classList.remove("active")
-        );
+function showPanel(
+    name,
+    button
+) {
 
     document
-        .querySelectorAll(".function-btn")
-        .forEach(btn =>
-            btn.classList.remove("active")
+        .querySelectorAll(
+            '.function-panel'
+        )
+        .forEach(
+            panel =>
+                panel.classList.remove(
+                    'active'
+                )
         );
 
-    const panel =
-        document.getElementById("panel-" + name);
 
-    if (panel) {
-        panel.classList.add("active");
-    }
+    document
+        .querySelectorAll(
+            '.function-btn'
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    'active'
+                )
+        );
+
+
+    document
+        .getElementById(
+            'panel-' + name
+        )
+        .classList.add(
+            'active'
+        );
+
 
     if (button) {
-        button.classList.add("active");
+
+        button.classList.add(
+            'active'
+        );
+
     }
 }
 
 
-/* =========================
-   THEMES
-========================= */
+/*
+    THEMES
+*/
 
-function setTheme(theme) {
+function setTheme(
+    theme
+) {
 
     document.body.setAttribute(
-        "data-theme",
+        'data-theme',
         theme
     );
 
-    try {
-        localStorage.setItem(
-            "revisionTheme",
-            theme
-        );
-    } catch(e) {}
 }
 
 
-/* =========================
-   LOGIN
-========================= */
+/*
+    LOGIN
+*/
 
 function toggleAuthModal() {
 
     document
-        .getElementById("auth-box")
-        .classList.toggle("hidden");
+        .getElementById(
+            'auth-box'
+        )
+        .classList
+        .toggle(
+            'hidden'
+        );
 }
 
 
 function loginUser() {
 
-    const input =
-        document.getElementById("user-input");
-
     const username =
-        input.value.trim();
+        document
+            .getElementById(
+                'user-input'
+            )
+            .value
+            .trim();
+
 
     if (!username) {
 
         alert(
-            currentLang === "en"
-            ? "Please enter a username."
-            : "請輸入使用者名稱。"
+            currentLang === 'en'
+                ? 'Please enter a username.'
+                : '請輸入使用者名稱。'
         );
 
         return;
     }
 
-    document.getElementById("user-display").innerText =
-        username;
-
-    document.getElementById("user-avatar").innerText =
-        username.charAt(0).toUpperCase();
 
     document
-        .getElementById("auth-box")
-        .classList.add("hidden");
+        .getElementById(
+            'user-display'
+        )
+        .innerText =
+        username;
 
-    try {
-        localStorage.setItem(
-            "revisionUsername",
-            username
+
+    document
+        .getElementById(
+            'user-avatar'
+        )
+        .innerText =
+        username
+            .charAt(0)
+            .toUpperCase();
+
+
+    document
+        .getElementById(
+            'auth-box'
+        )
+        .classList
+        .add(
+            'hidden'
         );
-    } catch(e) {}
 }
 
 
-/* =========================
-   ADD TOPIC FILE
-========================= */
+/*
+    ADD TOPIC FILE
+*/
 
 function addTopicFile() {
 
     const title =
-        document.getElementById("file-title")
-        .value
-        .trim();
+        document
+            .getElementById(
+                'file-title'
+            )
+            .value
+            .trim();
+
 
     const content =
-        document.getElementById("file-content")
-        .value
-        .trim();
+        document
+            .getElementById(
+                'file-content'
+            )
+            .value
+            .trim();
+
 
     if (!title) {
 
         alert(
-            currentLang === "en"
-            ? "Please enter a file name."
-            : "請輸入檔案名稱。"
+            currentLang === 'en'
+                ? 'Please enter a file name.'
+                : '請輸入檔案名稱。'
         );
 
         return;
     }
+
 
     if (!content) {
 
         alert(
-            currentLang === "en"
-            ? "Please enter some notes."
-            : "請輸入一些筆記內容。"
+            currentLang === 'en'
+                ? 'Please enter some notes.'
+                : '請輸入一些筆記內容。'
         );
 
         return;
     }
 
+
     const fileName =
-        title.toLowerCase().endsWith(".txt")
-        ? title
-        : title + ".txt";
+        title.endsWith('.txt')
+            ? title
+            : `${title}.txt`;
 
-    uploadedNotes[fileName] = content;
 
-    addFileToSidebar(fileName);
+    uploadedNotes[fileName] =
+        content;
 
-    document.getElementById("file-title").value = "";
-    document.getElementById("file-content").value = "";
+
+    addFileToSidebar(
+        fileName
+    );
+
+
+    document.getElementById(
+        'file-title'
+    ).value = '';
+
+
+    document.getElementById(
+        'file-content'
+    ).value = '';
+
 
     alert(
-        currentLang === "en"
-        ? "Topic file saved!"
-        : "主題檔案已儲存！"
+        currentLang === 'en'
+            ? 'Topic file saved!'
+            : '主題檔案已儲存！'
     );
 }
 
 
-/* =========================
-   NOTES
-========================= */
+/*
+    SHOW SELECTED NOTES
+*/
 
 function showSelectedNotes() {
 
     const selected =
         Array.from(
-            document.querySelectorAll(".topic-cb:checked")
+            document.querySelectorAll(
+                '.topic-cb:checked'
+            )
         );
+
 
     if (!selected.length) {
 
         alert(
-            currentLang === "en"
-            ? "Select a topic first."
-            : "請先選擇一個主題。"
+            currentLang === 'en'
+                ? 'Select a topic first.'
+                : '請先選擇一個主題。'
         );
 
         return;
     }
 
+
     const notes =
         selected
-        .map(checkbox => {
+            .map(
+                checkbox => {
 
-            const topic = checkbox.value;
+                    const topic =
+                        checkbox.value;
 
-            return (
-                uploadedNotes[topic] ||
-                builtInNotes[topic] ||
-                ""
-            );
+                    return (
+                        uploadedNotes[topic] ||
+                        builtInNotes[topic] ||
+                        ''
+                    );
+                }
+            )
+            .filter(
+                text => text
+            )
+            .join('\n\n');
 
-        })
-        .filter(Boolean)
-        .join("\n\n");
 
-    document.getElementById("notes-preview").value =
+    document.getElementById(
+        'notes-preview'
+    ).value =
         notes;
 }
 
 
-/* =====================================================
-   FIXED ESSAY MARKER
-===================================================== */
+/*
+    ESSAY MARKER
+*/
 
 function markEssay() {
 
     const text =
         document
-            .getElementById("essay-text")
-            .value
-            .trim();
-
-    const prompt =
-        document
-            .getElementById("essay-prompt")
+            .getElementById(
+                'essay-text'
+            )
             .value
             .trim();
 
@@ -1773,418 +2551,138 @@ function markEssay() {
     if (!text) {
 
         alert(
-            currentLang === "en"
-            ? "Please enter essay text."
-            : "請先輸入文章內容。"
+            currentLang === 'en'
+                ? 'Please enter essay text.'
+                : '請先輸入文章內容。'
         );
 
         return;
     }
 
 
-    /*
-       Count words correctly.
-
-       The old version used:
-           text.split(/\s+/).length
-
-       which can give inaccurate results for empty/odd whitespace.
-    */
-
-    const words =
-        text.match(/\S+/g) || [];
-
     const wordCount =
-        words.length;
+        text.split(/\s+/).length;
 
 
-    /*
-       Count sentences.
-    */
-
-    const sentences =
-        text
-        .split(/[.!?]+/)
-        .map(s => s.trim())
-        .filter(Boolean);
-
-    const sentenceCount =
-        sentences.length;
+    let grade =
+        'B+';
 
 
-    /*
-       Count paragraphs.
+    let feedback =
+        '';
 
-       A paragraph is separated by one or more blank lines.
-    */
-
-    const paragraphs =
-        text
-        .split(/\n\s*\n/)
-        .map(p => p.trim())
-        .filter(Boolean);
-
-    const paragraphCount =
-        paragraphs.length || 1;
-
-
-    /*
-       Basic quality checks.
-    */
-
-    const feedback = [];
-
-    let score = 0;
-
-
-    /* Length */
 
     if (wordCount >= 300) {
 
-        score += 4;
+        grade =
+            'A-';
 
-    } else if (wordCount >= 200) {
+        feedback =
+            'Strong amount of detail. Try to make sure each paragraph clearly supports your argument.';
 
-        score += 3;
-
-    } else if (wordCount >= 120) {
-
-        score += 2;
-
-    } else {
-
-        score += 1;
-
-        feedback.push(
-            currentLang === "en"
-            ? "Your essay is quite short. Develop your explanation and evidence."
-            : "文章比較短，可以加入更多解釋及證據。"
-        );
     }
 
+    else if (wordCount >= 180) {
 
-    /* Paragraph structure */
+        grade =
+            'B+';
 
-    if (paragraphCount >= 4) {
+        feedback =
+            'Good level of detail and structure. Add more specific evidence to strengthen the argument.';
 
-        score += 2;
-
-    } else if (paragraphCount >= 2) {
-
-        score += 1;
-
-    } else {
-
-        feedback.push(
-            currentLang === "en"
-            ? "Use clearer paragraphs to separate different ideas."
-            : "可以使用更清晰的分段來分開不同觀點。"
-        );
     }
 
+    else if (wordCount >= 100) {
 
-    /* Sentence development */
+        grade =
+            'B';
 
-    if (sentenceCount >= 8) {
+        feedback =
+            'A reasonable structure is present. Develop your examples and explanations further.';
 
-        score += 2;
-
-    } else if (sentenceCount >= 5) {
-
-        score += 1;
-
-    } else {
-
-        feedback.push(
-            currentLang === "en"
-            ? "Try developing your ideas with more complete explanations."
-            : "可以用更完整的句子發展你的觀點。"
-        );
     }
 
+    else {
 
-    /* Evidence / examples */
+        grade =
+            'C';
 
-    const evidenceWords = [
-        "because",
-        "therefore",
-        "however",
-        "for example",
-        "such as",
-        "evidence",
-        "this shows",
-        "this suggests",
-        "例如",
-        "因此",
-        "證據",
-        "顯示"
-    ];
-
-    const lowerText =
-        text.toLowerCase();
-
-    const hasEvidence =
-        evidenceWords.some(
-            word => lowerText.includes(word.toLowerCase())
-        );
-
-    if (hasEvidence) {
-
-        score += 2;
-
-    } else {
-
-        feedback.push(
-            currentLang === "en"
-            ? "Add specific evidence, examples, or linking phrases to strengthen your argument."
-            : "加入具體證據、例子或連接詞，可以令論點更有說服力。"
-        );
-    }
-
-
-    /*
-       Prompt relevance.
-
-       This doesn't pretend to use AI.
-       It simply checks whether words from the prompt
-       appear in the essay.
-    */
-
-    if (prompt) {
-
-        const promptWords =
-            prompt
-            .toLowerCase()
-            .match(/[a-zA-ZÀ-ÿ\u4e00-\u9fff]{4,}/g) || [];
-
-        const meaningfulWords =
-            promptWords.filter(
-                word =>
-                    ![
-                        "what",
-                        "why",
-                        "how",
-                        "discuss",
-                        "explain",
-                        "describe",
-                        "the",
-                        "and",
-                        "with",
-                        "about"
-                    ].includes(word)
-            );
-
-        const matched =
-            meaningfulWords.some(
-                word => lowerText.includes(word)
-            );
-
-        if (matched) {
-
-            score += 1;
-
-        } else {
-
-            feedback.push(
-                currentLang === "en"
-                ? "Make sure your paragraphs directly address the essay question."
-                : "確保每一段都直接回應文章題目。"
-            );
-        }
-    }
-
-
-    /*
-       Convert score to grade.
-    */
-
-    let grade;
-
-    if (score >= 10) {
-
-        grade = "A";
-
-    } else if (score >= 8) {
-
-        grade = "A-";
-
-    } else if (score >= 7) {
-
-        grade = "B+";
-
-    } else if (score >= 5) {
-
-        grade = "B";
-
-    } else if (score >= 4) {
-
-        grade = "C";
-
-    } else {
-
-        grade = "C-";
-    }
-
-
-    /*
-       Default positive feedback.
-    */
-
-    if (!feedback.length) {
-
-        feedback.push(
-            currentLang === "en"
-            ? "Strong structure and development. Keep using specific evidence to support your points."
-            : "文章結構及內容發展不錯。繼續使用具體證據支持你的觀點。"
-        );
+        feedback =
+            'The response is quite short. Add more explanation, evidence and developed paragraphs.';
 
     }
 
 
-    /*
-       Display result.
-    */
-
-    const gradeElement =
-        document.getElementById("essay-grade");
-
-    gradeElement.innerText =
-        currentLang === "en"
-        ? `Grade: ${grade}`
-        : `評級：${grade}`;
+    document.getElementById(
+        'essay-grade'
+    ).innerText =
+        `Grade: ${grade}`;
 
 
-    const feedbackElement =
-        document.getElementById("essay-feedback");
-
-    feedbackElement.innerText =
-        currentLang === "en"
-        ? `Feedback: ${feedback.join(" ")}`
-        : `評語：${feedback.join(" ")}`;
-
-
-    document.getElementById("essay-word-count").innerText =
-        wordCount;
-
-    document.getElementById("essay-sentence-count").innerText =
-        sentenceCount;
-
-    document.getElementById("essay-paragraph-count").innerText =
-        paragraphCount;
-
-
-    const list =
-        document.getElementById("essay-feedback-list");
-
-    list.innerHTML = "";
-
-    const ul =
-        document.createElement("ul");
-
-    ul.className = "feedback-list";
-
-    feedback.forEach(item => {
-
-        const li =
-            document.createElement("li");
-
-        li.innerText = item;
-
-        ul.appendChild(li);
-
-    });
-
-    list.appendChild(ul);
+    document.getElementById(
+        'essay-feedback'
+    ).innerText =
+        `Feedback: ${feedback} Word count: ${wordCount}`;
 
 
     document
-        .getElementById("essay-result")
-        .classList.remove("hidden");
-}
-
-
-/* =========================
-   UTILITIES
-========================= */
-
-function shuffle(array) {
-
-    for (
-        let i = array.length - 1;
-        i > 0;
-        i--
-    ) {
-
-        const j =
-            Math.floor(Math.random() * (i + 1));
-
-        [
-            array[i],
-            array[j]
-        ] = [
-            array[j],
-            array[i]
-        ];
-    }
-
-    return array;
-}
-
-
-function escapeRegExp(text) {
-
-    return String(text).replace(
-        /[.*+?^${}()|[\]\\]/g,
-        "\\$&"
-    );
-}
-
-
-/* =========================
-   STARTUP
-========================= */
-
-document.addEventListener("DOMContentLoaded",function() {
-
-    try {
-
-        const savedTheme =
-            localStorage.getItem("revisionTheme");
-
-        if (savedTheme) {
-            document.body.setAttribute(
-                "data-theme",
-                savedTheme
-            );
-        }
-
-        const savedUsername =
-            localStorage.getItem("revisionUsername");
-
-        if (savedUsername) {
-
-            document.getElementById(
-                "user-display"
-            ).innerText = savedUsername;
-
-            document.getElementById(
-                "user-avatar"
-            ).innerText =
-                savedUsername
-                .charAt(0)
-                .toUpperCase();
-        }
-
-    } catch(e) {
-
-        console.warn(
-            "Local storage is unavailable.",
-            e
+        .getElementById(
+            'essay-result'
+        )
+        .classList
+        .remove(
+            'hidden'
         );
+}
 
-    }
 
-});
+/*
+    SECURITY / HTML ESCAPING
+*/
+
+function escapeHTML(
+    text
+) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            '&amp;'
+        )
+
+        .replace(
+            /</g,
+            '&lt;'
+        )
+
+        .replace(
+            />/g,
+            '&gt;'
+        )
+
+        .replace(
+            /"/g,
+            '&quot;'
+        )
+
+        .replace(
+            /'/g,
+            '&#039;'
+        );
+}
+
+
+function escapeRegExp(
+    text
+) {
+
+    return String(text)
+        .replace(
+            /[.*+?^${}()|[\]\\]/g,
+            '\\$&'
+        );
+}
 
 </script>
 

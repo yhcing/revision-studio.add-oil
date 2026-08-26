@@ -6,8 +6,10 @@
 
     <title>Pastel Revision Studio</title>
 
-    <!-- PDF.js for reading PDF files -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- PDF.js -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    </script>
 
     <style>
         :root {
@@ -246,7 +248,7 @@
         }
 
         .type-card select {
-            width: 65px;
+            width: 80px;
             padding: 4px;
             border-radius: 6px;
         }
@@ -267,6 +269,74 @@
             font-size: 13px;
         }
 
+        .file-item.parent {
+            font-weight: 600;
+        }
+
+        .file-children {
+            margin-left: 18px;
+            border-left: 2px solid var(--border-color);
+            padding-left: 8px;
+            margin-bottom: 8px;
+        }
+
+        .sub-file-item {
+            background: var(--bg-color);
+            padding: 8px;
+            border-radius: 8px;
+            margin-bottom: 6px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            font-size: 12px;
+        }
+
+        .file-left {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .file-left label {
+            cursor: pointer;
+            overflow-wrap: anywhere;
+        }
+
+        .file-actions {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .small-btn {
+            width: auto;
+            margin: 0;
+            padding: 4px 7px;
+            font-size: 11px;
+            border-radius: 6px;
+        }
+
+        .delete-btn {
+            background: #c98c8c;
+        }
+
+        .delete-btn:hover {
+            background: #b87878;
+        }
+
+        .folder-btn {
+            background: transparent;
+            color: var(--text-main);
+            border: none;
+            width: auto;
+            margin: 0;
+            padding: 2px;
+            font-size: 14px;
+        }
+
         .upload-zone {
             border: 2px dashed var(--primary);
 
@@ -281,13 +351,15 @@
             cursor: pointer;
 
             margin-bottom: 20px;
-
-            transition: 0.2s ease;
         }
 
         .upload-zone:hover {
             opacity: 0.85;
-            transform: translateY(-1px);
+        }
+
+        .upload-zone.dragover {
+            opacity: 0.75;
+            transform: scale(1.01);
         }
 
         input[type="text"],
@@ -324,8 +396,6 @@
             margin-top: 10px;
 
             cursor: pointer;
-
-            transition: 0.2s ease;
         }
 
         button:hover {
@@ -354,12 +424,6 @@
 
             box-shadow:
                 0 2px 5px rgba(0,0,0,0.1);
-
-            transition: 0.2s ease;
-        }
-
-        .swatch:hover {
-            transform: scale(1.1);
         }
 
         .hidden {
@@ -428,13 +492,29 @@
             text-align: center;
         }
 
-        .loading-box {
+        .status-message {
+            padding: 10px;
+            border-radius: 10px;
+            background: var(--accent-bg);
+            margin-bottom: 12px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .subfile-controls {
             background: var(--accent-bg);
             padding: 12px;
             border-radius: 10px;
-            margin-top: 10px;
-            font-size: 13px;
-            color: var(--text-sub);
+            margin-bottom: 15px;
+        }
+
+        .subfile-controls button {
+            margin-top: 6px;
+        }
+
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
         }
 
         @media (max-width: 760px) {
@@ -463,6 +543,7 @@
         }
     </style>
 </head>
+
 
 <body data-theme="rose">
 
@@ -611,39 +692,58 @@
             📂 Topic Files
         </h3>
 
-        <div id="file-container">
+        <div id="file-container"></div>
 
-            <div class="file-item">
 
-                <label>
+        <!-- ADD SUB-FILE -->
 
-                    <input
-                        type="checkbox"
-                        class="topic-cb"
-                        value="Photosynthesis"
-                        checked>
+        <div
+            class="subfile-controls"
+            id="subfile-controls">
 
-                    Photosynthesis.txt
+            <strong>
+                📎 Add Sub-File
+            </strong>
 
-                </label>
+            <p
+                style="
+                    font-size:11px;
+                    color:var(--text-sub);
+                    margin:6px 0;
+                ">
 
-            </div>
+                Select a main file first, then add a smaller file underneath it.
 
-            <div class="file-item">
+            </p>
 
-                <label>
+            <select
+                id="parent-file-select">
 
-                    <input
-                        type="checkbox"
-                        class="topic-cb"
-                        value="Cold War"
-                        checked>
+                <option value="">
+                    Select parent file...
+                </option>
 
-                    Cold_War.txt
+            </select>
 
-                </label>
+            <input
+                type="text"
+                id="subfile-title"
+                placeholder="Sub-file name..."
+                style="margin-top:7px;">
 
-            </div>
+            <textarea
+                id="subfile-content"
+                rows="3"
+                placeholder="Paste sub-file notes..."
+                style="margin-top:7px;">
+            </textarea>
+
+            <button
+                onclick="addSubFile()">
+
+                Add Sub-File
+
+            </button>
 
         </div>
 
@@ -723,11 +823,7 @@
 
             <div
                 class="upload-zone"
-                onclick="
-                    document
-                        .getElementById('file-upload-input')
-                        .click()
-                ">
+                id="upload-zone">
 
                 <span style="font-size:24px;">
                     📄
@@ -740,21 +836,34 @@
                     "
                     id="lbl-drag-text">
 
-                    Click or Drop Files Here (.txt / .pdf)
+                    Click or Drop Files Here
 
                 </p>
 
-                <small style="color:var(--text-sub);">
-                    PDF text will be extracted automatically
-                </small>
+                <p
+                    style="
+                        margin:5px 0 0 0;
+                        font-size:12px;
+                        color:var(--text-sub);
+                    ">
+
+                    PDF, TXT, DOC, DOCX
+
+                </p>
 
                 <input
                     type="file"
                     id="file-upload-input"
-                    accept=".txt,.pdf,text/plain,application/pdf"
-                    style="display:none;"
-                    onchange="handleFileUpload(event)">
+                    accept=".txt,.pdf,.doc,.docx,text/plain,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    multiple
+                    style="display:none;">
 
+            </div>
+
+
+            <div
+                id="upload-status"
+                class="status-message">
             </div>
 
 
@@ -764,6 +873,8 @@
 
 
             <div class="type-grid">
+
+                <!-- MCQ -->
 
                 <div class="type-card">
 
@@ -782,8 +893,8 @@
 
                     <select id="count-mcq">
 
-                        <option value="3">
-                            3
+                        <option value="1">
+                            1
                         </option>
 
                         <option value="5" selected>
@@ -794,10 +905,20 @@
                             10
                         </option>
 
+                        <option value="20">
+                            20
+                        </option>
+
+                        <option value="50">
+                            50
+                        </option>
+
                     </select>
 
                 </div>
 
+
+                <!-- TRUE FALSE -->
 
                 <div class="type-card">
 
@@ -816,8 +937,8 @@
 
                     <select id="count-tf">
 
-                        <option value="3">
-                            3
+                        <option value="1">
+                            1
                         </option>
 
                         <option value="5" selected>
@@ -828,10 +949,20 @@
                             10
                         </option>
 
+                        <option value="20">
+                            20
+                        </option>
+
+                        <option value="50">
+                            50
+                        </option>
+
                     </select>
 
                 </div>
 
+
+                <!-- SHORT ANSWER -->
 
                 <div class="type-card">
 
@@ -850,22 +981,32 @@
 
                     <select id="count-sa">
 
-                        <option value="2">
-                            2
+                        <option value="1">
+                            1
                         </option>
 
-                        <option value="4" selected>
-                            4
+                        <option value="5" selected>
+                            5
                         </option>
 
-                        <option value="6">
-                            6
+                        <option value="10">
+                            10
+                        </option>
+
+                        <option value="20">
+                            20
+                        </option>
+
+                        <option value="50">
+                            50
                         </option>
 
                     </select>
 
                 </div>
 
+
+                <!-- ESSAY -->
 
                 <div class="type-card">
 
@@ -888,12 +1029,20 @@
                             1
                         </option>
 
-                        <option value="2" selected>
-                            2
+                        <option value="5" selected>
+                            5
                         </option>
 
-                        <option value="3">
-                            3
+                        <option value="10">
+                            10
+                        </option>
+
+                        <option value="20">
+                            20
+                        </option>
+
+                        <option value="50">
+                            50
                         </option>
 
                     </select>
@@ -992,7 +1141,7 @@
                         color:var(--primary);
                     ">
 
-                    Grade: B+
+                    Grade: B+ (Good)
 
                 </strong>
 
@@ -1003,7 +1152,7 @@
                         font-size:13px;
                     ">
 
-                        Feedback will appear here.
+                    Feedback
 
                 </p>
 
@@ -1049,53 +1198,49 @@
 
 <script>
 
+/* =========================================================
+   DATA
+========================================================= */
+
 let currentLang = 'en';
 
-
 /*
-    STORES UPLOADED NOTES
+    Every file is stored here.
+
+    Example:
+
+    topicFiles = {
+        "Biology.pdf": {
+            content: "...",
+            children: {
+                "Chapter 1.txt": {
+                    content: "..."
+                }
+            }
+        }
+    }
 */
 
-const uploadedNotes = {};
+const topicFiles = {};
 
 
-/*
-    BUILT-IN DEMO NOTES
-*/
+/* =========================================================
+   PDF.JS SETUP
+========================================================= */
 
-const builtInNotes = {
+if (
+    window.pdfjsLib
+) {
 
-    "Photosynthesis": `
-        Photosynthesis is the process by which green plants
-        convert light energy into chemical energy.
-        Chlorophyll absorbs light energy in plant cells.
-        Carbon dioxide enters the plant through tiny openings
-        called stomata.
-        Water is absorbed by the roots and transported through
-        the plant.
-        Glucose is produced during photosynthesis.
-        Plants can use glucose as an energy source.
-        Oxygen is released as a by-product of photosynthesis.
-    `,
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+        'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-    "Cold War": `
-        The Cold War was a period of political tension between
-        the United States and the Soviet Union.
-        The conflict developed after the Second World War.
-        The United States generally supported capitalism.
-        The Soviet Union generally supported communism.
-        NATO was established in 1949 as a military alliance.
-        The Soviet Union and its allies later created the
-        Warsaw Pact.
-        The Berlin Wall became a major symbol of the division
-        between communist and capitalist Europe.
-    `
-};
+}
 
 
-/*
-    TRANSLATIONS
-*/
+/* =========================================================
+   TRANSLATIONS
+========================================================= */
 
 const translations = {
 
@@ -1129,7 +1274,7 @@ const translations = {
             "📥 Upload Material to Notes",
 
         lblDragText:
-            "Click or Drop Files Here (.txt / .pdf)",
+            "Click or Drop Files Here",
 
         lblConfig:
             "⚙️ Test Configurator",
@@ -1159,7 +1304,6 @@ const translations = {
             "Submit & Mark Essay"
 
     },
-
 
     zh: {
 
@@ -1191,7 +1335,7 @@ const translations = {
             "📥 上傳文件並生成測驗",
 
         lblDragText:
-            "按此上傳或拖放文字檔 / PDF (.txt / .pdf)",
+            "按此上傳或拖放文件",
 
         lblConfig:
             "⚙️ 測驗自訂選項",
@@ -1225,9 +1369,9 @@ const translations = {
 };
 
 
-/*
-    LANGUAGE
-*/
+/* =========================================================
+   LANGUAGE
+========================================================= */
 
 function toggleLanguage() {
 
@@ -1236,22 +1380,33 @@ function toggleLanguage() {
             ? 'zh'
             : 'en';
 
+    applyLanguage();
+
+}
+
+
+function applyLanguage() {
+
     const t =
         translations[currentLang];
 
 
-    document.getElementById('app-title')
-        .innerText =
+    document.getElementById(
+        'app-title'
+    ).innerText =
         t.appTitle;
 
 
-    document.getElementById('lang-toggle-btn')
-        .innerText =
+    document.getElementById(
+        'lang-toggle-btn'
+    ).innerText =
         t.langBtn;
 
 
     const userElem =
-        document.getElementById('user-display');
+        document.getElementById(
+            'user-display'
+        );
 
 
     if (
@@ -1265,443 +1420,668 @@ function toggleLanguage() {
     }
 
 
-    document.getElementById('auth-btn')
-        .innerText =
+    document.getElementById(
+        'auth-btn'
+    ).innerText =
         t.authBtn;
 
 
-    document.getElementById('lbl-theme')
-        .innerText =
+    document.getElementById(
+        'lbl-theme'
+    ).innerText =
         t.lblTheme;
 
 
-    document.getElementById('lbl-files')
-        .innerText =
+    document.getElementById(
+        'lbl-files'
+    ).innerText =
         t.lblFiles;
 
 
-    document.getElementById('lbl-add-file')
-        .innerText =
+    document.getElementById(
+        'lbl-add-file'
+    ).innerText =
         t.lblAddFile;
 
 
-    document.getElementById('btn-save-file')
-        .innerText =
+    document.getElementById(
+        'btn-save-file'
+    ).innerText =
         t.btnSaveFile;
 
 
-    document.getElementById('lbl-upload-heading')
-        .innerText =
+    document.getElementById(
+        'lbl-upload-heading'
+    ).innerText =
         t.lblUploadHeading;
 
 
-    document.getElementById('lbl-drag-text')
-        .innerText =
+    document.getElementById(
+        'lbl-drag-text'
+    ).innerText =
         t.lblDragText;
 
 
-    document.getElementById('lbl-config')
-        .innerText =
+    document.getElementById(
+        'lbl-config'
+    ).innerText =
         t.lblConfig;
 
 
-    document.getElementById('opt-mcq')
-        .innerText =
+    document.getElementById(
+        'opt-mcq'
+    ).innerText =
         t.optMcq;
 
 
-    document.getElementById('opt-tf')
-        .innerText =
+    document.getElementById(
+        'opt-tf'
+    ).innerText =
         t.optTf;
 
 
-    document.getElementById('opt-sa')
-        .innerText =
+    document.getElementById(
+        'opt-sa'
+    ).innerText =
         t.optSa;
 
 
-    document.getElementById('opt-essay')
-        .innerText =
+    document.getElementById(
+        'opt-essay'
+    ).innerText =
         t.optEssay;
 
 
-    document.getElementById('btn-generate')
-        .innerText =
+    document.getElementById(
+        'btn-generate'
+    ).innerText =
         t.btnGenerate;
 
 
-    document.getElementById('lbl-quiz-result')
-        .innerText =
+    document.getElementById(
+        'lbl-quiz-result'
+    ).innerText =
         t.lblQuizResult;
 
 
-    document.getElementById('lbl-essay-heading')
-        .innerText =
+    document.getElementById(
+        'lbl-essay-heading'
+    ).innerText =
         t.lblEssayHeading;
 
 
-    document.getElementById('btn-mark')
-        .innerText =
+    document.getElementById(
+        'btn-mark'
+    ).innerText =
         t.btnMark;
+
+
+    renderFileList();
+
 }
 
 
-/*
-    FILE UPLOAD
-    Supports TXT and PDF
-*/
+/* =========================================================
+   FILE UPLOAD
+========================================================= */
 
-function handleFileUpload(event) {
+const uploadZone =
+    document.getElementById(
+        'upload-zone'
+    );
 
-    const file =
-        event.target.files[0];
+const fileInput =
+    document.getElementById(
+        'file-upload-input'
+    );
 
-    if (!file) return;
+
+uploadZone.addEventListener(
+    'click',
+    () => fileInput.click()
+);
+
+
+uploadZone.addEventListener(
+    'dragover',
+    event => {
+
+        event.preventDefault();
+
+        uploadZone.classList.add(
+            'dragover'
+        );
+
+    }
+);
+
+
+uploadZone.addEventListener(
+    'dragleave',
+    () => {
+
+        uploadZone.classList.remove(
+            'dragover'
+        );
+
+    }
+);
+
+
+uploadZone.addEventListener(
+    'drop',
+    event => {
+
+        event.preventDefault();
+
+        uploadZone.classList.remove(
+            'dragover'
+        );
+
+        const files =
+            Array.from(
+                event.dataTransfer.files
+            );
+
+        processUploadedFiles(files);
+
+    }
+);
+
+
+fileInput.addEventListener(
+    'change',
+    event => {
+
+        const files =
+            Array.from(
+                event.target.files
+            );
+
+        processUploadedFiles(files);
+
+        fileInput.value = '';
+
+    }
+);
+
+
+/* =========================================================
+   PROCESS UPLOADED FILES
+========================================================= */
+
+async function processUploadedFiles(
+    files
+) {
+
+    if (!files.length) {
+        return;
+    }
+
+
+    for (
+        const file of files
+    ) {
+
+        try {
+
+            showUploadStatus(
+                currentLang === 'en'
+                    ? `Reading "${file.name}"...`
+                    : `正在讀取「${file.name}」...`
+            );
+
+
+            const extension =
+                file.name
+                    .split('.')
+                    .pop()
+                    .toLowerCase();
+
+
+            let text = '';
+
+
+            if (
+                extension === 'pdf'
+            ) {
+
+                text =
+                    await extractPDFText(
+                        file
+                    );
+
+            }
+
+            else if (
+                extension === 'txt'
+            ) {
+
+                text =
+                    await file.text();
+
+            }
+
+            else if (
+                extension === 'doc' ||
+                extension === 'docx'
+            ) {
+
+                /*
+                    Browser-only DOC/DOCX parsing is not as
+                    reliable as PDF/TXT without another parser.
+
+                    We attempt to read it as text so the app
+                    can still handle simple text-based files.
+                */
+
+                text =
+                    await file.text();
+
+            }
+
+            else {
+
+                throw new Error(
+                    'Unsupported file type'
+                );
+
+            }
+
+
+            text =
+                cleanExtractedText(
+                    text
+                );
+
+
+            if (!text) {
+
+                throw new Error(
+                    currentLang === 'en'
+                        ? 'No readable text was found.'
+                        : '找不到可讀取的文字。'
+                );
+
+            }
+
+
+            addMainTopic(
+                file.name,
+                text
+            );
+
+
+            showUploadStatus(
+                currentLang === 'en'
+                    ? `"${file.name}" added successfully.`
+                    : `「${file.name}」已成功加入。`
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+
+            showUploadStatus(
+                currentLang === 'en'
+                    ? `Could not read "${file.name}".`
+                    : `無法讀取「${file.name}」。`
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   EXTRACT PDF TEXT
+========================================================= */
+
+async function extractPDFText(
+    file
+) {
+
+    if (!window.pdfjsLib) {
+
+        throw new Error(
+            'PDF.js is unavailable.'
+        );
+
+    }
+
+
+    const arrayBuffer =
+        await file.arrayBuffer();
+
+
+    const pdf =
+        await pdfjsLib
+            .getDocument({
+                data: arrayBuffer
+            })
+            .promise;
+
+
+    let fullText = '';
+
+
+    for (
+        let pageNumber = 1;
+        pageNumber <= pdf.numPages;
+        pageNumber++
+    ) {
+
+        const page =
+            await pdf.getPage(
+                pageNumber
+            );
+
+
+        const content =
+            await page.getTextContent();
+
+
+        const pageText =
+            content.items
+                .map(
+                    item => item.str
+                )
+                .join(' ');
+
+
+        fullText +=
+            pageText + '\n\n';
+
+    }
+
+
+    return fullText;
+
+}
+
+
+/* =========================================================
+   CLEAN TEXT
+========================================================= */
+
+function cleanExtractedText(
+    text
+) {
+
+    return String(text || '')
+
+        .replace(
+            /\r/g,
+            ' '
+        )
+
+        .replace(
+            /\n{3,}/g,
+            '\n\n'
+        )
+
+        .replace(
+            /[ \t]+/g,
+            ' '
+        )
+
+        .trim();
+
+}
+
+
+/* =========================================================
+   ADD MAIN TOPIC
+========================================================= */
+
+function addMainTopic(
+    fileName,
+    content
+) {
+
+    if (
+        topicFiles[fileName]
+    ) {
+
+        /*
+            If the same filename is uploaded again,
+            replace the content.
+        */
+
+        topicFiles[fileName].content =
+            content;
+
+    }
+
+    else {
+
+        topicFiles[fileName] = {
+
+            content:
+                content,
+
+            children:
+                {}
+
+        };
+
+    }
+
+
+    renderFileList();
+
+}
+
+
+/* =========================================================
+   ADD TOPIC FILE MANUALLY
+========================================================= */
+
+function addTopicFile() {
+
+    const title =
+        document
+            .getElementById(
+                'file-title'
+            )
+            .value
+            .trim();
+
+
+    const content =
+        document
+            .getElementById(
+                'file-content'
+            )
+            .value
+            .trim();
+
+
+    if (!title) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter a file name.'
+                : '請輸入檔案名稱。'
+        );
+
+        return;
+
+    }
+
+
+    if (!content) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter some notes.'
+                : '請輸入一些筆記內容。'
+        );
+
+        return;
+
+    }
 
 
     const fileName =
-        file.name.toLowerCase();
+        title.endsWith('.txt')
+            ? title
+            : `${title}.txt`;
 
 
-    const isTxt =
-        fileName.endsWith('.txt');
+    addMainTopic(
+        fileName,
+        content
+    );
 
 
-    const isPdf =
-        fileName.endsWith('.pdf');
+    document.getElementById(
+        'file-title'
+    ).value = '';
 
 
-    if (!isTxt && !isPdf) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please upload a .txt or .pdf file.'
-                : '請上傳 .txt 或 .pdf 檔案。'
-        );
-
-        event.target.value = '';
-
-        return;
-    }
+    document.getElementById(
+        'file-content'
+    ).value = '';
 
 
-    /*
-        TXT
-    */
+    showUploadStatus(
+        currentLang === 'en'
+            ? 'Topic file saved!'
+            : '主題檔案已儲存！'
+    );
 
-    if (isTxt) {
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            function(e) {
-
-                const content =
-                    e.target.result.trim();
-
-
-                if (!content) {
-
-                    alert(
-                        currentLang === 'en'
-                            ? 'This file is empty.'
-                            : '這個檔案是空的。'
-                    );
-
-                    event.target.value = '';
-
-                    return;
-                }
-
-
-                uploadedNotes[file.name] =
-                    content;
-
-
-                addFileToSidebar(
-                    file.name
-                );
-
-
-                alert(
-                    currentLang === 'en'
-                        ? `"${file.name}" loaded successfully!`
-                        : `"${file.name}" 已成功載入！`
-                );
-
-
-                event.target.value = '';
-            };
-
-
-        reader.onerror =
-            function() {
-
-                alert(
-                    currentLang === 'en'
-                        ? 'Could not read this file.'
-                        : '無法讀取這個檔案。'
-                );
-
-                event.target.value = '';
-            };
-
-
-        reader.readAsText(file);
-
-        return;
-    }
-
-
-    /*
-        PDF
-    */
-
-    if (isPdf) {
-
-        readPDFFile(
-            file,
-            event
-        );
-
-    }
 }
 
 
-/*
-    READ PDF
-*/
+/* =========================================================
+   ADD SUB-FILE
+========================================================= */
 
-async function readPDFFile(
-    file,
-    event
-) {
+function addSubFile() {
 
-    try {
-
-        /*
-            Show loading message
-        */
-
-        const loading =
-            document.createElement(
-                'div'
-            );
-
-        loading.id =
-            'pdf-loading';
-
-        loading.className =
-            'loading-box';
-
-        loading.innerText =
-            currentLang === 'en'
-                ? `📖 Reading "${file.name}"...`
-                : `📖 正在讀取「${file.name}」...`;
+    const parent =
+        document
+            .getElementById(
+                'parent-file-select'
+            )
+            .value;
 
 
-        const uploadZone =
-            document.querySelector(
-                '.upload-zone'
-            );
+    const title =
+        document
+            .getElementById(
+                'subfile-title'
+            )
+            .value
+            .trim();
 
 
-        uploadZone.insertAdjacentElement(
-            'afterend',
-            loading
-        );
+    const content =
+        document
+            .getElementById(
+                'subfile-content'
+            )
+            .value
+            .trim();
 
 
-        /*
-            Read PDF
-        */
-
-        const arrayBuffer =
-            await file.arrayBuffer();
-
-
-        /*
-            Load PDF using PDF.js
-        */
-
-        const pdf =
-            await pdfjsLib
-                .getDocument({
-                    data: arrayBuffer
-                })
-                .promise;
-
-
-        let extractedText =
-            '';
-
-
-        /*
-            Extract every page
-        */
-
-        for (
-            let pageNumber = 1;
-            pageNumber <= pdf.numPages;
-            pageNumber++
-        ) {
-
-            const page =
-                await pdf.getPage(
-                    pageNumber
-                );
-
-
-            const textContent =
-                await page.getTextContent();
-
-
-            const pageText =
-                textContent.items
-                    .map(
-                        item => item.str
-                    )
-                    .join(' ');
-
-
-            extractedText +=
-                pageText + '\n\n';
-
-
-            loading.innerText =
-                currentLang === 'en'
-                    ? `📖 Reading "${file.name}"... Page ${pageNumber} of ${pdf.numPages}`
-                    : `📖 正在讀取「${file.name}」... 第 ${pageNumber} / ${pdf.numPages} 頁`;
-        }
-
-
-        /*
-            Clean extracted text
-        */
-
-        extractedText =
-            extractedText
-                .replace(/\s+/g, ' ')
-                .trim();
-
-
-        /*
-            Remove loading box
-        */
-
-        loading.remove();
-
-
-        /*
-            No text found
-        */
-
-        if (!extractedText) {
-
-            alert(
-                currentLang === 'en'
-                    ? 'No readable text was found in this PDF. If it is a scanned PDF, OCR is required.'
-                    : '這個 PDF 找不到可讀取的文字。如果是掃描 PDF，需要使用 OCR。'
-            );
-
-            event.target.value = '';
-
-            return;
-        }
-
-
-        /*
-            Save extracted notes
-        */
-
-        uploadedNotes[file.name] =
-            extractedText;
-
-
-        /*
-            Add PDF to sidebar
-        */
-
-        addFileToSidebar(
-            file.name
-        );
-
-
-        /*
-            Automatically check new PDF
-        */
-
-        const checkbox =
-            Array.from(
-                document.querySelectorAll(
-                    '.topic-cb'
-                )
-            ).find(
-                cb =>
-                    cb.value === file.name
-            );
-
-
-        if (checkbox) {
-
-            checkbox.checked =
-                true;
-
-        }
-
-
-        /*
-            Success
-        */
+    if (!parent) {
 
         alert(
             currentLang === 'en'
-                ? `"${file.name}" loaded successfully! ${pdf.numPages} page(s) extracted.`
-                : `「${file.name}」已成功載入！已提取 ${pdf.numPages} 頁內容。`
+                ? 'Please select a parent file.'
+                : '請先選擇主檔案。'
         );
 
-
-    } catch (error) {
-
-        console.error(
-            'PDF reading error:',
-            error
-        );
-
-
-        const loading =
-            document.getElementById(
-                'pdf-loading'
-            );
-
-
-        if (loading) {
-            loading.remove();
-        }
-
-
-        alert(
-            currentLang === 'en'
-                ? 'Could not read this PDF. Please make sure it is a valid PDF.'
-                : '無法讀取這個 PDF。請確認檔案是有效的 PDF。'
-        );
+        return;
 
     }
 
 
-    event.target.value = '';
+    if (!title) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter a sub-file name.'
+                : '請輸入子檔案名稱。'
+        );
+
+        return;
+
+    }
+
+
+    if (!content) {
+
+        alert(
+            currentLang === 'en'
+                ? 'Please enter sub-file notes.'
+                : '請輸入子檔案內容。'
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !topicFiles[parent]
+    ) {
+
+        return;
+
+    }
+
+
+    const subName =
+        title.endsWith('.txt')
+            ? title
+            : `${title}.txt`;
+
+
+    topicFiles[parent].children[subName] = {
+
+        content:
+            content
+
+    };
+
+
+    document.getElementById(
+        'subfile-title'
+    ).value = '';
+
+
+    document.getElementById(
+        'subfile-content'
+    ).value = '';
+
+
+    renderFileList();
+
+
+    showUploadStatus(
+        currentLang === 'en'
+            ? 'Sub-file added successfully!'
+            : '子檔案已成功加入！'
+    );
+
 }
 
 
-/*
-    ADD FILE TO SIDEBAR
-*/
+/* =========================================================
+   RENDER FILE LIST
+========================================================= */
 
-function addFileToSidebar(
-    fileName
-) {
+function renderFileList() {
 
     const container =
         document.getElementById(
@@ -1709,84 +2089,588 @@ function addFileToSidebar(
         );
 
 
-    const alreadyExists =
-        Array.from(
-            container.querySelectorAll(
-                '.topic-cb'
-            )
-        ).some(
-            cb =>
-                cb.value === fileName
+    container.innerHTML =
+        '';
+
+
+    const parentSelect =
+        document.getElementById(
+            'parent-file-select'
         );
 
 
-    if (alreadyExists) return;
+    parentSelect.innerHTML =
+        '';
 
 
-    const div =
+    const defaultOption =
         document.createElement(
-            'div'
+            'option'
         );
 
 
-    div.className =
-        'file-item';
+    defaultOption.value =
+        '';
 
 
-    const label =
-        document.createElement(
-            'label'
-        );
+    defaultOption.innerText =
+        currentLang === 'en'
+            ? 'Select parent file...'
+            : '選擇主檔案...';
 
 
-    const checkbox =
-        document.createElement(
-            'input'
-        );
-
-
-    checkbox.type =
-        'checkbox';
-
-
-    checkbox.className =
-        'topic-cb';
-
-
-    checkbox.value =
-        fileName;
-
-
-    checkbox.checked =
-        true;
-
-
-    label.appendChild(
-        checkbox
+    parentSelect.appendChild(
+        defaultOption
     );
 
 
-    label.appendChild(
-        document.createTextNode(
-            ' ' + fileName
-        )
+    Object.keys(
+        topicFiles
+    ).forEach(
+        fileName => {
+
+            const file =
+                topicFiles[fileName];
+
+
+            /* Parent select */
+
+            const option =
+                document.createElement(
+                    'option'
+                );
+
+
+            option.value =
+                fileName;
+
+
+            option.innerText =
+                fileName;
+
+
+            parentSelect.appendChild(
+                option
+            );
+
+
+            /* Parent row */
+
+            const parentRow =
+                document.createElement(
+                    'div'
+                );
+
+
+            parentRow.className =
+                'file-item parent';
+
+
+            const left =
+                document.createElement(
+                    'div'
+                );
+
+
+            left.className =
+                'file-left';
+
+
+            /* Folder button */
+
+            const folderButton =
+                document.createElement(
+                    'button'
+                );
+
+
+            folderButton.className =
+                'folder-btn';
+
+
+            folderButton.innerText =
+                Object.keys(
+                    file.children
+                ).length
+                    ? '📁'
+                    : '📄';
+
+
+            folderButton.title =
+                'Expand / collapse';
+
+
+            left.appendChild(
+                folderButton
+            );
+
+
+            /* Checkbox */
+
+            const checkbox =
+                document.createElement(
+                    'input'
+                );
+
+
+            checkbox.type =
+                'checkbox';
+
+
+            checkbox.className =
+                'topic-cb';
+
+
+            checkbox.value =
+                fileName;
+
+
+            checkbox.checked =
+                true;
+
+
+            left.appendChild(
+                checkbox
+            );
+
+
+            const label =
+                document.createElement(
+                    'label'
+                );
+
+
+            label.innerText =
+                fileName;
+
+
+            left.appendChild(
+                label
+            );
+
+
+            parentRow.appendChild(
+                left
+            );
+
+
+            /* Delete parent */
+
+            const actions =
+                document.createElement(
+                    'div'
+                );
+
+
+            actions.className =
+                'file-actions';
+
+
+            const deleteButton =
+                document.createElement(
+                    'button'
+                );
+
+
+            deleteButton.className =
+                'small-btn delete-btn';
+
+
+            deleteButton.innerText =
+                '✕';
+
+
+            deleteButton.title =
+                currentLang === 'en'
+                    ? 'Delete file'
+                    : '刪除檔案';
+
+
+            deleteButton.onclick =
+                () => deleteMainFile(
+                    fileName
+                );
+
+
+            actions.appendChild(
+                deleteButton
+            );
+
+
+            parentRow.appendChild(
+                actions
+            );
+
+
+            container.appendChild(
+                parentRow
+            );
+
+
+            /* Children */
+
+            const childContainer =
+                document.createElement(
+                    'div'
+                );
+
+
+            childContainer.className =
+                'file-children';
+
+
+            childContainer.id =
+                'children-' +
+                encodeURIComponent(
+                    fileName
+                );
+
+
+            Object.keys(
+                file.children
+            ).forEach(
+                childName => {
+
+                    const child =
+                        file.children[
+                            childName
+                        ];
+
+
+                    const childRow =
+                        document.createElement(
+                            'div'
+                        );
+
+
+                    childRow.className =
+                        'sub-file-item';
+
+
+                    const childLeft =
+                        document.createElement(
+                            'div'
+                        );
+
+
+                    childLeft.className =
+                        'file-left';
+
+
+                    const childCheckbox =
+                        document.createElement(
+                            'input'
+                        );
+
+
+                    childCheckbox.type =
+                        'checkbox';
+
+
+                    childCheckbox.className =
+                        'topic-cb';
+
+
+                    /*
+                        Child topics use a unique ID.
+                    */
+
+                    childCheckbox.value =
+                        getChildTopicId(
+                            fileName,
+                            childName
+                        );
+
+
+                    childCheckbox.checked =
+                        true;
+
+
+                    childLeft.appendChild(
+                        childCheckbox
+                    );
+
+
+                    const childLabel =
+                        document.createElement(
+                            'label'
+                        );
+
+
+                    childLabel.innerText =
+                        '↳ ' + childName;
+
+
+                    childLeft.appendChild(
+                        childLabel
+                    );
+
+
+                    childRow.appendChild(
+                        childLeft
+                    );
+
+
+                    const childDelete =
+                        document.createElement(
+                            'button'
+                        );
+
+
+                    childDelete.className =
+                        'small-btn delete-btn';
+
+
+                    childDelete.innerText =
+                        '✕';
+
+
+                    childDelete.onclick =
+                        () =>
+                            deleteSubFile(
+                                fileName,
+                                childName
+                            );
+
+
+                    childRow.appendChild(
+                        childDelete
+                    );
+
+
+                    childContainer.appendChild(
+                        childRow
+                    );
+
+                }
+            );
+
+
+            if (
+                Object.keys(
+                    file.children
+                ).length
+            ) {
+
+                container.appendChild(
+                    childContainer
+                );
+
+            }
+
+
+            folderButton.onclick =
+                () => {
+
+                    childContainer.classList.toggle(
+                        'hidden'
+                    );
+
+                };
+
+        }
     );
 
-
-    div.appendChild(
-        label
-    );
-
-
-    container.appendChild(
-        div
-    );
 }
 
 
-/*
-    GENERATE PRACTICE TEST
-*/
+/* =========================================================
+   CHILD TOPIC ID
+========================================================= */
+
+function getChildTopicId(
+    parent,
+    child
+) {
+
+    return (
+        parent +
+        '::' +
+        child
+    );
+
+}
+
+
+/* =========================================================
+   FIND TOPIC CONTENT
+========================================================= */
+
+function getTopicContent(
+    topicId
+) {
+
+    if (
+        topicFiles[topicId]
+    ) {
+
+        return topicFiles[
+            topicId
+        ].content;
+
+    }
+
+
+    const separator =
+        '::';
+
+
+    if (
+        topicId.includes(
+            separator
+        )
+    ) {
+
+        const parts =
+            topicId.split(
+                separator
+            );
+
+
+        const parent =
+            parts.shift();
+
+
+        const child =
+            parts.join(
+                separator
+            );
+
+
+        if (
+            topicFiles[parent] &&
+            topicFiles[parent].children[child]
+        ) {
+
+            return topicFiles[parent]
+                .children[child]
+                .content;
+
+        }
+
+    }
+
+
+    return '';
+
+}
+
+
+/* =========================================================
+   DELETE MAIN FILE
+========================================================= */
+
+function deleteMainFile(
+    fileName
+) {
+
+    const confirmed =
+        confirm(
+            currentLang === 'en'
+                ? `Delete "${fileName}" and all its sub-files?`
+                : `確定要刪除「${fileName}」及所有子檔案？`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    delete topicFiles[
+        fileName
+    ];
+
+
+    renderFileList();
+
+}
+
+
+/* =========================================================
+   DELETE SUB-FILE
+========================================================= */
+
+function deleteSubFile(
+    parent,
+    child
+) {
+
+    const confirmed =
+        confirm(
+            currentLang === 'en'
+                ? `Delete "${child}"?`
+                : `確定要刪除「${child}」？`
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    if (
+        topicFiles[parent]
+    ) {
+
+        delete topicFiles[
+            parent
+        ].children[
+            child
+        ];
+
+    }
+
+
+    renderFileList();
+
+}
+
+
+/* =========================================================
+   UPLOAD STATUS
+========================================================= */
+
+function showUploadStatus(
+    message
+) {
+
+    const box =
+        document.getElementById(
+            'upload-status'
+        );
+
+
+    box.innerText =
+        message;
+
+
+    box.style.display =
+        'block';
+
+
+    clearTimeout(
+        showUploadStatus.timer
+    );
+
+
+    showUploadStatus.timer =
+        setTimeout(
+            () => {
+
+                box.style.display =
+                    'none';
+
+            },
+            4000
+        );
+
+}
+
+
+/* =========================================================
+   GENERATE PRACTICE TEST
+========================================================= */
 
 function generatePracticeTest() {
 
@@ -1796,12 +2680,13 @@ function generatePracticeTest() {
                 '.topic-cb:checked'
             )
         ).map(
-            cb =>
-                cb.value
+            cb => cb.value
         );
 
 
-    if (!checkedTopics.length) {
+    if (
+        !checkedTopics.length
+    ) {
 
         alert(
             currentLang === 'en'
@@ -1810,57 +2695,36 @@ function generatePracticeTest() {
         );
 
         return;
+
     }
 
 
     const settings = {
 
         mcq:
-            document.getElementById(
-                'cb-mcq'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-mcq'
-                    ).value
-                )
-                : 0,
-
+            getQuestionCount(
+                'cb-mcq',
+                'count-mcq'
+            ),
 
         tf:
-            document.getElementById(
-                'cb-tf'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-tf'
-                    ).value
-                )
-                : 0,
-
+            getQuestionCount(
+                'cb-tf',
+                'count-tf'
+            ),
 
         sa:
-            document.getElementById(
-                'cb-sa'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-sa'
-                    ).value
-                )
-                : 0,
-
+            getQuestionCount(
+                'cb-sa',
+                'count-sa'
+            ),
 
         essay:
-            document.getElementById(
-                'cb-essay'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-essay'
-                    ).value
-                )
-                : 0
+            getQuestionCount(
+                'cb-essay',
+                'count-essay'
+            )
+
     };
 
 
@@ -1871,25 +2735,27 @@ function generatePracticeTest() {
     checkedTopics.forEach(
         topic => {
 
-            let notes =
-                uploadedNotes[topic];
+            const notes =
+                getTopicContent(
+                    topic
+                );
 
 
             if (!notes) {
-
-                notes =
-                    builtInNotes[topic];
-
+                return;
             }
 
 
-            if (!notes) return;
+            const topicName =
+                topic.includes('::')
+                    ? topic.split('::').pop()
+                    : topic;
 
 
             const topicQuestions =
                 createQuestionsFromNotes(
                     notes,
-                    topic,
+                    topicName,
                     settings
                 );
 
@@ -1902,15 +2768,18 @@ function generatePracticeTest() {
     );
 
 
-    if (!allQuestions.length) {
+    if (
+        !allQuestions.length
+    ) {
 
         alert(
             currentLang === 'en'
-                ? 'Not enough information was found in your notes.'
-                : '你的筆記沒有足夠資料生成題目。'
+                ? 'Not enough readable information was found in your selected files.'
+                : '你選擇的檔案沒有足夠可讀取的資料生成題目。'
         );
 
         return;
+
     }
 
 
@@ -1923,12 +2792,46 @@ function generatePracticeTest() {
     renderQuestions(
         allQuestions
     );
+
 }
 
 
-/*
-    CREATE QUESTIONS
-*/
+/* =========================================================
+   GET QUESTION COUNT
+========================================================= */
+
+function getQuestionCount(
+    checkboxId,
+    selectId
+) {
+
+    const checkbox =
+        document.getElementById(
+            checkboxId
+        );
+
+
+    if (
+        !checkbox.checked
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+        document.getElementById(
+            selectId
+        ).value
+    );
+
+}
+
+
+/* =========================================================
+   CREATE QUESTIONS
+========================================================= */
 
 function createQuestionsFromNotes(
     notes,
@@ -1942,7 +2845,9 @@ function createQuestionsFromNotes(
         );
 
 
-    if (!sentences.length) {
+    if (
+        !sentences.length
+    ) {
 
         return [];
 
@@ -1960,9 +2865,7 @@ function createQuestionsFromNotes(
         [];
 
 
-    /*
-        MCQ
-    */
+    /* MCQ */
 
     for (
         let i = 0;
@@ -1984,7 +2887,9 @@ function createQuestionsFromNotes(
             );
 
 
-        if (question) {
+        if (
+            question
+        ) {
 
             questions.push(
                 question
@@ -1995,9 +2900,7 @@ function createQuestionsFromNotes(
     }
 
 
-    /*
-        TRUE / FALSE
-    */
+    /* TRUE / FALSE */
 
     for (
         let i = 0;
@@ -2010,7 +2913,8 @@ function createQuestionsFromNotes(
                 (
                     i +
                     settings.mcq
-                ) %
+                )
+                %
                 shuffled.length
             ];
 
@@ -2026,9 +2930,7 @@ function createQuestionsFromNotes(
     }
 
 
-    /*
-        SHORT ANSWER
-    */
+    /* SHORT ANSWER */
 
     for (
         let i = 0;
@@ -2042,7 +2944,8 @@ function createQuestionsFromNotes(
                     i +
                     settings.mcq +
                     settings.tf
-                ) %
+                )
+                %
                 shuffled.length
             ];
 
@@ -2070,9 +2973,7 @@ function createQuestionsFromNotes(
     }
 
 
-    /*
-        ESSAY
-    */
+    /* ESSAY */
 
     for (
         let i = 0;
@@ -2100,7 +3001,7 @@ function createQuestionsFromNotes(
                     .slice(
                         0,
                         Math.min(
-                            4,
+                            5,
                             shuffled.length
                         )
                     )
@@ -2112,53 +3013,117 @@ function createQuestionsFromNotes(
 
 
     return questions;
+
 }
 
 
-/*
-    EXTRACT SENTENCES
-*/
+/* =========================================================
+   EXTRACT SENTENCES
+========================================================= */
 
 function extractSentences(
     notes
 ) {
 
-    return notes
+    const cleaned =
+        String(notes)
 
-        .replace(
-            /\r/g,
-            ' '
-        )
+            .replace(
+                /\r/g,
+                ' '
+            )
 
-        .replace(
-            /\n+/g,
-            ' '
-        )
+            .replace(
+                /\n+/g,
+                ' '
+            )
 
-        .replace(
-            /\s+/g,
-            ' '
-        )
+            .replace(
+                /\s+/g,
+                ' '
+            );
 
-        .split(
-            /(?<=[.!?])\s+/
-        )
 
-        .map(
-            sentence =>
-                sentence.trim()
-        )
+    let sentences =
+        cleaned
 
-        .filter(
-            sentence =>
-                sentence.length >= 30
-        );
+            .split(
+                /(?<=[.!?])\s+/
+            )
+
+            .map(
+                sentence =>
+                    sentence.trim()
+            )
+
+            .filter(
+                sentence =>
+                    sentence.length >= 30
+            );
+
+
+    /*
+        If PDF extraction doesn't contain normal
+        punctuation, create chunks instead.
+    */
+
+    if (
+        sentences.length < 2 &&
+        cleaned.length >= 100
+    ) {
+
+        const words =
+            cleaned.split(
+                /\s+/
+            );
+
+
+        sentences =
+            [];
+
+
+        const chunkSize =
+            35;
+
+
+        for (
+            let i = 0;
+            i < words.length;
+            i += chunkSize
+        ) {
+
+            const chunk =
+                words
+                    .slice(
+                        i,
+                        i + chunkSize
+                    )
+                    .join(' ');
+
+
+            if (
+                chunk.length >= 30
+            ) {
+
+                sentences.push(
+                    chunk
+                );
+
+            }
+
+        }
+
+    }
+
+
+    return sentences;
+
 }
 
 
-/*
-    CREATE MCQ
-*/
+/* =========================================================
+   CREATE MCQ
+========================================================= */
 
 function createMCQ(
     sentence,
@@ -2184,7 +3149,9 @@ function createMCQ(
             );
 
 
-    if (words.length < 4) {
+    if (
+        words.length < 4
+    ) {
 
         return null;
 
@@ -2216,12 +3183,14 @@ function createMCQ(
         allSentences
 
             .flatMap(
-                s =>
-                    s
+                sentenceItem =>
+                    sentenceItem
+
                         .replace(
                             /[.,!?;:()[\]{}]/g,
                             ''
                         )
+
                         .split(
                             /\s+/
                         )
@@ -2230,25 +3199,28 @@ function createMCQ(
             .filter(
                 word =>
                     word.length >= 5 &&
-                    word.toLowerCase() !==
-                    answer.toLowerCase()
+                    word.toLowerCase()
+                        !==
+                        answer.toLowerCase()
             );
 
 
     const wrongAnswers =
-        [...new Set(
-            possibleWrongAnswers
-        )]
+        [
+            ...new Set(
+                possibleWrongAnswers
+            )
+        ]
 
-        .sort(
-            () =>
-                Math.random() - 0.5
-        )
+            .sort(
+                () =>
+                    Math.random() - 0.5
+            )
 
-        .slice(
-            0,
-            3
-        );
+            .slice(
+                0,
+                3
+            );
 
 
     if (
@@ -2264,10 +3236,12 @@ function createMCQ(
         [
             answer,
             ...wrongAnswers
-        ].sort(
-            () =>
-                Math.random() - 0.5
-        );
+        ]
+
+            .sort(
+                () =>
+                    Math.random() - 0.5
+            );
 
 
     return {
@@ -2297,12 +3271,13 @@ function createMCQ(
             )}. ${answer}`
 
     };
+
 }
 
 
-/*
-    TRUE / FALSE
-*/
+/* =========================================================
+   TRUE / FALSE
+========================================================= */
 
 function createTrueFalse(
     sentence,
@@ -2318,7 +3293,9 @@ function createTrueFalse(
         sentence;
 
 
-    if (makeFalse) {
+    if (
+        makeFalse
+    ) {
 
         const words =
             sentence.split(
@@ -2326,7 +3303,9 @@ function createTrueFalse(
             );
 
 
-        if (words.length > 5) {
+        if (
+            words.length > 5
+        ) {
 
             const position =
                 Math.floor(
@@ -2340,7 +3319,9 @@ function createTrueFalse(
 
 
             statement =
-                words.join(' ');
+                words.join(
+                    ' '
+                );
 
         }
 
@@ -2368,12 +3349,13 @@ function createTrueFalse(
                 : 'True'
 
     };
+
 }
 
 
-/*
-    RENDER QUESTIONS
-*/
+/* =========================================================
+   RENDER QUESTIONS
+========================================================= */
 
 function renderQuestions(
     questions
@@ -2390,10 +3372,7 @@ function renderQuestions(
 
 
     questions.forEach(
-        (
-            question,
-            index
-        ) => {
+        (question, index) => {
 
             const box =
                 document.createElement(
@@ -2439,9 +3418,7 @@ function renderQuestions(
             );
 
 
-            /*
-                MCQ
-            */
+            /* MCQ */
 
             if (
                 question.type ===
@@ -2489,10 +3466,12 @@ function renderQuestions(
 
                         label.appendChild(
                             document.createTextNode(
-                                ` ${String.fromCharCode(
-                                    65 +
-                                    optionIndex
-                                )}. ${option}`
+                                ` ${
+                                    String.fromCharCode(
+                                        65 +
+                                        optionIndex
+                                    )
+                                }. ${option}`
                             )
                         );
 
@@ -2513,9 +3492,7 @@ function renderQuestions(
             }
 
 
-            /*
-                TRUE / FALSE
-            */
+            /* TRUE FALSE */
 
             else if (
                 question.type ===
@@ -2588,9 +3565,7 @@ function renderQuestions(
             }
 
 
-            /*
-                SHORT ANSWER
-            */
+            /* SHORT ANSWER */
 
             else if (
                 question.type ===
@@ -2630,9 +3605,7 @@ function renderQuestions(
             }
 
 
-            /*
-                ESSAY
-            */
+            /* ESSAY */
 
             else {
 
@@ -2658,6 +3631,12 @@ function renderQuestions(
 
                 box.appendChild(
                     textarea
+                );
+
+
+                addAnswerButton(
+                    box,
+                    question.answer
                 );
 
             }
@@ -2689,12 +3668,13 @@ function renderQuestions(
         .remove(
             'hidden'
         );
+
 }
 
 
-/*
-    ANSWER BUTTON
-*/
+/* =========================================================
+   ANSWER BUTTON
+========================================================= */
 
 function addAnswerButton(
     box,
@@ -2755,12 +3735,13 @@ function addAnswerButton(
     box.appendChild(
         answerBox
     );
+
 }
 
 
-/*
-    NAVIGATION
-*/
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
 function showPanel(
     name,
@@ -2800,19 +3781,22 @@ function showPanel(
         );
 
 
-    if (button) {
+    if (
+        button
+    ) {
 
         button.classList.add(
             'active'
         );
 
     }
+
 }
 
 
-/*
-    THEMES
-*/
+/* =========================================================
+   THEMES
+========================================================= */
 
 function setTheme(
     theme
@@ -2822,12 +3806,13 @@ function setTheme(
         'data-theme',
         theme
     );
+
 }
 
 
-/*
-    LOGIN
-*/
+/* =========================================================
+   LOGIN
+========================================================= */
 
 function toggleAuthModal() {
 
@@ -2839,6 +3824,7 @@ function toggleAuthModal() {
         .toggle(
             'hidden'
         );
+
 }
 
 
@@ -2853,7 +3839,9 @@ function loginUser() {
             .trim();
 
 
-    if (!username) {
+    if (
+        !username
+    ) {
 
         alert(
             currentLang === 'en'
@@ -2862,6 +3850,7 @@ function loginUser() {
         );
 
         return;
+
     }
 
 
@@ -2891,95 +3880,13 @@ function loginUser() {
         .add(
             'hidden'
         );
+
 }
 
 
-/*
-    ADD TOPIC FILE
-*/
-
-function addTopicFile() {
-
-    const title =
-        document
-            .getElementById(
-                'file-title'
-            )
-            .value
-            .trim();
-
-
-    const content =
-        document
-            .getElementById(
-                'file-content'
-            )
-            .value
-            .trim();
-
-
-    if (!title) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please enter a file name.'
-                : '請輸入檔案名稱。'
-        );
-
-        return;
-    }
-
-
-    if (!content) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please enter some notes.'
-                : '請輸入一些筆記內容。'
-        );
-
-        return;
-    }
-
-
-    const fileName =
-        title.endsWith('.txt')
-            ? title
-            : `${title}.txt`;
-
-
-    uploadedNotes[fileName] =
-        content;
-
-
-    addFileToSidebar(
-        fileName
-    );
-
-
-    document.getElementById(
-        'file-title'
-    ).value =
-        '';
-
-
-    document.getElementById(
-        'file-content'
-    ).value =
-        '';
-
-
-    alert(
-        currentLang === 'en'
-            ? 'Topic file saved!'
-            : '主題檔案已儲存！'
-    );
-}
-
-
-/*
-    SHOW SELECTED NOTES
-*/
+/* =========================================================
+   SHOW SELECTED NOTES
+========================================================= */
 
 function showSelectedNotes() {
 
@@ -2991,7 +3898,9 @@ function showSelectedNotes() {
         );
 
 
-    if (!selected.length) {
+    if (
+        !selected.length
+    ) {
 
         alert(
             currentLang === 'en'
@@ -3000,6 +3909,7 @@ function showSelectedNotes() {
         );
 
         return;
+
     }
 
 
@@ -3007,19 +3917,10 @@ function showSelectedNotes() {
         selected
 
             .map(
-                checkbox => {
-
-                    const topic =
-                        checkbox.value;
-
-
-                    return (
-                        uploadedNotes[topic] ||
-                        builtInNotes[topic] ||
-                        ''
-                    );
-
-                }
+                checkbox =>
+                    getTopicContent(
+                        checkbox.value
+                    )
             )
 
             .filter(
@@ -3036,12 +3937,13 @@ function showSelectedNotes() {
         'notes-preview'
     ).value =
         notes;
+
 }
 
 
-/*
-    ESSAY MARKER
-*/
+/* =========================================================
+   ESSAY MARKER
+========================================================= */
 
 function markEssay() {
 
@@ -3054,7 +3956,9 @@ function markEssay() {
             .trim();
 
 
-    if (!text) {
+    if (
+        !text
+    ) {
 
         alert(
             currentLang === 'en'
@@ -3063,6 +3967,7 @@ function markEssay() {
         );
 
         return;
+
     }
 
 
@@ -3080,7 +3985,9 @@ function markEssay() {
         '';
 
 
-    if (wordCount >= 300) {
+    if (
+        wordCount >= 300
+    ) {
 
         grade =
             'A-';
@@ -3132,13 +4039,17 @@ function markEssay() {
     document.getElementById(
         'essay-grade'
     ).innerText =
-        `Grade: ${grade}`;
+        currentLang === 'en'
+            ? `Grade: ${grade}`
+            : `評級：${grade}`;
 
 
     document.getElementById(
         'essay-feedback'
     ).innerText =
-        `Feedback: ${feedback} Word count: ${wordCount}`;
+        currentLang === 'en'
+            ? `Feedback: ${feedback} Word count: ${wordCount}`
+            : `評語：${feedback} 字數：${wordCount}`;
 
 
     document
@@ -3149,12 +4060,13 @@ function markEssay() {
         .remove(
             'hidden'
         );
+
 }
 
 
-/*
-    SECURITY / HTML ESCAPING
-*/
+/* =========================================================
+   SECURITY
+========================================================= */
 
 function escapeHTML(
     text
@@ -3186,6 +4098,7 @@ function escapeHTML(
             /'/g,
             '&#039;'
         );
+
 }
 
 
@@ -3194,11 +4107,20 @@ function escapeRegExp(
 ) {
 
     return String(text)
+
         .replace(
             /[.*+?^${}()|[\]\\]/g,
             '\\$&'
         );
+
 }
+
+
+/* =========================================================
+   INITIALISE
+========================================================= */
+
+applyLanguage();
 
 </script>
 

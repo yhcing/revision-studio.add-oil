@@ -4,31 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>StudySphere</title>
+<title>StudySpace</title>
 
 <style>
-
-/* =========================================================
-   BASE
-========================================================= */
-
 :root {
-    --bg: #F8F6F3;
-    --card: #FFFFFF;
-    --text: #292B35;
-    --muted: #747884;
-    --border: #EAE6E5;
-
-    --primary: #8B7CAC;
-    --secondary: #B4C6DC;
-
-    --hero1: #8B7CAC;
-    --hero2: #B4C6DC;
-
-    --success: #86A995;
-    --danger: #C98789;
-
-    --sidebar: #FFFFFF;
+    --primary: #A4C8D5;
+    --primary-dark: #80ADBC;
+    --background: #F8F6F4;
+    --surface: #FFFFFF;
+    --surface-2: #F3F1EF;
+    --text: #454545;
+    --muted: #888888;
+    --border: #E5E1DE;
+    --danger: #D5A1A3;
+    --shadow: 0 8px 30px rgba(80, 80, 80, 0.08);
+    --radius: 18px;
 }
 
 * {
@@ -41,4934 +31,2586 @@ html {
 
 body {
     margin: 0;
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    background: var(--bg);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--background);
     color: var(--text);
-
-    transition:
-        background 0.25s ease,
-        color 0.25s ease;
 }
 
-button,
-input,
-textarea,
-select {
-    font: inherit;
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255,255,255,0.94);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border);
 }
 
-button {
+.navbar {
+    max-width: 1250px;
+    margin: auto;
+    padding: 15px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
     cursor: pointer;
 }
 
-button:focus,
-input:focus,
-textarea:focus,
-select:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 2px;
-}
-
-
-/* =========================================================
-   APP LAYOUT
-========================================================= */
-
-.app {
-    min-height: 100vh;
-    display: flex;
-}
-
-.sidebar {
-    width: 260px;
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-
-    overflow-y: auto;
-
-    background: var(--sidebar);
-    border-right: 1px solid var(--border);
-
-    padding: 24px 16px;
-
-    z-index: 50;
-}
-
-.main {
-    margin-left: 260px;
-
-    width: calc(100% - 260px);
-
-    padding: 28px;
-
-    max-width: 1550px;
-}
-
-
-/* =========================================================
-   LOGO
-========================================================= */
-
-.logo {
-    font-size: 23px;
-    font-weight: 800;
-
-    padding:
-        8px
-        12px
-        28px;
-
-    color: #392B66;
-}
-
 .logo span {
-    color: var(--primary);
+    color: var(--primary-dark);
 }
 
-
-/* =========================================================
-   SIDEBAR NAV
-========================================================= */
-
-.nav-title {
-    color: #999CA6;
-
-    font-size: 11px;
-    font-weight: 700;
-
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-
-    padding: 0 12px;
-
-    margin:
-        20px 0
-        8px;
+.nav-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.nav button {
-    width: 100%;
-
-    border: 0;
-
+.nav-links button {
+    border: none;
     background: transparent;
-
+    padding: 9px 12px;
+    border-radius: 10px;
+    cursor: pointer;
     color: var(--text);
+    font-size: 14px;
+}
 
-    text-align: left;
+.nav-links button:hover {
+    background: var(--surface-2);
+}
 
-    padding: 12px 13px;
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-    border-radius: 12px;
+.language-btn,
+.login-btn {
+    border: 1px solid var(--border);
+    background: white;
+    padding: 9px 13px;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
-    margin: 3px 0;
+.login-btn {
+    background: var(--primary);
+    border-color: var(--primary);
+}
 
+main {
+    max-width: 1250px;
+    margin: auto;
+    padding: 35px 22px 80px;
+}
+
+section {
+    margin-bottom: 45px;
+}
+
+.section-title {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.section-subtitle {
+    color: var(--muted);
+    margin-bottom: 22px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px;
+}
+
+button {
+    font-family: inherit;
+}
+
+.primary-btn {
+    border: none;
+    background: var(--primary);
+    color: #26383d;
+    padding: 11px 17px;
+    border-radius: 11px;
+    cursor: pointer;
+    font-weight: 600;
     transition: 0.2s;
 }
 
-.nav button:hover {
-    background: var(--bg);
+.primary-btn:hover {
+    transform: translateY(-1px);
+    background: var(--primary-dark);
 }
 
-.nav button.active {
-    background: #F0EAFB;
-
-    color: #5B43A4;
-
-    font-weight: 700;
-}
-
-
-/* =========================================================
-   ACCOUNT SIDEBAR
-========================================================= */
-
-.account-button {
-    width: 100%;
-
+.secondary-btn {
     border: 1px solid var(--border);
-
-    background: var(--card);
-
+    background: white;
     color: var(--text);
-
-    padding: 11px 12px;
-
+    padding: 11px 17px;
     border-radius: 11px;
-
-    text-align: left;
-
-    font-weight: 700;
+    cursor: pointer;
 }
 
-.account-button:hover {
-    background: var(--bg);
+.danger-btn {
+    border: none;
+    background: #F3DCDC;
+    color: #744949;
+    padding: 11px 17px;
+    border-radius: 11px;
+    cursor: pointer;
 }
 
-.account-name {
-    color: var(--muted);
-
-    font-size: 12px;
-
-    margin:
-        6px 12px
-        10px;
-}
-
-.logout-button {
-    width: 100%;
-
-    border: 0;
-
-    background: transparent;
-
-    color: #9B5D62;
-
-    padding: 9px 12px;
-
-    text-align: left;
-
-    border-radius: 9px;
-}
-
-.logout-button:hover {
-    background: #FFF1F1;
-}
-
-
-/* =========================================================
-   TOP BAR
-========================================================= */
-
-.topbar {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    margin-bottom: 24px;
-}
-
-.topbar h1 {
-    margin: 0;
-
-    font-size: 30px;
-}
-
-.top-user {
-    background: var(--card);
-
-    border: 1px solid var(--border);
-
-    padding: 9px 14px;
-
-    border-radius: 30px;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   VIEWS
-========================================================= */
-
-.view {
-    display: none;
-}
-
-.view.active {
-    display: block;
-}
-
-
-/* =========================================================
-   HERO
-========================================================= */
+/* HERO */
 
 .hero {
-    background:
-        linear-gradient(
-            135deg,
-            var(--hero1),
-            var(--hero2)
-        );
-
-    color: white;
-
-    border-radius: 24px;
-
-    padding: 32px;
-
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 30px;
-
-    box-shadow:
-        0 15px 40px
-        rgba(40, 40, 70, 0.08);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 25px;
+    align-items: stretch;
 }
 
-.hero h2 {
-    font-size: 32px;
-
-    margin:
-        0 0
-        8px;
-}
-
-.hero p {
-    max-width: 680px;
-
-    line-height: 1.6;
-
-    opacity: 0.92;
-}
-
-.hero-icon {
-    font-size: 80px;
-}
-
-
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.btn {
-    border: 0;
-
+.hero-main {
+    padding: 42px;
+    border-radius: 26px;
     background: var(--primary);
-
-    color: white;
-
-    padding:
-        11px
-        17px;
-
-    border-radius: 11px;
-
-    font-weight: 700;
-
-    transition:
-        transform 0.2s,
-        filter 0.2s;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-
-    filter: brightness(0.97);
-}
-
-.btn.light {
-    background: white;
-
-    color: var(--primary);
-}
-
-.btn.secondary {
-    background: var(--secondary);
-
-    color: #354252;
-}
-
-.btn.success {
-    background: var(--success);
-}
-
-.btn.danger {
-    background: var(--danger);
-}
-
-.btn.dark {
-    background: #363B48;
-}
-
-
-/* =========================================================
-   CARDS
-========================================================= */
-
-.card {
-    background: var(--card);
-
-    border: 1px solid var(--border);
-
-    border-radius: 18px;
-
-    padding: 20px;
-
-    box-shadow:
-        0 10px 30px
-        rgba(30, 35, 55, 0.045);
-}
-
-.card h2 {
-    margin-top: 0;
-}
-
-.muted {
-    color: var(--muted);
-}
-
-
-/* =========================================================
-   STATS
-========================================================= */
-
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(4, 1fr);
-
-    gap: 16px;
-
-    margin:
-        20px 0;
-}
-
-.stat strong {
-    display: block;
-
-    font-size: 27px;
-
-    margin-top: 7px;
-}
-
-
-/* =========================================================
-   GRIDS
-========================================================= */
-
-.grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 18px;
-}
-
-.two-column {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 18px;
-}
-
-
-/* =========================================================
-   FEATURE CARDS
-========================================================= */
-
-.feature {
-    min-height: 215px;
-
+    min-height: 300px;
     display: flex;
-
     flex-direction: column;
-
-    justify-content: space-between;
+    justify-content: center;
 }
 
-.feature-icon {
-    font-size: 30px;
+.hero-main h1 {
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.05;
+    margin: 0 0 15px;
 }
 
-.feature h3 {
-    margin:
-        8px 0
-        5px;
+.hero-main p {
+    font-size: 17px;
+    max-width: 650px;
+    line-height: 1.7;
 }
 
-.feature p {
-    color: var(--muted);
-
-    font-size: 14px;
-
-    line-height: 1.55;
+.hero-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
 }
 
-
-/* =========================================================
-   FORMS
-========================================================= */
-
-input,
-textarea,
-select {
-    width: 100%;
-
-    border:
-        1px solid
-        var(--border);
-
-    background: var(--card);
-
-    color: var(--text);
-
-    border-radius: 12px;
-
-    padding: 12px;
+.hero-side {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-textarea {
-    min-height: 170px;
+.stat-card {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 23px;
+    box-shadow: var(--shadow);
+}
 
-    resize: vertical;
+.stat-number {
+    font-size: 35px;
+    font-weight: 800;
+}
+
+/* LOGIN */
+
+.login-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    margin-bottom: 6px;
+    font-size: 14px;
+    margin-bottom: 7px;
+    font-weight: 600;
 }
 
-.field {
-    margin-bottom: 14px;
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: #fff;
+    color: var(--text);
+    font-family: inherit;
+    outline: none;
 }
 
-.row {
-    display: flex;
-
-    gap: 10px;
-
-    align-items: center;
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary-dark);
 }
 
-.between {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
+textarea {
+    min-height: 150px;
+    resize: vertical;
 }
 
+.user-status {
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    margin-bottom: 15px;
+}
 
-/* =========================================================
-   CHAT
-========================================================= */
+.hidden {
+    display: none !important;
+}
 
-.chat {
-    min-height: 300px;
+/* FEATURES */
 
-    display: flex;
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
 
-    flex-direction: column;
+.feature-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 23px;
+    box-shadow: var(--shadow);
+    transition: 0.2s;
+}
 
-    gap: 10px;
+.feature-card:hover {
+    transform: translateY(-3px);
+}
 
-    margin:
-        20px 0;
+.feature-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
 
-    padding: 10px;
+.feature-card h3 {
+    margin: 5px 0 8px;
+}
 
-    background: var(--bg);
+.feature-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
 
-    border-radius: 15px;
+/* NOTES */
 
+.notes-layout {
+    display: grid;
+    grid-template-columns: 330px 1fr;
+    gap: 20px;
+}
+
+.notes-list {
+    max-height: 500px;
     overflow-y: auto;
 }
 
-.message {
-    max-width: 75%;
-
-    padding:
-        12px
-        15px;
-
-    border-radius: 15px;
-
-    line-height: 1.5;
+.note-item {
+    padding: 14px;
+    border-radius: 12px;
+    background: var(--surface-2);
+    margin-bottom: 9px;
+    cursor: pointer;
 }
 
-.message.user {
-    align-self: flex-end;
-
-    background: var(--primary);
-
-    color: white;
+.note-item:hover {
+    background: #e9e7e5;
 }
 
-.message.ai {
-    align-self: flex-start;
-
-    background: var(--card);
-
-    border:
-        1px solid
-        var(--border);
-}
-
-
-/* =========================================================
-   FLASHCARDS
-========================================================= */
-
-.flashcard {
-    min-height: 260px;
-
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    text-align: center;
-
-    font-size: 26px;
-
-    padding: 30px;
-
-    background:
-        linear-gradient(
-            135deg,
-            var(--bg),
-            var(--card)
-        );
-
-    border-radius: 16px;
-
-    margin:
-        20px 0;
-}
-
-.badge {
-    background: var(--bg);
-
-    color: var(--primary);
-
-    padding:
-        5px
-        9px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-
+.note-item-title {
     font-weight: 700;
 }
 
+.note-item-date {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 4px;
+}
 
-/* =========================================================
-   FOCUSFLOW
-========================================================= */
+.notes-editor {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notes-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* TOMATO CLOCK */
+
+.focus-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
 
 .timer {
     text-align: center;
+    padding: 25px;
 }
 
-.clock {
-    font-size: 72px;
-
+.timer-display {
+    font-size: clamp(55px, 10vw, 100px);
     font-weight: 800;
-
-    margin:
-        20px 0;
+    letter-spacing: 3px;
+    margin: 20px 0;
 }
 
-.tasks {
+.timer-buttons {
     display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-.task {
-    background: var(--card);
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 12px;
-
-    padding: 13px;
-}
-
-
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.progress {
-    height: 9px;
-
-    background: #ECEEF2;
-
-    border-radius: 20px;
-
-    overflow: hidden;
-}
-
-.progress i {
-    display: block;
-
-    height: 100%;
-
-    width: 72%;
-
-    background: var(--primary);
-
-    border-radius: 20px;
-}
-
-
-/* =========================================================
-   CHART
-========================================================= */
-
-.chart {
-    height: 190px;
-
-    display: flex;
-
-    align-items: end;
-
-    gap: 10px;
-
-    padding:
-        15px
-        5px
-        25px;
-}
-
-.bar {
-    flex: 1;
-
-    background:
-        linear-gradient(
-            var(--hero2),
-            var(--primary)
-        );
-
-    border-radius:
-        7px
-        7px
-        0
-        0;
-
-    min-height: 10px;
-
-    position: relative;
-}
-
-.bar span {
-    position: absolute;
-
-    bottom: -23px;
-
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    font-size: 11px;
-
-    color: var(--muted);
-}
-
-
-/* =========================================================
-   TABLE
-========================================================= */
-
-table {
-    width: 100%;
-
-    border-collapse: collapse;
-
-    margin-top: 30px;
-}
-
-th,
-td {
-    padding: 12px;
-
-    text-align: left;
-
-    border-bottom:
-        1px solid
-        var(--border);
-}
-
-
-/* =========================================================
-   SAVED NOTES
-========================================================= */
-
-.note-list {
-    display: grid;
-
-    gap: 10px;
-
-    margin-top: 18px;
-}
-
-.saved-note {
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 13px;
-
-    padding: 13px;
-
-    background: var(--bg);
-}
-
-.saved-note h4 {
-    margin:
-        0 0
-        5px;
-}
-
-.saved-note p {
-    margin: 0;
-
-    color: var(--muted);
-
-    font-size: 13px;
-
-    white-space: pre-wrap;
-
-    max-height: 130px;
-
-    overflow: hidden;
-}
-
-.note-meta {
-    font-size: 11px;
-
-    color: var(--muted);
-
-    margin-top: 8px;
-}
-
-.note-actions {
-    margin-top: 9px;
-
-    display: flex;
-
-    gap: 7px;
-}
-
-.small-btn {
-    border: 0;
-
-    padding:
-        7px
-        10px;
-
-    border-radius: 8px;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    background: var(--secondary);
-
-    color: #354252;
-}
-
-
-/* =========================================================
-   LOGIN MODAL
-========================================================= */
-
-.login-overlay {
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(35, 38, 48, 0.45);
-
-    z-index: 100;
-
-    align-items: center;
-
     justify-content: center;
-
-    padding: 20px;
-}
-
-.login-overlay.open {
-    display: flex;
-}
-
-.login-box {
-    width:
-        min(440px, 100%);
-
-    background: var(--card);
-
-    border-radius: 24px;
-
-    padding: 28px;
-
-    box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, 0.2);
-}
-
-.login-box h2 {
-    margin-top: 0;
-}
-
-.login-actions {
-    display: flex;
-
     gap: 10px;
-
-    margin-top: 16px;
+    flex-wrap: wrap;
 }
 
-.login-info {
-    font-size: 12px;
-
-    color: var(--muted);
-
-    line-height: 1.5;
-
-    margin-top: 14px;
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-
-/* =========================================================
-   COLOUR PICKER
-========================================================= */
-
-.theme-picker {
-    display: none;
-
-    margin-top: 8px;
-
-    padding: 8px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius: 14px;
-
-    background: var(--card);
-}
-
-.theme-picker.open {
-    display: block;
-}
-
-.theme-choice {
-    width: 100%;
-
+.task-list li {
     display: flex;
-
     align-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
 
-    gap: 9px;
+.task-list li:last-child {
+    border-bottom: none;
+}
 
-    padding: 8px;
+/* FLASHCARDS */
 
-    border: 0;
+.flashcard-container {
+    max-width: 700px;
+    margin: auto;
+}
 
-    background: transparent;
+.flashcard {
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: var(--primary);
+    border-radius: 25px;
+    padding: 35px;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: var(--shadow);
+}
 
+.flashcard-text {
+    font-size: clamp(22px, 4vw, 35px);
+    font-weight: 700;
+}
+
+.flashcard-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* DASHBOARD */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.dashboard-stat {
+    padding: 20px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+}
+
+.dashboard-stat strong {
+    display: block;
+    font-size: 30px;
+    margin-top: 5px;
+}
+
+.progress-wrapper {
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 13px;
+    background: #ECE9E7;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-dark);
+    transition: 0.3s;
+}
+
+/* COLOURS */
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 15px;
+}
+
+.color-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+}
+
+.color-preview {
+    height: 65px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.color-code {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 9px;
+}
+
+.choose-color {
+    border: none;
+    background: var(--surface-2);
+    padding: 8px 12px;
     border-radius: 9px;
-
-    color: var(--text);
-
-    text-align: left;
-}
-
-.theme-choice:hover {
-    background: var(--bg);
-}
-
-.theme-choice.active {
-    background: var(--bg);
-}
-
-.swatch {
-    width: 25px;
-    height: 25px;
-
-    border-radius: 50%;
-
-    border:
-        1px solid
-        rgba(0,0,0,0.08);
-
-    flex-shrink: 0;
-}
-
-.theme-name {
-    flex: 1;
-
+    cursor: pointer;
     font-size: 12px;
 }
 
-.theme-choice b {
-    font-size: 10px;
-
-    color: var(--primary);
-
-    text-transform: uppercase;
+.choose-color:hover {
+    background: #e6e3e1;
 }
 
+/* REVISION */
 
-/* =========================================================
-   PASTEL THEMES
-   Based on the supplied palette
-========================================================= */
-
-body[data-theme="lavender"] {
-    --bg: #F8F6F3;
-    --primary: #8B7CAC;
-    --secondary: #B4C6DC;
-    --hero1: #8B7CAC;
-    --hero2: #B4C6DC;
+.revision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
-body[data-theme="rose"] {
-    --bg: #FCF8F7;
-    --primary: #C98789;
-    --secondary: #E9BDBE;
-    --hero1: #C98789;
-    --hero2: #E9BDBE;
+.revision-item {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
 }
 
-body[data-theme="sage"] {
-    --bg: #F8FAF4;
-    --primary: #98A88B;
-    --secondary: #D7E0A5;
-    --hero1: #98A88B;
-    --hero2: #D7E0A5;
+/* FOOTER */
+
+footer {
+    border-top: 1px solid var(--border);
+    background: white;
+    padding: 30px 20px;
+    text-align: center;
+    color: var(--muted);
 }
 
-body[data-theme="ocean"] {
-    --bg: #F4FAFC;
-    --primary: #80ADBC;
-    --secondary: #A4C8D5;
-    --hero1: #80ADBC;
-    --hero2: #AED9EA;
+.reset-area {
+    margin-top: 20px;
 }
 
-body[data-theme="sand"] {
-    --bg: #FBF8F3;
-    --primary: #B5A28A;
-    --secondary: #D9BD9C;
-    --hero1: #B5A28A;
-    --hero2: #D9BD9C;
+/* TOAST */
+
+.toast {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 5000;
+    background: #333;
+    color: white;
+    padding: 13px 18px;
+    border-radius: 11px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: 0.25s;
 }
 
-body[data-theme="sky"] {
-    --bg: #F5F8FB;
-    --primary: #8FA8C3;
-    --secondary: #B4C6DC;
-    --hero1: #8FA8C3;
-    --hero2: #B4C6DC;
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-body[data-theme="blush"] {
-    --bg: #FCF7F4;
-    --primary: #D49E8E;
-    --secondary: #F1D5BD;
-    --hero1: #D49E8E;
-    --hero2: #F1D5BD;
-}
+/* RESPONSIVE */
 
-body[data-theme="mint"] {
-    --bg: #F5FAF9;
-    --primary: #7FA7A4;
-    --secondary: #DEE9EB;
-    --hero1: #7FA7A4;
-    --hero2: #DEE9EB;
-}
-
-body[data-theme="peach"] {
-    --bg: #FCF7F5;
-    --primary: #C98F83;
-    --secondary: #E9CCC4;
-    --hero1: #C98F83;
-    --hero2: #E9CCC4;
-}
-
-body[data-theme="bluegrey"] {
-    --bg: #F6F8FA;
-    --primary: #84939F;
-    --secondary: #B0B0B2;
-    --hero1: #84939F;
-    --hero2: #B0B0B2;
-}
-
-body[data-theme="cream"] {
-    --bg: #FCFAF6;
-    --primary: #B5A28A;
-    --secondary: #FAF3EB;
-    --hero1: #B5A28A;
-    --hero2: #D9BD9C;
-}
-
-body[data-theme="aqua"] {
-    --bg: #F4FAFC;
-    --primary: #79AFC0;
-    --secondary: #AED9EA;
-    --hero1: #79AFC0;
-    --hero2: #AED9EA;
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
-
-@media (max-width: 1050px) {
-
-    .sidebar {
-        width: 75px;
-    }
-
-    .logo {
-        font-size: 0;
-
-        text-align: center;
-    }
-
-    .logo::before {
-        content: "🎓";
-
-        font-size: 25px;
-    }
-
-    .nav button {
-        font-size: 0;
-
-        text-align: center;
-    }
-
-    .nav button::first-letter {
-        font-size: 20px;
-    }
-
-    .nav-title {
-        display: none;
-    }
-
-    .account-name {
-        display: none;
-    }
-
-    .main {
-        margin-left: 75px;
-
-        width:
-            calc(100% - 75px);
-    }
-
-    .grid {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-}
-
-
-@media (max-width: 750px) {
-
-    .main {
-        padding: 16px;
-    }
-
-    .topbar h1 {
-        font-size: 23px;
-    }
-
-    .hero {
-        flex-direction: column;
-
-        align-items: flex-start;
-    }
-
-    .hero-icon {
-        display: none;
-    }
-
-    .stats {
-        grid-template-columns:
-            repeat(2, 1fr);
-    }
-
-    .grid,
-    .two-column {
+@media (max-width: 950px) {
+    .hero,
+    .login-grid,
+    .focus-layout,
+    .revision-grid {
         grid-template-columns: 1fr;
     }
 
-}
-
-
-@media (max-width: 500px) {
-
-    .sidebar {
-        width: 62px;
+    .feature-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .main {
-        margin-left: 62px;
-
-        width:
-            calc(100% - 62px);
-
-        padding: 12px;
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .stats {
+    .color-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .notes-layout {
         grid-template-columns: 1fr;
     }
+}
 
-    .clock {
-        font-size: 55px;
-    }
-
-    .login-actions {
-        flex-direction: column;
-    }
-
-    .row {
+@media (max-width: 650px) {
+    .navbar {
         flex-wrap: wrap;
     }
 
-}
+    .nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+    }
 
+    main {
+        padding: 25px 15px 60px;
+    }
+
+    .hero-main {
+        padding: 28px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .color-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 </style>
 </head>
 
+<body>
 
-<body data-theme="lavender">
+<header>
+<nav class="navbar">
 
-
-<!-- =====================================================
-     APP
-====================================================== -->
-
-<div class="app">
-
-
-<!-- =====================================================
-     SIDEBAR
-====================================================== -->
-
-<aside class="sidebar">
-
-    <div class="logo">
-        Study<span>Sphere</span>
+    <div class="logo" onclick="scrollToSection('home')">
+        STUDY<span>SPACE</span>
     </div>
 
+    <div class="nav-links">
 
-    <nav class="nav">
-
-
-        <div class="nav-title"
-             data-i18n="workspace">
-            Workspace
-        </div>
-
-
-        <button
-            class="active"
-            data-view="home">
-
-            🏠
-            <span data-i18n="dashboard">
-                Dashboard
-            </span>
-
+        <button onclick="scrollToSection('features')"
+                data-en="Features"
+                data-zh="功能">
+            Features
         </button>
 
-
-        <button data-view="buddy">
-
-            🧠
-            <span data-i18n="studyBuddy">
-                Study Buddy
-            </span>
-
+        <button onclick="scrollToSection('notes')"
+                data-en="Notes"
+                data-zh="筆記">
+            Notes
         </button>
 
-
-        <button data-view="revision">
-
-            📚
-            <span data-i18n="revisionStudio">
-                AI Revision Studio
-            </span>
-
+        <button onclick="scrollToSection('focus')"
+                data-en="Tomato Clock"
+                data-zh="番茄鐘">
+            Tomato Clock
         </button>
 
-
-        <button data-view="flashcards">
-
-            🃏
-            <span data-i18n="flashcards">
-                Flashcard Quest
-            </span>
-
+        <button onclick="scrollToSection('flashcards')"
+                data-en="Flashcards"
+                data-zh="閃卡">
+            Flashcards
         </button>
 
-
-        <button data-view="focus">
-
-            ⏱️
-            <span data-i18n="focusflow">
-                FocusFlow
-            </span>
-
+        <button onclick="scrollToSection('dashboard')"
+                data-en="Dashboard"
+                data-zh="學習統計">
+            Dashboard
         </button>
 
-
-        <div class="nav-title"
-             data-i18n="planning">
-            Planning
-        </div>
-
-
-        <button data-view="planner">
-
-            📖
-            <span data-i18n="planner">
-                Revision Planner
-            </span>
-
-        </button>
-
-
-        <button data-view="essay">
-
-            📝
-            <span data-i18n="essay">
-                Essay Coach
-            </span>
-
-        </button>
-
-
-        <button data-view="analytics">
-
-            📊
-            <span data-i18n="studyDashboard">
-                Study Dashboard
-            </span>
-
-        </button>
-
-
-        <!-- LOGIN -->
-
-        <div class="nav-title">
-            Account
-        </div>
-
-
-        <button
-            class="account-button"
-            id="accountButton">
-
-            👤
-            <span id="accountButtonText">
-                Log in
-            </span>
-
-        </button>
-
-
-        <div
-            class="account-name"
-            id="accountName">
-        </div>
-
-
-        <button
-            class="logout-button"
-            id="logoutButton"
-            style="display:none">
-
-            🚪
-            <span data-i18n="logout">
-                Log out
-            </span>
-
-        </button>
-
-
-        <!-- LANGUAGE -->
-
-        <div class="nav-title"
-             data-i18n="language">
-
-            Language
-
-        </div>
-
-
-        <button
-            class="account-button"
-            id="languageButton">
-
-            🌐 English / 廣東話
-
-        </button>
-
-
-        <!-- COLOURS -->
-
-        <div class="nav-title"
-             data-i18n="colours">
-
+        <button onclick="scrollToSection('colours')"
+                data-en="Colours"
+                data-zh="顏色">
             Colours
-
-        </div>
-
-
-        <button
-            class="account-button"
-            id="chooseColourButton">
-
-            🎨
-            <span data-i18n="chooseColour">
-                Choose colour
-            </span>
-
         </button>
-
-
-        <div
-            class="theme-picker"
-            id="themePicker">
-
-
-            <button
-                class="theme-choice active"
-                data-theme="lavender">
-
-                <span
-                    class="swatch"
-                    style="background:#8B7CAC">
-                </span>
-
-                <span class="theme-name">
-                    Lavender
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="rose">
-
-                <span
-                    class="swatch"
-                    style="background:#D5A1A3">
-                </span>
-
-                <span class="theme-name">
-                    Rose
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="sage">
-
-                <span
-                    class="swatch"
-                    style="background:#EAEEE0">
-                </span>
-
-                <span class="theme-name">
-                    Sage
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="ocean">
-
-                <span
-                    class="swatch"
-                    style="background:#80ADBC">
-                </span>
-
-                <span class="theme-name">
-                    Ocean
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="sand">
-
-                <span
-                    class="swatch"
-                    style="background:#D9BD9C">
-                </span>
-
-                <span class="theme-name">
-                    Warm Sand
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="sky">
-
-                <span
-                    class="swatch"
-                    style="background:#B4C6DC">
-                </span>
-
-                <span class="theme-name">
-                    Soft Sky
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="blush">
-
-                <span
-                    class="swatch"
-                    style="background:#F1D5BD">
-                </span>
-
-                <span class="theme-name">
-                    Blush
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="mint">
-
-                <span
-                    class="swatch"
-                    style="background:#DEE9EB">
-                </span>
-
-                <span class="theme-name">
-                    Soft Mint
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="peach">
-
-                <span
-                    class="swatch"
-                    style="background:#E9CCC4">
-                </span>
-
-                <span class="theme-name">
-                    Peach
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="bluegrey">
-
-                <span
-                    class="swatch"
-                    style="background:#B0B0B2">
-                </span>
-
-                <span class="theme-name">
-                    Blue Grey
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="cream">
-
-                <span
-                    class="swatch"
-                    style="background:#FAF3EB">
-                </span>
-
-                <span class="theme-name">
-                    Cream
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-            <button
-                class="theme-choice"
-                data-theme="aqua">
-
-                <span
-                    class="swatch"
-                    style="background:#AED9EA">
-                </span>
-
-                <span class="theme-name">
-                    Aqua
-                </span>
-
-                <b>
-                    Choose
-                </b>
-
-            </button>
-
-
-        </div>
-
-    </nav>
-
-</aside>
-
-
-<!-- =====================================================
-     MAIN
-====================================================== -->
-
-<main class="main">
-
-
-<header class="topbar">
-
-    <h1 id="pageTitle">
-        Good morning 👋
-    </h1>
-
-    <div
-        class="top-user"
-        id="topUser">
-
-        🎓 Student
 
     </div>
 
+    <div class="header-actions">
+
+        <button class="language-btn"
+                onclick="toggleLanguage()"
+                id="languageButton">
+            🇬🇧 English
+        </button>
+
+        <button class="login-btn"
+                onclick="scrollToSection('account')"
+                data-en="Login"
+                data-zh="登入">
+            Login
+        </button>
+
+    </div>
+
+</nav>
 </header>
 
 
-<!-- =====================================================
-     HOME
-====================================================== -->
+<main>
 
-<section
-    id="home"
-    class="view active">
+<!-- HOME -->
 
+<section id="home">
 
     <div class="hero">
 
-        <div>
+        <div class="hero-main">
 
-            <h2 data-i18n="heroTitle">
-                Make studying feel easier.
-            </h2>
+            <h1 data-en="Study smarter. Feel calmer."
+                data-zh="更有效率咁讀書，更輕鬆咁學習。">
+                Study smarter. Feel calmer.
+            </h1>
 
-            <p data-i18n="heroText">
-                One place for AI revision, flashcards,
-                focus sessions, planning, essay feedback
-                and progress tracking.
+            <p data-en="One peaceful place for your notes, revision, flashcards, focus sessions and study planning."
+               data-zh="一個簡單舒服嘅學習空間，集中管理你嘅筆記、溫習、閃卡、專注時間同讀書計劃。">
+                One peaceful place for your notes, revision, flashcards,
+                focus sessions and study planning.
             </p>
 
-            <button
-                class="btn light"
-                onclick="showView('revision')"
-                data-i18n="startRevising">
+            <div class="hero-buttons">
 
-                Start revising →
+                <button class="primary-btn"
+                        onclick="scrollToSection('notes')"
+                        data-en="Start studying"
+                        data-zh="開始學習">
+                    Start studying
+                </button>
 
-            </button>
+                <button class="secondary-btn"
+                        onclick="scrollToSection('colours')"
+                        data-en="Choose a colour"
+                        data-zh="選擇顏色">
+                    Choose a colour
+                </button>
+
+            </div>
 
         </div>
 
-        <div class="hero-icon">
-            🧠✨
+        <div class="hero-side">
+
+            <div class="stat-card">
+                <div data-en="Saved notes" data-zh="已保存筆記">
+                    Saved notes
+                </div>
+                <div class="stat-number" id="heroNotes">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div data-en="Study sessions" data-zh="學習次數">
+                    Study sessions
+                </div>
+                <div class="stat-number" id="heroSessions">0</div>
+            </div>
+
+            <div class="stat-card">
+                <div data-en="Flashcards" data-zh="閃卡">
+                    Flashcards
+                </div>
+                <div class="stat-number" id="heroFlashcards">0</div>
+            </div>
+
         </div>
 
     </div>
 
-
-    <div class="stats">
-
-
-        <div class="card stat">
-
-            <span
-                class="muted"
-                data-i18n="studySessions">
-
-                Study sessions
-
-            </span>
-
-            <strong>
-                24
-            </strong>
-
-            <small class="muted">
-                This week
-            </small>
-
-        </div>
+</section>
 
 
-        <div class="card stat">
+<!-- ACCOUNT -->
 
-            <span
-                class="muted"
-                data-i18n="tasksCompleted">
+<section id="account">
 
-                Tasks completed
-
-            </span>
-
-            <strong>
-                18
-            </strong>
-
-            <small class="muted">
-                This week
-            </small>
-
-        </div>
-
-
-        <div class="card stat">
-
-            <span
-                class="muted"
-                data-i18n="studyStreak">
-
-                Study streak
-
-            </span>
-
-            <strong>
-                7 days 🔥
-            </strong>
-
-        </div>
-
-
-        <div class="card stat">
-
-            <span
-                class="muted"
-                data-i18n="focusTime">
-
-                Focus time
-
-            </span>
-
-            <strong>
-                12h 45m
-            </strong>
-
-        </div>
-
-
-    </div>
-
-
-    <h2 data-i18n="studyTools">
-        Explore your study tools
+    <h2 class="section-title"
+        data-en="Your account"
+        data-zh="你嘅帳戶">
+        Your account
     </h2>
 
-
-    <div class="grid">
-
-
-        <!-- Study Buddy -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    🧠
-                </div>
-
-                <h3 data-i18n="studyBuddy">
-                    Study Buddy
-                </h3>
-
-                <p data-i18n="buddyDesc">
-                    Chat with AI to understand
-                    difficult topics, get explanations
-                    and receive smart hints.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('buddy')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Revision -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    📚
-                </div>
-
-                <h3 data-i18n="revisionStudio">
-                    AI Revision Studio
-                </h3>
-
-                <p data-i18n="revisionDesc">
-                    Paste notes and generate MCQs,
-                    true/false, short answers
-                    and flashcards.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('revision')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Flashcards -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    🃏
-                </div>
-
-                <h3 data-i18n="flashcards">
-                    Flashcard Quest
-                </h3>
-
-                <p data-i18n="flashDesc">
-                    Flip through flashcards,
-                    mark Know or Review,
-                    and practise your topics.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('flashcards')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Focus -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    ⏱️
-                </div>
-
-                <h3 data-i18n="focusflow">
-                    FocusFlow
-                </h3>
-
-                <p data-i18n="focusDesc">
-                    Pomodoro timer, tasks,
-                    study sessions and
-                    break reminders.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('focus')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Planner -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    📖
-                </div>
-
-                <h3 data-i18n="planner">
-                    Revision Planner
-                </h3>
-
-                <p data-i18n="plannerDesc">
-                    Add your exams and subjects
-                    and create a simple revision
-                    timetable.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('planner')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Essay -->
-
-        <div class="card feature">
-
-            <div>
-
-                <div class="feature-icon">
-                    📝
-                </div>
-
-                <h3 data-i18n="essay">
-                    Essay Coach
-                </h3>
-
-                <p data-i18n="essayDesc">
-                    Paste your essay and get
-                    structured feedback and
-                    improvement suggestions.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('essay')"
-                data-i18n="open">
-
-                Open
-
-            </button>
-
-        </div>
-
-
-        <!-- Dashboard -->
-
-        <div
-            class="card feature"
-            style="grid-column:1/-1">
-
-            <div>
-
-                <div class="feature-icon">
-                    📊
-                </div>
-
-                <h3 data-i18n="studyDashboard">
-                    Study Dashboard
-                </h3>
-
-                <p data-i18n="analyticsDesc">
-                    Track study sessions,
-                    subjects, scores and
-                    completed work.
-                </p>
-
-            </div>
-
-            <button
-                class="btn"
-                onclick="showView('analytics')"
-                data-i18n="openDashboard">
-
-                Open Dashboard
-
-            </button>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STUDY BUDDY
-====================================================== -->
-
-<section
-    id="buddy"
-    class="view">
-
-
-    <div class="card">
-
-        <h2 data-i18n="studyBuddy">
-            🧠 Study Buddy
-        </h2>
-
-        <p
-            class="muted"
-            data-i18n="buddyDesc">
-
-            Ask a question and get a
-            simple explanation or hint.
-
-        </p>
-
-
-        <div
-            class="chat"
-            id="chat">
-
-            <div
-                class="message ai"
-                data-i18n="buddyWelcome">
-
-                Hey! I'm your Study Buddy.
-                Ask me about something
-                you're learning.
-
-            </div>
-
-        </div>
-
-
-        <div class="row">
-
-            <input
-                id="chatInput"
-                placeholder="Ask something..."
-                data-placeholder="chatPlaceholder">
-
-            <button
-                class="btn"
-                onclick="sendChat()"
-                data-i18n="send">
-
-                Send
-
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     REVISION STUDIO
-====================================================== -->
-
-<section
-    id="revision"
-    class="view">
-
-
-    <div class="two-column">
-
+    <p class="section-subtitle"
+       data-en="Log in to keep your study information saved on this device."
+       data-zh="登入後，你嘅學習資料會保存喺呢部裝置。">
+        Log in to keep your study information saved on this device.
+    </p>
+
+    <div class="login-grid">
 
         <div class="card">
 
-            <h2 data-i18n="revisionStudio">
-                📚 AI Revision Studio
-            </h2>
+            <div id="loggedOutArea">
 
-            <p
-                class="muted"
-                data-i18n="revisionDesc">
+                <div class="form-group">
 
-                Paste your notes and create
-                revision material.
+                    <label data-en="Name" data-zh="名稱">
+                        Name
+                    </label>
 
+                    <input id="loginName"
+                           type="text"
+                           placeholder="Your name">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label data-en="Email" data-zh="電郵">
+                        Email
+                    </label>
+
+                    <input id="loginEmail"
+                           type="email"
+                           placeholder="you@example.com">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label data-en="Password" data-zh="密碼">
+                        Password
+                    </label>
+
+                    <input id="loginPassword"
+                           type="password"
+                           placeholder="Password">
+
+                </div>
+
+                <button class="primary-btn"
+                        onclick="login()"
+                        data-en="Login / Create account"
+                        data-zh="登入 / 建立帳戶">
+                    Login / Create account
+                </button>
+
+            </div>
+
+            <div id="loggedInArea" class="hidden">
+
+                <div class="user-status">
+
+                    <strong id="userName">User</strong>
+
+                    <br>
+
+                    <span id="userEmail">email</span>
+
+                </div>
+
+                <button class="secondary-btn"
+                        onclick="logout()"
+                        data-en="Log out"
+                        data-zh="登出">
+                    Log out
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3 data-en="Local saving"
+                data-zh="本機保存">
+                Local saving
+            </h3>
+
+            <p data-en="Your notes, tasks, flashcards, colour choice and study statistics are stored locally in your browser."
+               data-zh="你嘅筆記、工作、閃卡、顏色選擇同學習統計會保存喺瀏覽器本機。">
+                Your notes, tasks, flashcards, colour choice and study
+                statistics are stored locally in your browser.
             </p>
 
+            <p data-en="No example data is included when you first open the website."
+               data-zh="第一次打開網站時，入面唔會有任何示範資料。">
+                No example data is included when you first open the website.
+            </p>
 
-            <input
-                id="noteTitle"
-                placeholder="Note title"
-                data-placeholder="noteTitlePlaceholder"
-                style="margin-bottom:10px">
+        </div>
 
+    </div>
 
-            <textarea
-                id="notes"
-                placeholder="Paste your notes here..."
-                data-placeholder="notesPlaceholder">
-            </textarea>
+</section>
 
 
-            <div
-                class="row"
-                style="margin-top:12px">
+<!-- FEATURES -->
 
+<section id="features">
 
-                <select id="material">
+    <h2 class="section-title"
+        data-en="Everything in one study space"
+        data-zh="一個空間管理所有學習內容">
+        Everything in one study space
+    </h2>
 
-                    <option
-                        value="MCQs"
-                        data-i18n="mcqs">
+    <p class="section-subtitle"
+       data-en="Choose the tools that fit the way you study."
+       data-zh="選擇最適合你嘅學習工具。">
+        Choose the tools that fit the way you study.
+    </p>
 
-                        MCQs
+    <div class="feature-grid">
 
-                    </option>
+        <div class="feature-card">
 
-                    <option
-                        value="True / False"
-                        data-i18n="trueFalse">
+            <div class="feature-icon">📚</div>
 
-                        True / False
+            <h3 data-en="AI Revision Studio"
+                data-zh="AI 溫習工作室">
+                AI Revision Studio
+            </h3>
 
-                    </option>
+            <p data-en="Turn your notes into revision questions, true/false questions and short-answer practice."
+               data-zh="將你嘅筆記變成溫習問題、是非題同短答題。">
+                Turn your notes into revision questions,
+                true/false questions and short-answer practice.
+            </p>
 
-                    <option
-                        value="Short Answers"
-                        data-i18n="shortAnswers">
-
-                        Short Answers
-
-                    </option>
-
-                    <option
-                        value="Flashcards"
-                        data-i18n="flashcards">
-
-                        Flashcards
-
-                    </option>
-
-                </select>
-
-
-                <button
-                    class="btn"
+            <button class="primary-btn"
                     onclick="generateRevision()"
-                    data-i18n="generate">
-
-                    Generate
-
-                </button>
-
-
-                <button
-                    class="btn success"
-                    onclick="saveNote()"
-                    data-i18n="saveNote">
-
-                    Save note
-
-                </button>
-
-            </div>
-
-
-            <div
-                id="revisionOutput"
-                style="margin-top:20px">
-            </div>
+                    data-en="Create questions"
+                    data-zh="建立問題">
+                Create questions
+            </button>
 
         </div>
 
 
-        <!-- SAVED NOTES -->
+        <div class="feature-card">
+
+            <div class="feature-icon">🧠</div>
+
+            <h3 data-en="Study Buddy"
+                data-zh="學習助手">
+                Study Buddy
+            </h3>
+
+            <p data-en="Ask for explanations, hints and simple breakdowns of difficult topics."
+               data-zh="詢問解釋、提示，或者將困難嘅概念拆開慢慢理解。">
+                Ask for explanations, hints and simple breakdowns
+                of difficult topics.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="openBuddy()"
+                    data-en="Ask Study Buddy"
+                    data-zh="問學習助手">
+                Ask Study Buddy
+            </button>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">🍅</div>
+
+            <h3 data-en="Tomato Clock"
+                data-zh="番茄鐘">
+                Tomato Clock
+            </h3>
+
+            <p data-en="Use a simple 25-minute tomato clock and keep track of your study sessions."
+               data-zh="使用簡單嘅 25 分鐘番茄鐘，記錄你嘅學習時間。">
+                Use a simple 25-minute tomato clock and keep track
+                of your study sessions.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="scrollToSection('focus')"
+                    data-en="Start Tomato Clock"
+                    data-zh="開始番茄鐘">
+                Start Tomato Clock
+            </button>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">🃏</div>
+
+            <h3 data-en="Flashcard Quest"
+                data-zh="閃卡挑戰">
+                Flashcard Quest
+            </h3>
+
+            <p data-en="Create your own flashcards and mark cards as known or needing review."
+               data-zh="建立自己嘅閃卡，再標記「識」或者「要再溫習」。">
+                Create your own flashcards and mark cards
+                as known or needing review.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="scrollToSection('flashcards')"
+                    data-en="Open flashcards"
+                    data-zh="開啟閃卡">
+                Open flashcards
+            </button>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">📊</div>
+
+            <h3 data-en="Study Dashboard"
+                data-zh="學習統計">
+                Study Dashboard
+            </h3>
+
+            <p data-en="See your saved notes, flashcards and completed focus sessions."
+               data-zh="查看你保存嘅筆記、閃卡同完成嘅專注學習時間。">
+                See your saved notes, flashcards and completed
+                focus sessions.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="scrollToSection('dashboard')"
+                    data-en="View dashboard"
+                    data-zh="查看統計">
+                View dashboard
+            </button>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">📝</div>
+
+            <h3 data-en="Essay Coach"
+                data-zh="作文助手">
+                Essay Coach
+            </h3>
+
+            <p data-en="Paste your essay and receive structured areas to think about while improving it."
+               data-zh="貼上作文內容，按照結構、清晰度同論點方向進行改善。">
+                Paste your essay and receive structured areas
+                to think about while improving it.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="openEssayCoach()"
+                    data-en="Open Essay Coach"
+                    data-zh="開啟作文助手">
+                Open Essay Coach
+            </button>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">📖</div>
+
+            <h3 data-en="Revision Planner"
+                data-zh="溫習計劃">
+                Revision Planner
+            </h3>
+
+            <p data-en="Add your subjects and exam dates to organise your revision."
+               data-zh="輸入科目同考試日期，幫你整理溫習計劃。">
+                Add your subjects and exam dates to organise
+                your revision.
+            </p>
+
+            <button class="primary-btn"
+                    onclick="addRevisionPlan()"
+                    data-en="Add plan"
+                    data-zh="加入計劃">
+                Add plan
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- NOTES -->
+
+<section id="notes">
+
+    <h2 class="section-title"
+        data-en="My Notes"
+        data-zh="我嘅筆記">
+        My Notes
+    </h2>
+
+    <p class="section-subtitle"
+       data-en="Create notes and save them directly in your browser."
+       data-zh="建立筆記，直接保存喺你嘅瀏覽器。">
+        Create notes and save them directly in your browser.
+    </p>
+
+    <div class="notes-layout">
 
         <div class="card">
 
-            <div class="between">
+            <h3 data-en="Saved notes"
+                data-zh="已保存筆記">
+                Saved notes
+            </h3>
 
-                <div>
+            <div id="notesList" class="notes-list"></div>
 
-                    <h2 data-i18n="savedNotes">
-                        Saved notes
-                    </h2>
+        </div>
 
-                    <p
-                        class="muted"
-                        data-i18n="savedNotesHelp">
+        <div class="card notes-editor">
 
-                        Your notes are organised
-                        by your logged-in account.
+            <input id="noteTitle"
+                   type="text"
+                   placeholder="Note title"
+                   data-placeholder-en="Note title"
+                   data-placeholder-zh="筆記標題">
 
-                    </p>
+            <textarea id="noteContent"
+                      placeholder="Write your notes here..."
+                      data-placeholder-en="Write your notes here..."
+                      data-placeholder-zh="喺呢度寫低你嘅筆記..."></textarea>
+
+            <div class="notes-actions">
+
+                <button class="primary-btn"
+                        onclick="saveNote()"
+                        data-en="Save note"
+                        data-zh="保存筆記">
+                    Save note
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="newNote()"
+                        data-en="New note"
+                        data-zh="新筆記">
+                    New note
+                </button>
+
+                <button class="danger-btn"
+                        onclick="deleteCurrentNote()"
+                        data-en="Delete"
+                        data-zh="刪除">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI REVISION STUDIO -->
+
+<section id="revisionStudio">
+
+    <h2 class="section-title"
+        data-en="AI Revision Studio"
+        data-zh="AI 溫習工作室">
+        AI Revision Studio
+    </h2>
+
+    <p class="section-subtitle"
+       data-en="Use your saved notes as the starting point for revision practice."
+       data-zh="以你保存嘅筆記作為溫習練習嘅起點。">
+        Use your saved notes as the starting point for revision practice.
+    </p>
+
+    <div class="card">
+
+        <textarea id="revisionInput"
+                  placeholder="Paste notes or a topic here..."
+                  data-placeholder-en="Paste notes or a topic here..."
+                  data-placeholder-zh="喺呢度貼上筆記或者輸入主題..."></textarea>
+
+        <br><br>
+
+        <button class="primary-btn"
+                onclick="generateRevision()"
+                data-en="Generate revision practice"
+                data-zh="建立溫習練習">
+            Generate revision practice
+        </button>
+
+        <div id="revisionOutput" style="margin-top:20px;"></div>
+
+    </div>
+
+</section>
+
+
+<!-- STUDY BUDDY -->
+
+<section id="studyBuddy">
+
+    <h2 class="section-title"
+        data-en="Study Buddy"
+        data-zh="學習助手">
+        Study Buddy
+    </h2>
+
+    <div class="card">
+
+        <div id="buddyMessages"
+             style="min-height:180px;
+                    background:var(--surface-2);
+                    border-radius:13px;
+                    padding:15px;
+                    margin-bottom:15px;">
+        </div>
+
+        <div style="display:flex;gap:8px;">
+
+            <input id="buddyInput"
+                   type="text"
+                   placeholder="Ask something..."
+                   data-placeholder-en="Ask something..."
+                   data-placeholder-zh="問一條問題...">
+
+            <button class="primary-btn"
+                    onclick="sendBuddyMessage()">
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TOMATO CLOCK -->
+
+<section id="focus">
+
+    <h2 class="section-title"
+        data-en="Tomato Clock"
+        data-zh="番茄鐘">
+        Tomato Clock
+    </h2>
+
+    <p class="section-subtitle"
+       data-en="A simple 25-minute tomato clock for focused study."
+       data-zh="簡單嘅 25 分鐘番茄鐘，幫你專心學習。">
+        A simple 25-minute tomato clock for focused study.
+    </p>
+
+    <div class="focus-layout">
+
+        <div class="card timer">
+
+            <div data-en="Tomato Clock session"
+                 data-zh="番茄鐘時間">
+                Tomato Clock session
+            </div>
+
+            <div class="timer-display" id="timerDisplay">
+                25:00
+            </div>
+
+            <div class="timer-buttons">
+
+                <button class="primary-btn"
+                        onclick="startTimer()"
+                        data-en="Start"
+                        data-zh="開始">
+                    Start
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="pauseTimer()"
+                        data-en="Pause"
+                        data-zh="暫停">
+                    Pause
+                </button>
+
+                <button class="secondary-btn"
+                        onclick="resetTimer()"
+                        data-en="Reset"
+                        data-zh="重設">
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3 data-en="Tasks"
+                data-zh="工作">
+                Tasks
+            </h3>
+
+            <div style="display:flex;gap:8px;margin-bottom:15px;">
+
+                <input id="taskInput"
+                       placeholder="Add a study task..."
+                       data-placeholder-en="Add a study task..."
+                       data-placeholder-zh="加入學習工作...">
+
+                <button class="primary-btn"
+                        onclick="addTask()">
+                    +
+                </button>
+
+            </div>
+
+            <ul id="taskList" class="task-list"></ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FLASHCARDS -->
+
+<section id="flashcards">
+
+    <h2 class="section-title"
+        data-en="Flashcard Quest"
+        data-zh="閃卡挑戰">
+        Flashcard Quest
+    </h2>
+
+    <p class="section-subtitle"
+       data-en="Click the card to flip it."
+       data-zh="撳一下閃卡就可以翻轉。">
+        Click the card to flip it.
+    </p>
+
+    <div class="card">
+
+        <div class="form-group">
+
+            <input id="flashQuestion"
+                   placeholder="Question"
+                   data-placeholder-en="Question"
+                   data-placeholder-zh="問題">
+
+        </div>
+
+        <div class="form-group">
+
+            <input id="flashAnswer"
+                   placeholder="Answer"
+                   data-placeholder-en="Answer"
+                   data-placeholder-zh="答案">
+
+        </div>
+
+        <button class="primary-btn"
+                onclick="addFlashcard()"
+                data-en="Add flashcard"
+                data-zh="加入閃卡">
+            Add flashcard
+        </button>
+
+    </div>
+
+    <br>
+
+    <div class="flashcard-container">
+
+        <div class="flashcard"
+             onclick="flipFlashcard()">
+
+            <div class="flashcard-text"
+                 id="flashcardText">
+                No flashcards yet.
+            </div>
+
+        </div>
+
+        <div class="flashcard-actions">
+
+            <button class="secondary-btn"
+                    onclick="previousFlashcard()"
+                    data-en="Previous"
+                    data-zh="上一張">
+                Previous
+            </button>
+
+            <button class="primary-btn"
+                    onclick="markFlashcard()"
+                    data-en="Know"
+                    data-zh="識">
+                Know
+            </button>
+
+            <button class="secondary-btn"
+                    onclick="nextFlashcard()"
+                    data-en="Review"
+                    data-zh="再溫習">
+                Review
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard">
+
+    <h2 class="section-title"
+        data-en="Study Dashboard"
+        data-zh="學習統計">
+        Study Dashboard
+    </h2>
+
+    <div class="dashboard-grid">
+
+        <div class="dashboard-stat">
+            <span data-en="Notes" data-zh="筆記">Notes</span>
+            <strong id="dashboardNotes">0</strong>
+        </div>
+
+        <div class="dashboard-stat">
+            <span data-en="Flashcards" data-zh="閃卡">Flashcards</span>
+            <strong id="dashboardFlashcards">0</strong>
+        </div>
+
+        <div class="dashboard-stat">
+            <span data-en="Sessions" data-zh="專注時間">Sessions</span>
+            <strong id="dashboardSessions">0</strong>
+        </div>
+
+        <div class="dashboard-stat">
+            <span data-en="Tasks completed" data-zh="完成工作">
+                Tasks completed
+            </span>
+            <strong id="dashboardTasks">0</strong>
+        </div>
+
+    </div>
+
+    <div class="card progress-wrapper">
+
+        <h3 data-en="Study progress"
+            data-zh="學習進度">
+            Study progress
+        </h3>
+
+        <div class="progress-bar">
+
+            <div class="progress-fill"
+                 id="progressFill">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ESSAY COACH -->
+
+<section id="essayCoach">
+
+    <h2 class="section-title"
+        data-en="Essay Coach"
+        data-zh="作文助手">
+        Essay Coach
+    </h2>
+
+    <div class="card">
+
+        <textarea id="essayInput"
+                  placeholder="Paste your essay here..."
+                  data-placeholder-en="Paste your essay here..."
+                  data-placeholder-zh="喺呢度貼上你嘅作文..."></textarea>
+
+        <br><br>
+
+        <button class="primary-btn"
+                onclick="analyseEssay()"
+                data-en="Review essay"
+                data-zh="檢查作文">
+            Review essay
+        </button>
+
+        <div id="essayOutput"
+             style="margin-top:20px;">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- REVISION PLANNER -->
+
+<section id="planner">
+
+    <h2 class="section-title"
+        data-en="Revision Planner"
+        data-zh="溫習計劃">
+        Revision Planner
+    </h2>
+
+    <div class="card">
+
+        <div class="revision-grid">
+
+            <div>
+
+                <div class="form-group">
+
+                    <label data-en="Subject"
+                           data-zh="科目">
+                        Subject
+                    </label>
+
+                    <input id="planSubject"
+                           placeholder="e.g. Biology"
+                           data-placeholder-en="e.g. Biology"
+                           data-placeholder-zh="例如：生物">
 
                 </div>
 
-
-                <span
-                    class="badge"
-                    id="noteCount">
-
-                    0
-
-                </span>
-
-            </div>
-
-
-            <div
-                class="note-list"
-                id="savedNotes">
-
-            </div>
-
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FLASHCARDS
-====================================================== -->
-
-<section
-    id="flashcards"
-    class="view">
-
-
-    <div class="card">
-
-
-        <div class="between">
-
-            <h2 data-i18n="flashcards">
-                🃏 Flashcard Quest
-            </h2>
-
-            <span
-                class="badge"
-                id="fcCount">
-
-                Card 1 / 5
-
-            </span>
-
-        </div>
-
-
-        <div
-            class="flashcard"
-            id="flash">
-
-            What is photosynthesis?
-
-        </div>
-
-
-        <div
-            class="row"
-            style="justify-content:center">
-
-
-            <button
-                class="btn"
-                onclick="flipCard()"
-                data-i18n="flip">
-
-                Flip
-
-            </button>
-
-
-            <button
-                class="btn success"
-                onclick="nextCard('know')"
-                data-i18n="know">
-
-                ✓ Know
-
-            </button>
-
-
-            <button
-                class="btn dark"
-                onclick="nextCard('review')"
-                data-i18n="review">
-
-                ↻ Review
-
-            </button>
-
-
-        </div>
-
-
-        <p
-            class="muted"
-            id="fcResult"
-            style="text-align:center">
-        </p>
-
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     FOCUSFLOW
-====================================================== -->
-
-<section
-    id="focus"
-    class="view">
-
-
-    <div class="two-column">
-
-
-        <div
-            class="card timer">
-
-
-            <h2 data-i18n="focusflow">
-                ⏱️ FocusFlow
-            </h2>
-
-
-            <p
-                class="muted"
-                data-i18n="pomodoro">
-
-                25-minute focus session
-
-            </p>
-
-
-            <div
-                class="clock"
-                id="clock">
-
-                25:00
-
-            </div>
-
-
-            <div
-                class="row"
-                style="justify-content:center">
-
-
-                <button
-                    class="btn"
-                    id="timerButton"
-                    onclick="toggleTimer()"
-                    data-i18n="start">
-
-                    Start
-
+                <div class="form-group">
+
+                    <label data-en="Exam date"
+                           data-zh="考試日期">
+                        Exam date
+                    </label>
+
+                    <input id="planDate"
+                           type="date">
+
+                </div>
+
+                <button class="primary-btn"
+                        onclick="savePlan()"
+                        data-en="Add revision plan"
+                        data-zh="加入溫習計劃">
+                    Add revision plan
                 </button>
 
-
-                <button
-                    class="btn dark"
-                    onclick="resetTimer()"
-                    data-i18n="reset">
-
-                    Reset
-
-                </button>
-
-
             </div>
 
+            <div>
+
+                <h3 data-en="Your plans"
+                    data-zh="你嘅計劃">
+                    Your plans
+                </h3>
+
+                <div id="planList"></div>
+
+            </div>
 
         </div>
-
-
-        <div class="card">
-
-
-            <h2 data-i18n="todaysTasks">
-                Today's tasks
-            </h2>
-
-
-            <div
-                class="tasks"
-                id="tasks">
-            </div>
-
-
-            <div
-                class="row"
-                style="margin-top:12px">
-
-
-                <input
-                    id="taskInput"
-                    placeholder="Add a task..."
-                    data-placeholder="taskPlaceholder">
-
-
-                <button
-                    class="btn"
-                    onclick="addTask()">
-
-                    +
-
-                </button>
-
-
-            </div>
-
-
-        </div>
-
 
     </div>
 
 </section>
 
 
-<!-- =====================================================
-     REVISION PLANNER
-====================================================== -->
+<!-- COLOUR THEMES -->
 
-<section
-    id="planner"
-    class="view">
+<section id="colours">
 
+    <h2 class="section-title"
+        data-en="Choose your study colour"
+        data-zh="選擇你嘅學習顏色">
+        Choose your study colour
+    </h2>
+
+    <p class="section-subtitle"
+       data-en="Pick a pastel theme. Your choice will be remembered."
+       data-zh="揀一個柔和嘅顏色主題，系統會記住你嘅選擇。">
+        Pick a pastel theme. Your choice will be remembered.
+    </p>
+
+    <div class="color-grid" id="colorGrid"></div>
+
+</section>
+
+
+<!-- RESET -->
+
+<section>
 
     <div class="card">
 
-
-        <h2 data-i18n="planner">
-            📖 Revision Planner
+        <h2 data-en="Reset StudySpace"
+            data-zh="重設 StudySpace">
+            Reset StudySpace
         </h2>
 
-
-        <p
-            class="muted"
-            data-i18n="plannerDesc">
-
-            Enter your exam information
-            and subjects.
-
+        <p data-en="Reset removes all locally saved notes, tasks, flashcards, plans, account information, progress and colour settings."
+           data-zh="重設會刪除所有本機保存嘅筆記、工作、閃卡、計劃、帳戶資料、進度同顏色設定。">
+            Reset removes all locally saved notes, tasks, flashcards,
+            plans, account information, progress and colour settings.
         </p>
 
+        <div class="reset-area">
 
-        <div class="two-column">
-
-
-            <input
-                id="examName"
-                placeholder="Exam name"
-                data-placeholder="examNamePlaceholder">
-
-
-            <input
-                id="examDate"
-                type="date">
-
+            <button class="danger-btn"
+                    onclick="resetEverything()"
+                    data-en="Reset everything"
+                    data-zh="全部重設">
+                Reset everything
+            </button>
 
         </div>
-
-
-        <textarea
-            id="subjects"
-            placeholder="Subjects or topics, one per line"
-            data-placeholder="subjectsPlaceholder"
-            style="margin-top:12px;min-height:120px">
-        </textarea>
-
-
-        <button
-            class="btn"
-            style="margin-top:12px"
-            onclick="makePlan()"
-            data-i18n="createTimetable">
-
-            Create timetable
-
-        </button>
-
-
-        <div
-            id="planOutput"
-            style="margin-top:20px">
-        </div>
-
 
     </div>
 
 </section>
-
-
-<!-- =====================================================
-     ESSAY COACH
-====================================================== -->
-
-<section
-    id="essay"
-    class="view">
-
-
-    <div class="card">
-
-
-        <h2 data-i18n="essay">
-            📝 Essay Coach
-        </h2>
-
-
-        <p
-            class="muted"
-            data-i18n="essayDesc">
-
-            Paste your essay for
-            structured feedback.
-
-        </p>
-
-
-        <textarea
-            id="essayText"
-            placeholder="Paste your essay here..."
-            data-placeholder="essayPlaceholder">
-        </textarea>
-
-
-        <button
-            class="btn"
-            style="margin-top:12px"
-            onclick="coachEssay()"
-            data-i18n="analyseEssay">
-
-            Analyse Essay
-
-        </button>
-
-
-        <div
-            id="essayOutput"
-            style="margin-top:20px">
-        </div>
-
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     STUDY DASHBOARD
-====================================================== -->
-
-<section
-    id="analytics"
-    class="view">
-
-
-    <div class="card">
-
-
-        <h2 data-i18n="studyDashboard">
-            📊 Study Dashboard
-        </h2>
-
-
-        <p
-            class="muted"
-            data-i18n="weeklyActivity">
-
-            Your study activity this week.
-
-        </p>
-
-
-        <div class="chart">
-
-
-            <div
-                class="bar"
-                style="height:55%">
-
-                <span>Mon</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:75%">
-
-                <span>Tue</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:40%">
-
-                <span>Wed</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:90%">
-
-                <span>Thu</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:65%">
-
-                <span>Fri</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:45%">
-
-                <span>Sat</span>
-
-            </div>
-
-
-            <div
-                class="bar"
-                style="height:80%">
-
-                <span>Sun</span>
-
-            </div>
-
-
-        </div>
-
-
-        <table>
-
-
-            <tr>
-
-                <th data-i18n="subject">
-                    Subject
-                </th>
-
-                <th data-i18n="sessions">
-                    Sessions
-                </th>
-
-                <th data-i18n="score">
-                    Score
-                </th>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Biology
-                </td>
-
-                <td>
-                    8
-                </td>
-
-                <td>
-                    91%
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    Maths
-                </td>
-
-                <td>
-                    6
-                </td>
-
-                <td>
-                    84%
-                </td>
-
-            </tr>
-
-
-            <tr>
-
-                <td>
-                    History
-                </td>
-
-                <td>
-                    5
-                </td>
-
-                <td>
-                    78%
-                </td>
-
-            </tr>
-
-
-        </table>
-
-
-    </div>
-
-</section>
-
 
 </main>
 
-</div>
 
+<footer>
 
-<!-- =====================================================
-     LOGIN MODAL
-====================================================== -->
-
-<div
-    class="login-overlay"
-    id="loginOverlay">
-
-
-    <div class="login-box">
-
-
-        <div class="between">
-
-
-            <h2 id="loginTitle">
-                👤 Log in
-            </h2>
-
-
-            <button
-                class="btn dark"
-                onclick="closeLogin()">
-
-                ×
-
-            </button>
-
-
-        </div>
-
-
-        <p
-            class="muted"
-            id="loginSubtitle">
-
-            Log in to keep your notes
-            connected to your account.
-
-        </p>
-
-
-        <div class="field">
-
-            <label>
-                Email
-            </label>
-
-            <input
-                id="loginEmail"
-                type="email"
-                placeholder="you@example.com">
-
-        </div>
-
-
-        <div class="field">
-
-            <label>
-                Password
-            </label>
-
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Password">
-
-        </div>
-
-
-        <div class="login-actions">
-
-
-            <button
-                class="btn"
-                onclick="login()"
-                id="loginSubmit">
-
-                Log in
-
-            </button>
-
-
-            <button
-                class="btn secondary"
-                onclick="demoLogin()"
-                id="demoButton">
-
-                Use demo account
-
-            </button>
-
-
-        </div>
-
-
-        <p
-            class="login-info"
-            id="loginInfo">
-
-            Demo website: account information and
-            notes are stored only in this browser.
-            For a real website, connect this interface
-            to a secure authentication and database
-            service.
-
-        </p>
-
-
-        <p
-            class="muted"
-            id="loginMessage">
-        </p>
-
-
+    <div>
+        © 2026 StudySpace
     </div>
 
-</div>
+    <div style="margin-top:8px;"
+         data-en="A calm place to learn."
+         data-zh="一個舒服嘅學習空間。">
+        A calm place to learn.
+    </div>
+
+</footer>
+
+
+<div id="toast" class="toast"></div>
 
 
 <script>
 
-/* =========================================================
-   TRANSLATIONS
-========================================================= */
-
-const translations = {
-
-    en: {
-
-        workspace: "Workspace",
-        dashboard: "Dashboard",
-
-        studyBuddy: "Study Buddy",
-        revisionStudio: "AI Revision Studio",
-        flashcards: "Flashcard Quest",
-        focusflow: "FocusFlow",
-
-        planning: "Planning",
-        planner: "Revision Planner",
-        essay: "Essay Coach",
-        studyDashboard: "Study Dashboard",
-
-        language: "Language",
-        colours: "Colours",
-        chooseColour: "Choose colour",
-
-        login: "Log in",
-        logout: "Log out",
-
-        heroTitle:
-            "Make studying feel easier.",
-
-        heroText:
-            "One place for AI revision, flashcards, focus sessions, planning, essay feedback and progress tracking.",
-
-        startRevising:
-            "Start revising →",
-
-        studySessions:
-            "Study sessions",
-
-        tasksCompleted:
-            "Tasks completed",
-
-        studyStreak:
-            "Study streak",
-
-        focusTime:
-            "Focus time",
-
-        studyTools:
-            "Explore your study tools",
-
-        buddyDesc:
-            "Chat with AI to understand difficult topics, get explanations and receive smart hints.",
-
-        revisionDesc:
-            "Paste notes and generate MCQs, true/false, short answers and flashcards.",
-
-        flashDesc:
-            "Flip through flashcards, mark Know or Review, and practise your topics.",
-
-        focusDesc:
-            "Pomodoro timer, tasks, study sessions and break reminders.",
-
-        plannerDesc:
-            "Add your exams and subjects and create a simple revision timetable.",
-
-        essayDesc:
-            "Paste your essay and get structured feedback and improvement suggestions.",
-
-        analyticsDesc:
-            "Track study sessions, subjects, scores and completed work.",
-
-        open:
-            "Open",
-
-        openDashboard:
-            "Open Dashboard",
-
-        buddyWelcome:
-            "Hey! I'm your Study Buddy. Ask me about something you're learning.",
-
-        send:
-            "Send",
-
-        mcqs:
-            "MCQs",
-
-        trueFalse:
-            "True / False",
-
-        shortAnswers:
-            "Short Answers",
-
-        generate:
-            "Generate",
-
-        saveNote:
-            "Save note",
-
-        savedNotes:
-            "Saved notes",
-
-        savedNotesHelp:
-            "Your notes are organised by your logged-in account.",
-
-        flip:
-            "Flip",
-
-        know:
-            "✓ Know",
-
-        review:
-            "↻ Review",
-
-        pomodoro:
-            "25-minute focus session",
-
-        start:
-            "Start",
-
-        reset:
-            "Reset",
-
-        todaysTasks:
-            "Today's tasks",
-
-        createTimetable:
-            "Create timetable",
-
-        analyseEssay:
-            "Analyse Essay",
-
-        weeklyActivity:
-            "Your study activity this week.",
-
-        subject:
-            "Subject",
-
-        sessions:
-            "Sessions",
-
-        score:
-            "Score",
-
-        loginTitle:
-            "👤 Log in",
-
-        loginSubtitle:
-            "Log in to keep your notes connected to your account.",
-
-        loginInfo:
-            "Demo website: account information and notes are stored only in this browser. For a real website, connect this interface to a secure authentication and database service.",
-
-        chatPlaceholder:
-            "Ask something...",
-
-        noteTitlePlaceholder:
-            "Note title",
-
-        notesPlaceholder:
-            "Paste your notes here...",
-
-        taskPlaceholder:
-            "Add a task...",
-
-        examNamePlaceholder:
-            "Exam name",
-
-        subjectsPlaceholder:
-            "Subjects or topics, one per line",
-
-        essayPlaceholder:
-            "Paste your essay here..."
-
-    },
-
-
-    zh: {
-
-        workspace:
-            "工作區",
-
-        dashboard:
-            "主頁",
-
-        studyBuddy:
-            "學習伙伴",
-
-        revisionStudio:
-            "AI 溫習工作室",
-
-        flashcards:
-            "記憶卡挑戰",
-
-        focusflow:
-            "專注模式",
-
-        planning:
-            "計劃",
-
-        planner:
-            "溫習計劃表",
-
-        essay:
-            "作文教練",
-
-        studyDashboard:
-            "學習數據",
-
-        language:
-            "語言",
-
-        colours:
-            "顏色",
-
-        chooseColour:
-            "揀顏色",
-
-        login:
-            "登入",
-
-        logout:
-            "登出",
-
-        heroTitle:
-            "令溫習變得輕鬆啲。",
-
-        heroText:
-            "一個地方幫你做 AI 溫習、記憶卡、專注學習、溫習計劃、作文回饋同學習進度追蹤。",
-
-        startRevising:
-            "開始溫習 →",
-
-        studySessions:
-            "溫習次數",
-
-        tasksCompleted:
-            "完成工作",
-
-        studyStreak:
-            "連續溫習",
-
-        focusTime:
-            "專注時間",
-
-        studyTools:
-            "探索學習工具",
-
-        buddyDesc:
-            "同 AI 傾偈，了解難題、取得解釋同溫習提示。",
-
-        revisionDesc:
-            "貼上筆記，生成選擇題、是非題、短答題同記憶卡。",
-
-        flashDesc:
-            "翻閱記憶卡，標記「識」或者「要再溫」，慢慢熟習課題。",
-
-        focusDesc:
-            "番茄鐘、工作清單、溫習時間同休息提醒。",
-
-        plannerDesc:
-            "加入考試日期同科目，建立簡單溫習時間表。",
-
-        essayDesc:
-            "貼上作文，取得有結構嘅回饋同改善建議。",
-
-        analyticsDesc:
-            "追蹤溫習次數、科目、分數同完成進度。",
-
-        open:
-            "開啟",
-
-        openDashboard:
-            "開啟數據",
-
-        buddyWelcome:
-            "你好！我係你嘅學習伙伴。你可以問我任何你而家學緊嘅嘢。",
-
-        send:
-            "發送",
-
-        mcqs:
-            "選擇題",
-
-        trueFalse:
-            "是非題",
-
-        shortAnswers:
-            "短答題",
-
-        generate:
-            "生成",
-
-        saveNote:
-            "儲存筆記",
-
-        savedNotes:
-            "已儲存筆記",
-
-        savedNotesHelp:
-            "你嘅筆記會按登入帳戶分開儲存。",
-
-        flip:
-            "翻卡",
-
-        know:
-            "✓ 識",
-
-        review:
-            "↻ 要再溫",
-
-        pomodoro:
-            "25 分鐘專注溫習",
-
-        start:
-            "開始",
-
-        reset:
-            "重設",
-
-        todaysTasks:
-            "今日工作",
-
-        createTimetable:
-            "建立時間表",
-
-        analyseEssay:
-            "分析作文",
-
-        weeklyActivity:
-            "你今個星期嘅學習活動。",
-
-        subject:
-            "科目",
-
-        sessions:
-            "次數",
-
-        score:
-            "分數",
-
-        loginTitle:
-            "👤 登入",
-
-        loginSubtitle:
-            "登入後，你嘅筆記會連結到自己嘅帳戶。",
-
-        loginInfo:
-            "示範網站：帳戶資料同筆記只會儲存在呢部瀏覽器。正式網站應連接安全嘅登入及資料庫服務。",
-
-        chatPlaceholder:
-            "問啲嘢...",
-
-        noteTitlePlaceholder:
-            "筆記標題",
-
-        notesPlaceholder:
-            "貼上你嘅筆記...",
-
-        taskPlaceholder:
-            "加入工作...",
-
-        examNamePlaceholder:
-            "考試名稱",
-
-        subjectsPlaceholder:
-            "科目或課題，每行一個",
-
-        essayPlaceholder:
-            "貼上你嘅作文..."
-
-    }
-
+const STORAGE_KEY = "studyspace_data_v2";
+
+let data = {
+    user: null,
+    notes: [],
+    tasks: [],
+    flashcards: [],
+    plans: [],
+    sessions: 0,
+    completedTasks: 0,
+    selectedColour: null
 };
 
+let currentNoteId = null;
+let currentFlashcard = 0;
+let flashShowingAnswer = false;
 
-/* =========================================================
-   LANGUAGE STATE
-========================================================= */
+
+/* LOAD DATA */
+
+function loadData() {
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if (!saved) {
+        return;
+    }
+
+    try {
+
+        const parsed = JSON.parse(saved);
+
+        data = {
+            ...data,
+            ...parsed
+        };
+
+    } catch (error) {
+
+        console.log("No valid saved data.");
+
+    }
+}
+
+
+/* SAVE DATA */
+
+function saveData() {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* LANGUAGE */
 
 let currentLanguage =
-    localStorage.getItem(
-        "studysphere-language"
-    ) || "en";
+    localStorage.getItem("studyspace_language") || "en";
 
 
-function t(key) {
+function toggleLanguage() {
 
-    return translations[currentLanguage][key]
-        || translations.en[key]
-        || key;
-
-}
-
-
-function applyLanguage() {
-
-    document.documentElement.lang =
-        currentLanguage === "zh"
-            ? "zh-HK"
+    currentLanguage =
+        currentLanguage === "en"
+            ? "zh"
             : "en";
 
-
-    document
-        .querySelectorAll("[data-i18n]")
-        .forEach(element => {
-
-            const key =
-                element.dataset.i18n;
-
-            if (t(key)) {
-
-                element.textContent =
-                    t(key);
-
-            }
-
-        });
-
-
-    document
-        .querySelectorAll("[data-placeholder]")
-        .forEach(element => {
-
-            const key =
-                element.dataset.placeholder;
-
-            if (t(key)) {
-
-                element.placeholder =
-                    t(key);
-
-            }
-
-        });
-
-
-    document.getElementById(
-        "languageButton"
-    ).textContent =
-        currentLanguage === "en"
-            ? "🌐 English / 廣東話"
-            : "🌐 廣東話 / English";
-
-
-    document.getElementById(
-        "loginTitle"
-    ).textContent =
-        t("loginTitle");
-
-
-    document.getElementById(
-        "loginSubtitle"
-    ).textContent =
-        t("loginSubtitle");
-
-
-    document.getElementById(
-        "loginInfo"
-    ).textContent =
-        t("loginInfo");
-
-
-    updateAccountUI();
-
-}
-
-
-document
-    .getElementById("languageButton")
-    .addEventListener(
-        "click",
-        () => {
-
-            currentLanguage =
-                currentLanguage === "en"
-                    ? "zh"
-                    : "en";
-
-            localStorage.setItem(
-                "studysphere-language",
-                currentLanguage
-            );
-
-            applyLanguage();
-
-            updatePageTitle();
-
-        }
+    localStorage.setItem(
+        "studyspace_language",
+        currentLanguage
     );
 
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-const pageTitles = {
-
-    en: {
-
-        home: "Good morning 👋",
-        buddy: "Study Buddy",
-        revision: "AI Revision Studio",
-        flashcards: "Flashcard Quest",
-        focus: "FocusFlow",
-        planner: "Revision Planner",
-        essay: "Essay Coach",
-        analytics: "Study Dashboard"
-
-    },
-
-    zh: {
-
-        home: "早晨 👋",
-        buddy: "學習伙伴",
-        revision: "AI 溫習工作室",
-        flashcards: "記憶卡挑戰",
-        focus: "專注模式",
-        planner: "溫習計劃表",
-        essay: "作文教練",
-        analytics: "學習數據"
-
-    }
-
-};
-
-
-let currentView = "home";
-
-
-function updatePageTitle() {
-
-    document.getElementById(
-        "pageTitle"
-    ).textContent =
-        pageTitles[currentLanguage][
-            currentView
-        ];
+    updateLanguage();
 
 }
 
 
-function showView(id) {
+function updateLanguage() {
 
-    currentView = id;
-
-
-    document
-        .querySelectorAll(".view")
-        .forEach(view => {
-
-            view.classList.remove(
-                "active"
-            );
-
-        });
+    document.documentElement.lang =
+        currentLanguage === "en"
+            ? "en"
+            : "zh-HK";
 
 
-    const target =
+    document.querySelectorAll("[data-en]").forEach(element => {
+
+        element.textContent =
+            currentLanguage === "en"
+                ? element.dataset.en
+                : element.dataset.zh;
+
+    });
+
+
+    document.querySelectorAll("[data-placeholder-en]").forEach(element => {
+
+        element.placeholder =
+            currentLanguage === "en"
+                ? element.dataset.placeholderEn
+                : element.dataset.placeholderZh;
+
+    });
+
+
+    const languageButton =
+        document.getElementById("languageButton");
+
+    languageButton.textContent =
+        currentLanguage === "en"
+            ? "🇬🇧 English"
+            : "🇭🇰 廣東話";
+
+}
+
+
+/* NAVIGATION */
+
+function scrollToSection(id) {
+
+    const element =
         document.getElementById(id);
 
-    if (target) {
+    if (element) {
 
-        target.classList.add(
-            "active"
-        );
+        element.scrollIntoView({
+            behavior: "smooth"
+        });
 
     }
 
-
-    document
-        .querySelectorAll(
-            ".nav button[data-view]"
-        )
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.view === id
-            );
-
-        });
+}
 
 
-    updatePageTitle();
+/* TOAST */
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
 
 }
 
 
-document
-    .querySelectorAll(
-        ".nav button[data-view]"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                showView(
-                    button.dataset.view
-                );
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   COLOUR THEMES
-========================================================= */
-
-const themePicker =
-    document.getElementById(
-        "themePicker"
-    );
-
-
-document
-    .getElementById(
-        "chooseColourButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            themePicker.classList.toggle(
-                "open"
-            );
-
-        }
-    );
-
-
-document
-    .querySelectorAll(
-        ".theme-choice"
-    )
-    .forEach(button => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const theme =
-                    button.dataset.theme;
-
-
-                document.body.dataset.theme =
-                    theme;
-
-
-                localStorage.setItem(
-                    "studysphere-theme",
-                    theme
-                );
-
-
-                document
-                    .querySelectorAll(
-                        ".theme-choice"
-                    )
-                    .forEach(item => {
-
-                        item.classList.toggle(
-                            "active",
-                            item.dataset.theme ===
-                                theme
-                        );
-
-                    });
-
-
-                themePicker.classList.remove(
-                    "open"
-                );
-
-            }
-        );
-
-    });
-
-
-const savedTheme =
-    localStorage.getItem(
-        "studysphere-theme"
-    );
-
-
-if (savedTheme) {
-
-    document.body.dataset.theme =
-        savedTheme;
-
-
-    document
-        .querySelectorAll(
-            ".theme-choice"
-        )
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.theme ===
-                    savedTheme
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   LOGIN SYSTEM
-========================================================= */
-
-let currentUser =
-    JSON.parse(
-        localStorage.getItem(
-            "studysphere-current-user"
-        ) || "null"
-    );
-
-
-function openLogin() {
-
-    document
-        .getElementById(
-            "loginOverlay"
-        )
-        .classList.add("open");
-
-
-    document.getElementById(
-        "loginMessage"
-    ).textContent = "";
-
-}
-
-
-function closeLogin() {
-
-    document
-        .getElementById(
-            "loginOverlay"
-        )
-        .classList.remove("open");
-
-}
-
-
-document
-    .getElementById(
-        "accountButton"
-    )
-    .addEventListener(
-        "click",
-        () => {
-
-            if (currentUser) {
-
-                showView("revision");
-
-            } else {
-
-                openLogin();
-
-            }
-
-        }
-    );
-
+/* LOGIN */
 
 function login() {
 
-    const email =
-        document
-            .getElementById(
-                "loginEmail"
-            )
-            .value
-            .trim();
+    const name =
+        document.getElementById("loginName").value.trim();
 
+    const email =
+        document.getElementById("loginEmail").value.trim();
 
     const password =
-        document
-            .getElementById(
-                "loginPassword"
-            )
-            .value;
+        document.getElementById("loginPassword").value.trim();
 
 
-    if (!email || !password) {
+    if (!name || !email || !password) {
 
-        document.getElementById(
-            "loginMessage"
-        ).textContent =
-            currentLanguage === "zh"
-                ? "請輸入電郵同密碼。"
-                : "Please enter your email and password.";
+        showToast(
+            currentLanguage === "en"
+                ? "Please fill in all fields."
+                : "請填寫所有資料。"
+        );
 
         return;
-
     }
 
 
-    const name =
+    data.user = {
+        name,
         email
-            .split("@")[0];
-
-
-    currentUser = {
-
-        email: email,
-
-        name: name
-
     };
 
 
-    localStorage.setItem(
-        "studysphere-current-user",
-        JSON.stringify(currentUser)
+    saveData();
+
+    renderAccount();
+
+    showToast(
+        currentLanguage === "en"
+            ? "You are logged in."
+            : "你已經登入。"
     );
-
-
-    updateAccountUI();
-
-    loadNotes();
-
-    closeLogin();
-
-}
-
-
-function demoLogin() {
-
-    currentUser = {
-
-        email:
-            "student@studysphere.demo",
-
-        name:
-            "Student"
-
-    };
-
-
-    localStorage.setItem(
-        "studysphere-current-user",
-        JSON.stringify(currentUser)
-    );
-
-
-    updateAccountUI();
-
-    loadNotes();
-
-    closeLogin();
 
 }
 
 
 function logout() {
 
-    currentUser = null;
+    data.user = null;
 
+    saveData();
 
-    localStorage.removeItem(
-        "studysphere-current-user"
-    );
-
-
-    updateAccountUI();
-
-    loadNotes();
+    renderAccount();
 
 }
 
 
-document
-    .getElementById(
-        "logoutButton"
-    )
-    .addEventListener(
-        "click",
-        logout
-    );
+function renderAccount() {
+
+    const loggedOut =
+        document.getElementById("loggedOutArea");
+
+    const loggedIn =
+        document.getElementById("loggedInArea");
 
 
-function updateAccountUI() {
+    if (data.user) {
 
-    const accountButton =
-        document.getElementById(
-            "accountButton"
-        );
+        loggedOut.classList.add("hidden");
 
-    const accountButtonText =
-        document.getElementById(
-            "accountButtonText"
-        );
+        loggedIn.classList.remove("hidden");
 
-    const accountName =
-        document.getElementById(
-            "accountName"
-        );
+        document.getElementById("userName").textContent =
+            data.user.name;
 
-    const logoutButton =
-        document.getElementById(
-            "logoutButton"
-        );
-
-    const topUser =
-        document.getElementById(
-            "topUser"
-        );
-
-
-    if (currentUser) {
-
-        accountButtonText.textContent =
-            currentLanguage === "zh"
-                ? "帳戶"
-                : "Account";
-
-
-        accountName.textContent =
-            currentUser.email;
-
-
-        logoutButton.style.display =
-            "block";
-
-
-        topUser.textContent =
-            "🎓 " +
-            currentUser.name;
+        document.getElementById("userEmail").textContent =
+            data.user.email;
 
     } else {
 
-        accountButtonText.textContent =
-            t("login");
+        loggedOut.classList.remove("hidden");
 
-
-        accountName.textContent =
-            "";
-
-
-        logoutButton.style.display =
-            "none";
-
-
-        topUser.textContent =
-            "🎓 Student";
+        loggedIn.classList.add("hidden");
 
     }
 
 }
 
 
-/* =========================================================
-   NOTES
-========================================================= */
-
-function notesStorageKey() {
-
-    if (!currentUser) {
-
-        return null;
-
-    }
-
-
-    return (
-        "studysphere-notes-" +
-        currentUser.email
-            .toLowerCase()
-    );
-
-}
-
-
-function getNotes() {
-
-    const key =
-        notesStorageKey();
-
-
-    if (!key) {
-
-        return [];
-
-    }
-
-
-    return JSON.parse(
-        localStorage.getItem(key)
-        || "[]"
-    );
-
-}
-
+/* NOTES */
 
 function saveNote() {
 
-    if (!currentUser) {
-
-        openLogin();
-
-
-        document.getElementById(
-            "loginMessage"
-        ).textContent =
-            currentLanguage === "zh"
-                ? "請先登入，先可以儲存筆記。"
-                : "Please log in before saving notes.";
-
-        return;
-
-    }
-
-
     const title =
-        document
-            .getElementById(
-                "noteTitle"
-            )
-            .value
-            .trim()
-            ||
-            (
-                currentLanguage === "zh"
-                    ? "未命名筆記"
-                    : "Untitled note"
-            );
-
+        document.getElementById("noteTitle").value.trim();
 
     const content =
-        document
-            .getElementById(
-                "notes"
-            )
-            .value
-            .trim();
+        document.getElementById("noteContent").value.trim();
 
 
-    if (!content) {
+    if (!title && !content) {
 
-        alert(
-            currentLanguage === "zh"
-                ? "請先輸入筆記。"
-                : "Please enter some notes first."
+        showToast(
+            currentLanguage === "en"
+                ? "There is nothing to save."
+                : "冇內容可以保存。"
         );
 
         return;
+    }
+
+
+    if (currentNoteId) {
+
+        const note =
+            data.notes.find(
+                n => n.id === currentNoteId
+            );
+
+        if (note) {
+
+            note.title =
+                title || "Untitled";
+
+            note.content =
+                content;
+
+            note.updated =
+                new Date().toLocaleString();
+
+        }
+
+    } else {
+
+        const note = {
+
+            id: Date.now(),
+
+            title:
+                title || "Untitled",
+
+            content,
+
+            updated:
+                new Date().toLocaleString()
+
+        };
+
+        data.notes.unshift(note);
+
+        currentNoteId = note.id;
 
     }
 
 
-    const notes =
-        getNotes();
+    saveData();
+
+    renderNotes();
+
+    updateDashboard();
+
+    showToast(
+        currentLanguage === "en"
+            ? "Note saved."
+            : "筆記已保存。"
+    );
+
+}
 
 
-    notes.unshift({
+function renderNotes() {
 
-        id: Date.now(),
+    const list =
+        document.getElementById("notesList");
 
-        title: title,
+    list.innerHTML = "";
 
-        content: content,
 
-        created:
-            new Date()
-                .toLocaleString()
+    if (data.notes.length === 0) {
+
+        list.innerHTML = `
+            <div style="color:var(--muted);padding:15px 0;">
+                ${
+                    currentLanguage === "en"
+                    ? "No saved notes yet."
+                    : "暫時未有保存筆記。"
+                }
+            </div>
+        `;
+
+        return;
+    }
+
+
+    data.notes.forEach(note => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "note-item";
+
+        item.innerHTML = `
+
+            <div class="note-item-title">
+                ${escapeHTML(note.title)}
+            </div>
+
+            <div class="note-item-date">
+                ${escapeHTML(note.updated)}
+            </div>
+
+        `;
+
+        item.onclick = () =>
+            loadNote(note.id);
+
+        list.appendChild(item);
 
     });
 
-
-    localStorage.setItem(
-        notesStorageKey(),
-        JSON.stringify(notes)
-    );
-
-
-    document.getElementById(
-        "noteTitle"
-    ).value = "";
-
-
-    loadNotes();
-
-
-    alert(
-        currentLanguage === "zh"
-            ? "筆記已儲存。"
-            : "Note saved."
-    );
-
 }
 
 
-function loadNotes() {
-
-    const container =
-        document.getElementById(
-            "savedNotes"
-        );
-
-
-    const count =
-        document.getElementById(
-            "noteCount"
-        );
-
-
-    const notes =
-        getNotes();
-
-
-    count.textContent =
-        notes.length;
-
-
-    if (!currentUser) {
-
-        container.innerHTML = `
-
-            <p class="muted">
-
-                ${
-                    currentLanguage === "zh"
-
-                    ? "登入後先可以儲存同查看自己嘅筆記。"
-
-                    : "Log in to save and view your notes."
-
-                }
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    if (!notes.length) {
-
-        container.innerHTML = `
-
-            <p class="muted">
-
-                ${
-                    currentLanguage === "zh"
-
-                    ? "暫時未有儲存筆記。"
-
-                    : "No saved notes yet."
-
-                }
-
-            </p>
-
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-
-        notes
-            .map(note => `
-
-                <div class="saved-note">
-
-                    <h4>
-                        ${escapeHTML(note.title)}
-                    </h4>
-
-                    <p>
-                        ${escapeHTML(note.content)}
-                    </p>
-
-                    <div class="note-meta">
-                        ${escapeHTML(note.created)}
-                    </div>
-
-                    <div class="note-actions">
-
-                        <button
-                            class="small-btn"
-                            onclick="openSavedNote(${note.id})">
-
-                            ${
-                                currentLanguage === "zh"
-                                    ? "開啟"
-                                    : "Open"
-                            }
-
-                        </button>
-
-
-                        <button
-                            class="small-btn"
-                            onclick="deleteNote(${note.id})">
-
-                            ${
-                                currentLanguage === "zh"
-                                    ? "刪除"
-                                    : "Delete"
-                            }
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `)
-            .join("");
-
-}
-
-
-function openSavedNote(id) {
+function loadNote(id) {
 
     const note =
-        getNotes().find(
-            item =>
-                item.id === id
+        data.notes.find(
+            n => n.id === id
         );
 
+    if (!note) return;
 
-    if (!note) {
+    currentNoteId = id;
+
+    document.getElementById("noteTitle").value =
+        note.title;
+
+    document.getElementById("noteContent").value =
+        note.content;
+
+}
+
+
+function newNote() {
+
+    currentNoteId = null;
+
+    document.getElementById("noteTitle").value = "";
+
+    document.getElementById("noteContent").value = "";
+
+}
+
+
+function deleteCurrentNote() {
+
+    if (!currentNoteId) {
+
+        showToast(
+            currentLanguage === "en"
+                ? "Select a note first."
+                : "請先選擇一篇筆記。"
+        );
 
         return;
-
     }
 
 
-    document.getElementById(
-        "noteTitle"
-    ).value =
-        note.title;
-
-
-    document.getElementById(
-        "notes"
-    ).value =
-        note.content;
-
-
-    showView("revision");
-
-}
-
-
-function deleteNote(id) {
-
-    const notes =
-        getNotes().filter(
-            note =>
-                note.id !== id
+    data.notes =
+        data.notes.filter(
+            n => n.id !== currentNoteId
         );
 
 
-    localStorage.setItem(
-        notesStorageKey(),
-        JSON.stringify(notes)
-    );
+    currentNoteId = null;
 
+    saveData();
 
-    loadNotes();
+    newNote();
 
-}
+    renderNotes();
 
-
-function escapeHTML(text) {
-
-    return String(text)
-        .replace(
-            /[&<>"']/g,
-            character => ({
-
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#039;"
-
-            }[character])
-        );
+    updateDashboard();
 
 }
 
 
-/* =========================================================
-   STUDY BUDDY
-========================================================= */
+/* TASKS */
 
-function sendChat() {
+function addTask() {
 
     const input =
-        document.getElementById(
-            "chatInput"
-        );
-
+        document.getElementById("taskInput");
 
     const text =
         input.value.trim();
 
-
-    if (!text) {
-
-        return;
-
-    }
+    if (!text) return;
 
 
-    const chat =
-        document.getElementById(
-            "chat"
-        );
+    data.tasks.push({
 
+        id: Date.now(),
 
-    const userMessage =
-        document.createElement(
-            "div"
-        );
+        text,
 
+        completed: false
 
-    userMessage.className =
-        "message user";
-
-
-    userMessage.textContent =
-        text;
-
-
-    chat.appendChild(
-        userMessage
-    );
-
-
-    let response =
-        currentLanguage === "zh"
-
-            ? "試下將個課題拆細啲。先用自己嘅說話解釋一次，再唔睇筆記測試自己。"
-
-            : "Try breaking the topic into smaller ideas. Explain each part in your own words, then test yourself without looking at your notes.";
-
-
-    if (
-        text
-            .toLowerCase()
-            .includes(
-                "photosynthesis"
-            )
-    ) {
-
-        response =
-            currentLanguage === "zh"
-
-                ? "光合作用係植物利用光能製造化學能嘅過程。植物會用二氧化碳同水，製造葡萄糖同氧氣。"
-
-                : "Photosynthesis is the process plants use to convert light energy into chemical energy. Plants use carbon dioxide and water to produce glucose and oxygen.";
-
-    }
-
-
-    setTimeout(
-        () => {
-
-            const aiMessage =
-                document.createElement(
-                    "div"
-                );
-
-
-            aiMessage.className =
-                "message ai";
-
-
-            aiMessage.textContent =
-                response;
-
-
-            chat.appendChild(
-                aiMessage
-            );
-
-
-            chat.scrollTop =
-                chat.scrollHeight;
-
-        },
-        400
-    );
+    });
 
 
     input.value = "";
 
+    saveData();
+
+    renderTasks();
+
+    updateDashboard();
+
 }
 
 
-/* =========================================================
-   REVISION STUDIO
-========================================================= */
+function renderTasks() {
 
-function generateRevision() {
+    const list =
+        document.getElementById("taskList");
 
-    const notes =
-        document
-            .getElementById(
-                "notes"
-            )
-            .value
-            .trim();
+    list.innerHTML = "";
 
 
-    const material =
-        document
-            .getElementById(
-                "material"
-            )
-            .value;
+    data.tasks.forEach(task => {
+
+        const li =
+            document.createElement("li");
 
 
-    const output =
-        document.getElementById(
-            "revisionOutput"
-        );
+        li.innerHTML = `
 
+            <input
+                type="checkbox"
+                ${task.completed ? "checked" : ""}
+                style="width:auto">
 
-    if (!notes) {
+            <span
+                style="
+                    flex:1;
+                    ${task.completed
+                        ? "text-decoration:line-through;color:var(--muted);"
+                        : ""}
+                ">
+                ${escapeHTML(task.text)}
+            </span>
 
-        output.innerHTML = `
-
-            <p class="muted">
-
-                ${
-                    currentLanguage === "zh"
-                        ? "請先貼上筆記。"
-                        : "Please paste some notes first."
-                }
-
-            </p>
+            <button
+                class="danger-btn"
+                style="padding:6px 9px;"
+                onclick="deleteTask(${task.id})">
+                ×
+            </button>
 
         `;
 
-        return;
 
-    }
+        li.querySelector("input").onchange =
+            function() {
 
+                task.completed =
+                    this.checked;
 
-    output.innerHTML = `
+                data.completedTasks =
+                    data.tasks.filter(
+                        t => t.completed
+                    ).length;
 
-        <div
-            class="card"
-            style="
-                background:var(--bg);
-                box-shadow:none;
-            ">
+                saveData();
 
-            <h3>
+                renderTasks();
 
-                ${
-                    currentLanguage === "zh"
-                        ? "生成結果"
-                        : "Generated material"
-                }
+                updateDashboard();
 
-            </h3>
+            };
 
 
-            <p>
+        list.appendChild(li);
 
-                <strong>
-
-                    ${escapeHTML(material)}
-
-                </strong>
-
-            </p>
-
-
-            <p>
-
-                ${
-                    currentLanguage === "zh"
-
-                        ? "問題：請用自己嘅說話解釋筆記入面最重要嘅概念。"
-
-                        : "Question: Explain the most important concept from your notes in your own words."
-
-                }
-
-            </p>
-
-
-            <textarea
-                placeholder="${
-                    currentLanguage === "zh"
-                        ? "寫低你嘅答案..."
-                        : "Write your answer..."
-                }">
-
-            </textarea>
-
-        </div>
-
-    `;
+    });
 
 }
 
 
-/* =========================================================
-   FLASHCARDS
-========================================================= */
+function deleteTask(id) {
 
-const cards = [
+    data.tasks =
+        data.tasks.filter(
+            task => task.id !== id
+        );
 
-    [
-        "What is photosynthesis?",
-        "The process plants use to convert light energy into chemical energy."
-    ],
+    data.completedTasks =
+        data.tasks.filter(
+            task => task.completed
+        ).length;
 
-    [
-        "What is a variable?",
-        "A symbol representing a value that can change."
-    ],
+    saveData();
 
-    [
-        "What is a hypothesis?",
-        "A testable proposed explanation for an observation."
-    ],
+    renderTasks();
 
-    [
-        "What is a primary source?",
-        "Original evidence from the period being studied."
-    ],
-
-    [
-        "What is an ecosystem?",
-        "A community of organisms interacting with their environment."
-    ]
-
-];
-
-
-let currentCard = 0;
-
-let flipped = false;
-
-let knownCards = 0;
-
-
-function renderCard() {
-
-    document.getElementById(
-        "fcCount"
-    ).textContent =
-
-        `${
-            currentCard + 1
-        } / ${cards.length}`;
-
-
-    document.getElementById(
-        "flash"
-    ).textContent =
-
-        flipped
-            ? cards[currentCard][1]
-            : cards[currentCard][0];
+    updateDashboard();
 
 }
 
 
-function flipCard() {
+/* TOMATO CLOCK */
 
-    flipped =
-        !flipped;
-
-    renderCard();
-
-}
+let timerSeconds = 25 * 60;
+let timerInterval = null;
 
 
-function nextCard(result) {
-
-    if (
-        result === "know"
-    ) {
-
-        knownCards++;
-
-    }
-
-
-    currentCard =
-        (
-            currentCard + 1
-        ) %
-        cards.length;
-
-
-    flipped = false;
-
-
-    document.getElementById(
-        "fcResult"
-    ).textContent =
-
-        currentLanguage === "zh"
-
-            ? `你已標記 ${knownCards} 張為「識」。`
-
-            : `${knownCards} cards marked as known.`;
-
-
-    renderCard();
-
-}
-
-
-renderCard();
-
-
-/* =========================================================
-   FOCUSFLOW
-========================================================= */
-
-let seconds = 1500;
-
-let timer = null;
-
-
-function updateClock() {
+function updateTimerDisplay() {
 
     const minutes =
-        String(
-            Math.floor(
-                seconds / 60
-            )
-        ).padStart(2, "0");
+        Math.floor(timerSeconds / 60);
 
+    const seconds =
+        timerSeconds % 60;
 
-    const secs =
-        String(
-            seconds % 60
-        ).padStart(2, "0");
-
-
-    document.getElementById(
-        "clock"
-    ).textContent =
-
-        `${minutes}:${secs}`;
+    document.getElementById("timerDisplay")
+        .textContent =
+        String(minutes).padStart(2, "0")
+        + ":"
+        + String(seconds).padStart(2, "0");
 
 }
 
 
-function toggleTimer() {
+function startTimer() {
 
-    const button =
-        document.getElementById(
-            "timerButton"
-        );
+    if (timerInterval) return;
 
 
-    if (timer) {
+    timerInterval =
+        setInterval(() => {
 
-        clearInterval(timer);
+            if (timerSeconds <= 0) {
 
-        timer = null;
+                clearInterval(timerInterval);
 
+                timerInterval = null;
 
-        button.textContent =
-            t("start");
+                data.sessions++;
 
+                saveData();
 
-        return;
+                updateDashboard();
 
-    }
+                showToast(
+                    currentLanguage === "en"
+                        ? "Tomato Clock session completed!"
+                        : "番茄鐘時間完成！"
+                );
 
+                timerSeconds =
+                    25 * 60;
 
-    timer =
-        setInterval(
-            () => {
+                updateTimerDisplay();
 
-                if (seconds > 0) {
-
-                    seconds--;
-
-                    updateClock();
-
-                } else {
-
-                    clearInterval(
-                        timer
-                    );
-
-                    timer = null;
+                return;
+            }
 
 
-                    button.textContent =
-                        t("start");
+            timerSeconds--;
+
+            updateTimerDisplay();
+
+        }, 1000);
+
+}
 
 
-                    alert(
-                        currentLanguage === "zh"
+function pauseTimer() {
 
-                            ? "專注時間完成！🎉"
+    clearInterval(timerInterval);
 
-                            : "Focus session complete! 🎉"
-                    );
-
-                }
-
-            },
-            1000
-        );
-
-
-    button.textContent =
-        currentLanguage === "zh"
-            ? "暫停"
-            : "Pause";
+    timerInterval = null;
 
 }
 
 
 function resetTimer() {
 
-    clearInterval(
-        timer
-    );
+    pauseTimer();
 
+    timerSeconds =
+        25 * 60;
 
-    timer = null;
-
-
-    seconds = 1500;
-
-
-    updateClock();
-
-
-    document.getElementById(
-        "timerButton"
-    ).textContent =
-        t("start");
+    updateTimerDisplay();
 
 }
 
 
-/* =========================================================
-   TASKS
-========================================================= */
+/* FLASHCARDS */
 
-let tasks = [
+function addFlashcard() {
 
-    "Revise biology notes",
+    const question =
+        document.getElementById("flashQuestion")
+        .value.trim();
 
-    "Complete maths questions",
-
-    "Review flashcards"
-
-];
+    const answer =
+        document.getElementById("flashAnswer")
+        .value.trim();
 
 
-function renderTasks() {
+    if (!question || !answer) {
 
-    const container =
-        document.getElementById(
-            "tasks"
+        showToast(
+            currentLanguage === "en"
+                ? "Enter both a question and answer."
+                : "請輸入問題同答案。"
         );
-
-
-    container.innerHTML =
-
-        tasks
-            .map(
-                (task, index) => `
-
-                    <div class="task">
-
-                        <label>
-
-                            <input
-                                type="checkbox"
-                                onchange="
-                                    this.closest('.task').style.opacity =
-                                    this.checked ? '0.5' : '1'
-                                ">
-
-                            ${escapeHTML(task)}
-
-                        </label>
-
-                    </div>
-
-                `
-            )
-            .join("");
-
-}
-
-
-function addTask() {
-
-    const input =
-        document.getElementById(
-            "taskInput"
-        );
-
-
-    const task =
-        input.value.trim();
-
-
-    if (!task) {
 
         return;
-
     }
 
 
-    tasks.push(
-        task
-    );
+    data.flashcards.push({
+
+        id: Date.now(),
+
+        question,
+
+        answer,
+
+        known: false
+
+    });
 
 
-    input.value = "";
+    document.getElementById("flashQuestion").value = "";
+
+    document.getElementById("flashAnswer").value = "";
 
 
-    renderTasks();
+    currentFlashcard =
+        data.flashcards.length - 1;
+
+    flashShowingAnswer = false;
+
+    saveData();
+
+    renderFlashcard();
+
+    updateDashboard();
 
 }
 
 
-renderTasks();
+function renderFlashcard() {
+
+    const text =
+        document.getElementById("flashcardText");
 
 
-/* =========================================================
-   REVISION PLANNER
-========================================================= */
+    if (data.flashcards.length === 0) {
 
-function makePlan() {
+        text.textContent =
+            currentLanguage === "en"
+                ? "No flashcards yet."
+                : "暫時未有閃卡。";
 
-    const name =
-        document
-            .getElementById(
-                "examName"
-            )
-            .value
-            ||
-            (
-                currentLanguage === "zh"
-                    ? "你嘅考試"
-                    : "Your exam"
-            );
+        return;
+    }
 
 
-    const date =
-        document
-            .getElementById(
-                "examDate"
-            )
-            .value
-            ||
-            (
-                currentLanguage === "zh"
-                    ? "未設定"
-                    : "Not set"
-            );
+    const card =
+        data.flashcards[currentFlashcard];
 
 
-    const subjects =
-        document
-            .getElementById(
-                "subjects"
-            )
-            .value
-            .split("\n")
-            .map(
-                item =>
-                    item.trim()
-            )
-            .filter(Boolean);
+    text.textContent =
+        flashShowingAnswer
+            ? card.answer
+            : card.question;
+
+}
 
 
-    const output =
-        document.getElementById(
-            "planOutput"
+function flipFlashcard() {
+
+    if (data.flashcards.length === 0)
+        return;
+
+    flashShowingAnswer =
+        !flashShowingAnswer;
+
+    renderFlashcard();
+
+}
+
+
+function nextFlashcard() {
+
+    if (data.flashcards.length === 0)
+        return;
+
+    currentFlashcard =
+        (currentFlashcard + 1)
+        % data.flashcards.length;
+
+    flashShowingAnswer = false;
+
+    renderFlashcard();
+
+}
+
+
+function previousFlashcard() {
+
+    if (data.flashcards.length === 0)
+        return;
+
+    currentFlashcard =
+        (currentFlashcard - 1 + data.flashcards.length)
+        % data.flashcards.length;
+
+    flashShowingAnswer = false;
+
+    renderFlashcard();
+
+}
+
+
+function markFlashcard() {
+
+    if (data.flashcards.length === 0)
+        return;
+
+    data.flashcards[currentFlashcard].known =
+        true;
+
+    saveData();
+
+    nextFlashcard();
+
+    showToast(
+        currentLanguage === "en"
+            ? "Marked as known."
+            : "已標記為識。"
+    );
+
+}
+
+
+/* DASHBOARD */
+
+function updateDashboard() {
+
+    document.getElementById("dashboardNotes")
+        .textContent =
+        data.notes.length;
+
+    document.getElementById("dashboardFlashcards")
+        .textContent =
+        data.flashcards.length;
+
+    document.getElementById("dashboardSessions")
+        .textContent =
+        data.sessions;
+
+    document.getElementById("dashboardTasks")
+        .textContent =
+        data.completedTasks;
+
+
+    document.getElementById("heroNotes")
+        .textContent =
+        data.notes.length;
+
+    document.getElementById("heroSessions")
+        .textContent =
+        data.sessions;
+
+    document.getElementById("heroFlashcards")
+        .textContent =
+        data.flashcards.length;
+
+
+    const total =
+        data.notes.length
+        + data.flashcards.length
+        + data.sessions
+        + data.completedTasks;
+
+
+    const percentage =
+        Math.min(
+            100,
+            total * 5
         );
 
 
-    if (!subjects.length) {
+    document.getElementById("progressFill")
+        .style.width =
+        percentage + "%";
+
+}
+
+
+/* REVISION STUDIO */
+
+function generateRevision() {
+
+    const input =
+        document.getElementById("revisionInput");
+
+    const text =
+        input.value.trim();
+
+
+    const output =
+        document.getElementById("revisionOutput");
+
+
+    if (!text) {
 
         output.innerHTML = `
-
-            <p class="muted">
-
+            <div class="revision-item">
                 ${
-                    currentLanguage === "zh"
-                        ? "至少加入一個科目。"
-                        : "Add at least one subject."
+                    currentLanguage === "en"
+                    ? "Add some notes or a topic first."
+                    : "請先加入筆記或者輸入一個主題。"
                 }
-
-            </p>
-
+            </div>
         `;
 
         return;
-
     }
 
 
     output.innerHTML = `
 
-        <div
-            class="card"
-            style="
-                background:var(--bg);
-                box-shadow:none;
-            ">
+        <div class="revision-item">
 
-
-            <h3>
-                ${escapeHTML(name)}
-            </h3>
-
-
-            <p class="muted">
-
+            <strong>
                 ${
-                    currentLanguage === "zh"
-                        ? "考試日期："
-                        : "Exam date: "
+                    currentLanguage === "en"
+                    ? "Practice question"
+                    : "溫習問題"
                 }
+            </strong>
 
-                ${escapeHTML(date)}
-
+            <p>
+                ${
+                    currentLanguage === "en"
+                    ? "Explain the main idea of this topic in your own words."
+                    : "用你自己嘅說話解釋呢個主題最重要嘅概念。"
+                }
             </p>
 
+        </div>
 
-            ${
-                subjects
-                    .map(
-                        (subject, index) => `
 
-                            <p>
+        <div class="revision-item">
 
-                                <strong>
+            <strong>
+                ${
+                    currentLanguage === "en"
+                    ? "Quick recall"
+                    : "快速回憶"
+                }
+            </strong>
 
-                                    ${
-                                        currentLanguage === "zh"
+            <p>
+                ${
+                    currentLanguage === "en"
+                    ? "List three important facts you remember."
+                    : "寫出三個你記得嘅重要資料。"
+                }
+            </p>
 
-                                            ? `第 ${index + 1} 日：`
+        </div>
 
-                                            : `Day ${index + 1}:`
-                                    }
 
-                                </strong>
+        <div class="revision-item">
 
-                                ${escapeHTML(subject)}
+            <strong>
+                ${
+                    currentLanguage === "en"
+                    ? "Teach it"
+                    : "教畀其他人"
+                }
+            </strong>
 
-                                —
-
-                                ${
-                                    currentLanguage === "zh"
-
-                                        ? "25 分鐘學習 + 10 分鐘回想 + 5 分鐘重溫"
-
-                                        : "25 min learning + 10 min recall + 5 min review"
-                                }
-
-                            </p>
-
-                        `
-                    )
-                    .join("")
-            }
-
+            <p>
+                ${
+                    currentLanguage === "en"
+                    ? "Pretend you are teaching this topic to someone who has never studied it."
+                    : "假設你要教一個完全未學過呢個主題嘅人。"
+                }
+            </p>
 
         </div>
 
@@ -4977,167 +2619,184 @@ function makePlan() {
 }
 
 
-/* =========================================================
-   ESSAY COACH
-========================================================= */
+/* STUDY BUDDY */
 
-function coachEssay() {
+function openBuddy() {
+
+    scrollToSection("studyBuddy");
+
+    document.getElementById("buddyInput")
+        .focus();
+
+}
+
+
+function sendBuddyMessage() {
+
+    const input =
+        document.getElementById("buddyInput");
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) return;
+
+
+    const box =
+        document.getElementById("buddyMessages");
+
+
+    const userMessage =
+        document.createElement("div");
+
+    userMessage.style.marginBottom = "10px";
+
+    userMessage.innerHTML =
+        "<strong>You:</strong> "
+        + escapeHTML(message);
+
+
+    box.appendChild(userMessage);
+
+
+    const response =
+        document.createElement("div");
+
+    response.style.marginBottom = "10px";
+
+
+    response.innerHTML =
+        currentLanguage === "en"
+
+        ? `
+            <strong>Study Buddy:</strong>
+            Break the topic into smaller ideas,
+            explain what you already know,
+            and identify the part you are unsure about.
+            Then practise recalling it without looking at your notes.
+          `
+
+        : `
+            <strong>學習助手：</strong>
+            可以先將主題拆成幾個細小概念，
+            講下你已經知道嘅內容，
+            再找出你最唔肯定嘅部分。
+            最後嘗試唔睇筆記自己回憶。
+          `;
+
+
+    box.appendChild(response);
+
+    input.value = "";
+
+    box.scrollTop =
+        box.scrollHeight;
+
+}
+
+
+/* ESSAY COACH */
+
+function openEssayCoach() {
+
+    scrollToSection("essayCoach");
+
+}
+
+
+function analyseEssay() {
 
     const essay =
-        document
-            .getElementById(
-                "essayText"
-            )
-            .value
-            .trim();
+        document.getElementById("essayInput")
+        .value.trim();
 
 
     const output =
-        document.getElementById(
-            "essayOutput"
-        );
+        document.getElementById("essayOutput");
 
 
     if (!essay) {
 
         output.innerHTML = `
 
-            <p class="muted">
+            <div class="revision-item">
 
                 ${
-                    currentLanguage === "zh"
-                        ? "請先貼上作文。"
-                        : "Paste an essay first."
+                    currentLanguage === "en"
+                    ? "Paste your essay first."
+                    : "請先貼上你嘅作文。"
                 }
 
-            </p>
+            </div>
 
         `;
 
         return;
-
     }
 
 
-    const words =
-        essay
-            .split(/\s+/)
-            .filter(Boolean)
-            .length;
+    const wordCount =
+        essay.split(/\s+/).length;
 
 
     output.innerHTML = `
 
-        <div
-            class="card"
-            style="
-                background:var(--bg);
-                box-shadow:none;
-            ">
+        <div class="revision-item">
 
-
-            <h3>
-
+            <strong>
                 ${
-                    currentLanguage === "zh"
-                        ? "作文回饋"
-                        : "Structured feedback"
+                    currentLanguage === "en"
+                    ? "Structure"
+                    : "結構"
                 }
-
-            </h3>
-
+            </strong>
 
             <p>
-
-                <strong>
-
-                    ${
-                        currentLanguage === "zh"
-                            ? "字數："
-                            : "Word count: "
-                    }
-
-                </strong>
-
-                ${words}
-
+                ${
+                    currentLanguage === "en"
+                    ? "Check whether your introduction clearly presents the main idea and whether each paragraph has a clear purpose."
+                    : "檢查引言有冇清楚講出中心思想，以及每一段有冇清晰目的。"
+                }
             </p>
 
+        </div>
+
+
+        <div class="revision-item">
+
+            <strong>
+                ${
+                    currentLanguage === "en"
+                    ? "Clarity"
+                    : "清晰度"
+                }
+            </strong>
 
             <p>
-
-                <strong>
-
-                    ${
-                        currentLanguage === "zh"
-                            ? "結構："
-                            : "Structure: "
-                    }
-
-                </strong>
-
-
                 ${
-                    currentLanguage === "zh"
-
-                        ? "確保引言清楚回應題目，而每段都有一個主要觀點。"
-
-                        : "Make sure your introduction clearly answers the question and each paragraph has one main idea."
-
+                    currentLanguage === "en"
+                    ? "Look for sentences that could be shorter or explained more clearly."
+                    : "留意有冇句子可以寫得更簡潔或者解釋得更清楚。"
                 }
-
             </p>
 
+        </div>
+
+
+        <div class="revision-item">
+
+            <strong>
+                ${
+                    currentLanguage === "en"
+                    ? "Word count"
+                    : "字數"
+                }
+            </strong>
 
             <p>
-
-                <strong>
-
-                    ${
-                        currentLanguage === "zh"
-                            ? "證據："
-                            : "Evidence: "
-                    }
-
-                </strong>
-
-
-                ${
-                    currentLanguage === "zh"
-
-                        ? "適當加入具體例子或證據。"
-
-                        : "Add specific examples or evidence where appropriate."
-
-                }
-
+                ${wordCount}
             </p>
-
-
-            <p>
-
-                <strong>
-
-                    ${
-                        currentLanguage === "zh"
-                            ? "分析："
-                            : "Analysis: "
-                    }
-
-                </strong>
-
-
-                ${
-                    currentLanguage === "zh"
-
-                        ? "提出證據後，解釋點解證據可以支持你嘅論點。"
-
-                        : "After presenting evidence, explain how it supports your argument."
-
-                }
-
-            </p>
-
 
         </div>
 
@@ -5146,17 +2805,618 @@ function coachEssay() {
 }
 
 
-/* =========================================================
-   STARTUP
-========================================================= */
+/* REVISION PLANNER */
 
-applyLanguage();
+function addRevisionPlan() {
 
-updateAccountUI();
+    scrollToSection("planner");
 
-loadNotes();
+}
 
-updatePageTitle();
+
+function savePlan() {
+
+    const subject =
+        document.getElementById("planSubject")
+        .value.trim();
+
+    const date =
+        document.getElementById("planDate")
+        .value;
+
+
+    if (!subject || !date) {
+
+        showToast(
+            currentLanguage === "en"
+                ? "Add a subject and exam date."
+                : "請加入科目同考試日期。"
+        );
+
+        return;
+    }
+
+
+    data.plans.push({
+
+        id: Date.now(),
+
+        subject,
+
+        date
+
+    });
+
+
+    saveData();
+
+    renderPlans();
+
+    document.getElementById("planSubject").value = "";
+
+    document.getElementById("planDate").value = "";
+
+}
+
+
+function renderPlans() {
+
+    const list =
+        document.getElementById("planList");
+
+    list.innerHTML = "";
+
+
+    if (data.plans.length === 0) {
+
+        list.innerHTML = `
+
+            <div style="color:var(--muted);">
+
+                ${
+                    currentLanguage === "en"
+                    ? "No revision plans yet."
+                    : "暫時未有溫習計劃。"
+                }
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    data.plans.forEach(plan => {
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            "revision-item";
+
+        div.innerHTML = `
+
+            <strong>
+                ${escapeHTML(plan.subject)}
+            </strong>
+
+            <br>
+
+            <span>
+                ${escapeHTML(plan.date)}
+            </span>
+
+            <button
+                class="danger-btn"
+                style="float:right;padding:5px 9px;"
+                onclick="deletePlan(${plan.id})">
+                ×
+            </button>
+
+        `;
+
+        list.appendChild(div);
+
+    });
+
+}
+
+
+function deletePlan(id) {
+
+    data.plans =
+        data.plans.filter(
+            plan => plan.id !== id
+        );
+
+    saveData();
+
+    renderPlans();
+
+}
+
+
+/* COLOUR THEMES */
+
+const colours = [
+
+    {
+        name: "Cloud",
+        code: "#FAE9E2"
+    },
+
+    {
+        name: "Cream",
+        code: "#F6F3EE"
+    },
+
+    {
+        name: "Mist",
+        code: "#EDECEB"
+    },
+
+    {
+        name: "Lavender",
+        code: "#EAE8EB"
+    },
+
+    {
+        name: "Rose",
+        code: "#EDDFDE"
+    },
+
+    {
+        name: "Peach",
+        code: "#FBFEF3"
+    },
+
+    {
+        name: "Soft Pink",
+        code: "#FCE4E2"
+    },
+
+    {
+        name: "Blush",
+        code: "#FAE8E8"
+    },
+
+    {
+        name: "Dusty Rose",
+        code: "#F8E6E6"
+    },
+
+    {
+        name: "Mauve",
+        code: "#CE9C9D"
+    },
+
+    {
+        name: "Rosewood",
+        code: "#D5A1A3"
+    },
+
+    {
+        name: "Pink",
+        code: "#E9BDBE"
+    },
+
+    {
+        name: "Warm Cream",
+        code: "#FAF3EB"
+    },
+
+    {
+        name: "Sage",
+        code: "#EAEEE0"
+    },
+
+    {
+        name: "Stone",
+        code: "#B0B0B2"
+    },
+
+    {
+        name: "Cool Grey",
+        code: "#E1E2E4"
+    },
+
+    {
+        name: "Light Grey",
+        code: "#DADADC"
+    },
+
+    {
+        name: "Taupe",
+        code: "#B5A28A"
+    },
+
+    {
+        name: "Ice",
+        code: "#EBF6FA"
+    },
+
+    {
+        name: "Blue Grey",
+        code: "#D9E6EC"
+    },
+
+    {
+        name: "Pastel Blue",
+        code: "#A4C8D5"
+    },
+
+    {
+        name: "Ocean",
+        code: "#80ADBC"
+    },
+
+    {
+        name: "Sky",
+        code: "#AED9EA"
+    },
+
+    {
+        name: "Blue Stone",
+        code: "#C0D3D8"
+    },
+
+    {
+        name: "Pearl",
+        code: "#EFEFEF"
+    },
+
+    {
+        name: "Pale Rose",
+        code: "#ECDCDC"
+    },
+
+    {
+        name: "Soft Lilac",
+        code: "#EEE8E8"
+    },
+
+    {
+        name: "Peach Cream",
+        code: "#E9CCC4"
+    },
+
+    {
+        name: "Sage Cream",
+        code: "#E7E7DB"
+    },
+
+    {
+        name: "Butter",
+        code: "#DFD8AB"
+    },
+
+    {
+        name: "Sand",
+        code: "#EFDFD5"
+    },
+
+    {
+        name: "Grey Beige",
+        code: "#E3E2E1"
+    },
+
+    {
+        name: "Pale Blue Grey",
+        code: "#DEE9EB"
+    },
+
+    {
+        name: "Off White",
+        code: "#F0EDE8"
+    },
+
+    {
+        name: "Mushroom",
+        code: "#C2B7B1"
+    },
+
+    {
+        name: "Warm Beige",
+        code: "#E1D7CD"
+    },
+
+    {
+        name: "Fog",
+        code: "#D7E0E5"
+    },
+
+    {
+        name: "Slate",
+        code: "#ADB5BE"
+    },
+
+    {
+        name: "Stone Beige",
+        code: "#D4C8B6"
+    },
+
+    {
+        name: "Caramel",
+        code: "#D9BD9C"
+    },
+
+    {
+        name: "Golden Beige",
+        code: "#CAB08B"
+    },
+
+    {
+        name: "Grey Mist",
+        code: "#D7DBDA"
+    },
+
+    {
+        name: "Very Light Blue",
+        code: "#E6EDF3"
+    },
+
+    {
+        name: "Powder Blue",
+        code: "#D4E2EF"
+    },
+
+    {
+        name: "Periwinkle",
+        code: "#B4C6DC"
+    },
+
+    {
+        name: "Clay",
+        code: "#DEC8BD"
+    },
+
+    {
+        name: "Apricot",
+        code: "#F1D5BD"
+    },
+
+    {
+        name: "Warm Peach",
+        code: "#E0B394"
+    }
+
+];
+
+
+function renderColours() {
+
+    const grid =
+        document.getElementById("colorGrid");
+
+    grid.innerHTML = "";
+
+
+    colours.forEach((colour, index) => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "color-card";
+
+
+        card.innerHTML = `
+
+            <div
+                class="color-preview"
+                style="background:${colour.code};">
+            </div>
+
+            <div>
+                ${escapeHTML(colour.name)}
+            </div>
+
+            <div class="color-code">
+                ${escapeHTML(colour.code)}
+            </div>
+
+            <button
+                class="choose-color"
+                onclick="chooseColour(${index})">
+                ${
+                    currentLanguage === "en"
+                    ? "Choose"
+                    : "選擇"
+                }
+            </button>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+function chooseColour(index) {
+
+    const colour =
+        colours[index];
+
+    data.selectedColour =
+        colour.code;
+
+    saveData();
+
+    applyColour(colour.code);
+
+    showToast(
+        currentLanguage === "en"
+            ? "Colour chosen."
+            : "顏色已選擇。"
+    );
+
+}
+
+
+function applyColour(code) {
+
+    if (!code) return;
+
+
+    document.documentElement
+        .style.setProperty(
+            "--primary",
+            code
+        );
+
+
+    document.documentElement
+        .style.setProperty(
+            "--primary-dark",
+            code
+        );
+
+}
+
+
+/* RESET EVERYTHING */
+
+function resetEverything() {
+
+    const confirmation =
+        currentLanguage === "en"
+
+            ? "Are you sure you want to erase everything? This cannot be undone."
+
+            : "你確定要刪除所有資料嗎？呢個動作無法還原。";
+
+
+    if (!confirm(confirmation)) {
+        return;
+    }
+
+
+    localStorage.removeItem(STORAGE_KEY);
+
+    localStorage.removeItem(
+        "studyspace_language"
+    );
+
+
+    data = {
+
+        user: null,
+
+        notes: [],
+
+        tasks: [],
+
+        flashcards: [],
+
+        plans: [],
+
+        sessions: 0,
+
+        completedTasks: 0,
+
+        selectedColour: null
+
+    };
+
+
+    currentNoteId = null;
+
+    currentFlashcard = 0;
+
+    flashShowingAnswer = false;
+
+
+    resetTimer();
+
+
+    document.getElementById("noteTitle").value = "";
+
+    document.getElementById("noteContent").value = "";
+
+    document.getElementById("revisionInput").value = "";
+
+    document.getElementById("essayInput").value = "";
+
+
+    renderAccount();
+
+    renderNotes();
+
+    renderTasks();
+
+    renderFlashcard();
+
+    renderPlans();
+
+    renderColours();
+
+    updateDashboard();
+
+    updateLanguage();
+
+
+    showToast(
+        currentLanguage === "en"
+            ? "Everything has been reset."
+            : "所有資料已經重設。"
+    );
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* INITIALISE */
+
+loadData();
+
+renderAccount();
+
+renderNotes();
+
+renderTasks();
+
+renderFlashcard();
+
+renderPlans();
+
+renderColours();
+
+updateDashboard();
+
+updateTimerDisplay();
+
+updateLanguage();
+
+
+if (data.selectedColour) {
+
+    applyColour(
+        data.selectedColour
+    );
+
+}
 
 </script>
 

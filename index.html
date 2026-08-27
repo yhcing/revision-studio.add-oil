@@ -1,3292 +1,737 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Pastel Revision Studio</title>
 
-<!-- PDF.js -->
+<!-- PDF.js: reads PDF text in the browser -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-<!-- Mammoth.js for DOCX -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<!-- Mammoth: reads DOCX text in the browser -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
 
 <style>
-
-:root {
-    --bg-color: #F6F3EE;
-    --card-bg: #FFFFFF;
-    --primary: #D5A1A3;
-    --primary-hover: #CE9C9D;
-    --accent-bg: #F8E6E6;
-    --text-main: #333333;
-    --text-sub: #7A6F6D;
-    --border-color: #EAE8EB;
-    --shadow: 0 8px 25px rgba(213,161,163,0.12);
-}
-
-[data-theme="blue"] {
-    --bg-color: #EBF6FA;
-    --primary: #80ADBC;
-    --primary-hover: #A4C8D5;
-    --accent-bg: #D9E6EC;
-    --border-color: #C0D3D8;
-    --shadow: 0 8px 25px rgba(128,173,188,0.15);
-}
-
-[data-theme="nude"] {
-    --bg-color: #FBEFE3;
-    --primary: #CAB08B;
-    --primary-hover: #D9BD9C;
-    --accent-bg: #DEC8BD;
-    --border-color: #D4C8B6;
-    --shadow: 0 8px 25px rgba(202,176,139,0.15);
-}
-
-[data-theme="sage"] {
-    --bg-color: #F1F5EF;
-    --primary: #9CAF88;
-    --primary-hover: #8B9E78;
-    --accent-bg: #E2EADF;
-    --border-color: #C8D6C4;
-    --shadow: 0 8px 25px rgba(156,175,136,0.15);
-}
-
-[data-theme="lavender"] {
-    --bg-color: #F5F2F9;
-    --primary: #B5A0D0;
-    --primary-hover: #A38DC0;
-    --accent-bg: #E8E1F2;
-    --border-color: #D3C7E3;
-    --shadow: 0 8px 25px rgba(181,160,208,0.15);
-}
-
-[data-theme="peach"] {
-    --bg-color: #FDF5EF;
-    --primary: #E8A87C;
-    --primary-hover: #D7976B;
-    --accent-bg: #F9E5D8;
-    --border-color: #EECDBC;
-    --shadow: 0 8px 25px rgba(232,168,124,0.15);
-}
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
-
-    background: var(--bg-color);
-    color: var(--text-main);
-
-    margin: 0;
-    padding: 20px;
-
-    transition: all 0.3s ease;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    max-width: 1200px;
-    margin: 0 auto 20px auto;
-
-    background: var(--card-bg);
-    padding: 12px 25px;
-
-    border-radius: 16px;
-
-    box-shadow: var(--shadow);
-    border: 1px solid var(--border-color);
-
-    gap: 15px;
-}
-
-.user-profile-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.profile-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
-    background: var(--accent-bg);
-
-    padding: 5px 10px;
-
-    border-radius: 20px;
-
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.avatar-icon {
-    width: 22px;
-    height: 22px;
-
-    border-radius: 50%;
-
-    background: var(--primary);
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 11px;
-    font-weight: bold;
-}
-
-.compact-lang-btn {
-    background: var(--card-bg);
-    color: var(--text-main);
-
-    border: 1px solid var(--border-color);
-
-    padding: 5px 10px;
-
-    border-radius: 8px;
-
-    font-size: 12px;
-    font-weight: 600;
-
-    cursor: pointer;
-}
-
-.app-layout {
-    display: grid;
-
-    grid-template-columns: 290px 1fr;
-
-    gap: 20px;
-
-    max-width: 1200px;
-
-    margin: 0 auto;
-}
-
-.sidebar,
-.main-panel {
-    background: var(--card-bg);
-
-    padding: 22px;
-
-    border-radius: 20px;
-
-    box-shadow: var(--shadow);
-
-    border: 1px solid var(--border-color);
-}
-
-.function-nav {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
-
-    margin-bottom: 20px;
-}
-
-.function-btn {
-    background: var(--accent-bg);
-
-    color: var(--text-main);
-
-    text-align: left;
-
-    border: 1px solid transparent;
-}
-
-.function-btn.active {
-    background: var(--primary);
-    color: white;
-}
-
-.function-panel {
-    display: none;
-}
-
-.function-panel.active {
-    display: block;
-}
-
-h2,
-h3 {
-    color: var(--primary);
-
-    margin-top: 0;
-
-    font-weight: 700;
-}
-
-input[type="text"],
-textarea,
-select,
-button {
-    width: 100%;
-
-    padding: 12px;
-
-    border-radius: 10px;
-
-    border: 1px solid var(--border-color);
-
-    font-size: 14px;
-
-    outline: none;
-}
-
-textarea {
-    resize: vertical;
-    font-family: inherit;
-}
-
-button {
-    background: var(--primary);
-
-    color: white;
-
-    border: none;
-
-    font-weight: 600;
-
-    margin-top: 10px;
-
-    cursor: pointer;
-}
-
-button:hover {
-    background: var(--primary-hover);
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* ---------------- THEMES ---------------- */
-
-.swatch-grid {
-    display: flex;
-
-    gap: 8px;
-
-    margin-bottom: 20px;
-
-    flex-wrap: wrap;
-}
-
-.swatch {
-    width: 26px;
-    height: 26px;
-
-    border-radius: 50%;
-
-    border: 2px solid white;
-
-    cursor: pointer;
-
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-/* ---------------- FILE TREE ---------------- */
-
-.file-tree {
-    margin-top: 10px;
-}
-
-.folder {
-    margin-bottom: 8px;
-}
-
-.folder-header {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    background: var(--accent-bg);
-
-    padding: 10px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-weight: 600;
-}
-
-.folder-header:hover {
-    opacity: 0.85;
-}
-
-.folder-files {
-    margin-left: 16px;
-
-    margin-top: 5px;
-
-    border-left: 2px solid var(--border-color);
-
-    padding-left: 8px;
-}
-
-.file-item {
-    display: flex;
-
-    align-items: center;
-
-    gap: 7px;
-
-    padding: 8px;
-
-    margin-bottom: 4px;
-
-    border-radius: 8px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-}
-
-.file-item:hover {
-    background: var(--accent-bg);
-}
-
-.file-item.active {
-    background: var(--primary);
-
-    color: white;
-}
-
-.file-icon {
-    font-size: 16px;
-}
-
-.file-name {
-    overflow: hidden;
-
-    text-overflow: ellipsis;
-
-    white-space: nowrap;
-}
-
-/* ---------------- UPLOAD ---------------- */
-
-.upload-zone {
-    border: 2px dashed var(--primary);
-
-    background: var(--accent-bg);
-
-    padding: 25px;
-
-    border-radius: 14px;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    margin-bottom: 20px;
-}
-
-.upload-zone:hover {
-    opacity: 0.85;
-}
-
-.upload-zone small {
-    color: var(--text-sub);
-}
-
-/* ---------------- CONFIG ---------------- */
-
-.type-grid {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 10px;
-
-    margin: 15px 0;
-}
-
-.type-card {
-    background: var(--accent-bg);
-
-    padding: 12px 14px;
-
-    border-radius: 10px;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    font-size: 14px;
-
-    font-weight: 500;
-}
-
-.type-card select {
-    width: 90px;
-
-    padding: 7px;
-}
-
-/* ---------------- QUIZ ---------------- */
-
-.quiz-question {
-    background: white;
-
-    padding: 16px;
-
-    margin-top: 12px;
-
-    border-radius: 12px;
-
-    border: 1px solid var(--border-color);
-}
-
-.question-type {
-    font-size: 12px;
-
-    color: var(--text-sub);
-
-    margin-bottom: 7px;
-}
-
-.option {
-    display: block;
-
-    padding: 8px;
-
-    margin-top: 5px;
-
-    background: var(--bg-color);
-
-    border-radius: 8px;
-
-    cursor: pointer;
-}
-
-.option:hover {
-    background: var(--accent-bg);
-}
-
-.answer-box {
-    margin-top: 10px;
-
-    padding: 10px;
-
-    background: var(--accent-bg);
-
-    border-radius: 8px;
-
-    font-size: 13px;
-}
-
-.score-box {
-    background: var(--accent-bg);
-
-    padding: 15px;
-
-    border-radius: 12px;
-
-    margin-bottom: 15px;
-
-    text-align: center;
-}
-
-/* ---------------- NOTES DOCS ---------------- */
-
-.notes-layout {
-    display: grid;
-
-    grid-template-columns: 230px 1fr;
-
-    min-height: 650px;
-
-    border: 1px solid var(--border-color);
-
-    border-radius: 14px;
-
-    overflow: hidden;
-
-    background: #fafafa;
-}
-
-.notes-sidebar {
-    background: #f4f1ed;
-
-    border-right: 1px solid var(--border-color);
-
-    padding: 15px;
-
-    overflow-y: auto;
-}
-
-.notes-sidebar-title {
-    font-weight: 700;
-
-    color: var(--primary);
-
-    margin-bottom: 12px;
-}
-
-.notes-document {
-    background: #ffffff;
-
-    padding: 30px;
-
-    overflow-y: auto;
-
-    min-height: 650px;
-}
-
-.document-header {
-    border-bottom: 1px solid var(--border-color);
-
-    padding-bottom: 15px;
-
-    margin-bottom: 20px;
-}
-
-.document-title {
-    font-size: 24px;
-
-    font-weight: 700;
-
-    color: var(--text-main);
-
-    margin-bottom: 6px;
-}
-
-.document-meta {
-    font-size: 12px;
-
-    color: var(--text-sub);
-}
-
-.document-content {
-    max-width: 800px;
-
-    margin: auto;
-
-    line-height: 1.7;
-
-    font-size: 15px;
-}
-
-.document-content h1,
-.document-content h2,
-.document-content h3 {
-    color: var(--text-main);
-
-    margin-top: 25px;
-}
-
-.document-content p {
-    margin: 10px 0;
-}
-
-.document-content ul,
-.document-content ol {
-    padding-left: 25px;
-}
-
-.pdf-viewer {
-    width: 100%;
-
-    height: 700px;
-
-    border: none;
-
-    border-radius: 8px;
-
-    background: #eee;
-}
-
-.empty-document {
-    text-align: center;
-
-    color: var(--text-sub);
-
-    padding: 80px 20px;
-}
-
-.file-preview-toolbar {
-    display: flex;
-
-    gap: 8px;
-
-    margin-bottom: 15px;
-
-    flex-wrap: wrap;
-}
-
-.file-preview-toolbar button {
-    width: auto;
-
-    padding: 8px 12px;
-
-    margin: 0;
-}
-
-/* ---------------- ESSAY ---------------- */
-
-#essay-result {
-    margin-top: 15px;
-
-    padding: 15px;
-
-    background: var(--accent-bg);
-
-    border-radius: 12px;
-}
-
-/* ---------------- RESPONSIVE ---------------- */
-
-@media (max-width: 850px) {
-
-    body {
-        padding: 10px;
-    }
-
-    .header {
-        flex-direction: column;
-
-        align-items: stretch;
-    }
-
-    .user-profile-section {
-        justify-content: space-between;
-
-        flex-wrap: wrap;
-    }
-
-    .app-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .notes-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .notes-sidebar {
-        border-right: none;
-
-        border-bottom: 1px solid var(--border-color);
-
-        max-height: 250px;
-    }
-
-    .type-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
+:root{
+    --bg:#f6f3ee;--card:#fff;--primary:#d5a1a3;--hover:#ce9c9d;
+    --accent:#f8e6e6;--text:#333;--sub:#7a6f6d;--border:#eae8eb;
+    --shadow:0 8px 25px rgba(213,161,163,.12);
+}
+[data-theme=blue]{--bg:#ebf6fa;--primary:#80adbc;--hover:#6f9eae;--accent:#d9e6ec;--border:#c0d3d8;--shadow:0 8px 25px rgba(128,173,188,.15)}
+[data-theme=nude]{--bg:#fbefe3;--primary:#cab08b;--hover:#b79c76;--accent:#dec8bd;--border:#d4c8b6}
+[data-theme=sage]{--bg:#f1f5ef;--primary:#9caf88;--hover:#8b9e78;--accent:#e2eadf;--border:#c8d6c4}
+[data-theme=lavender]{--bg:#f5f2f9;--primary:#b5a0d0;--hover:#a38dc0;--accent:#e8e1f2;--border:#d3c7e3}
+[data-theme=peach]{--bg:#fdf5ef;--primary:#e8a87c;--hover:#d7976b;--accent:#f9e5d8;--border:#eecdbc}
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;transition:.25s}
+button,input,textarea,select{font:inherit}
+button{border:0;cursor:pointer}
+.topbar,.layout{max-width:1250px;margin:auto}
+.topbar{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:18px;padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:18px}
+.brand{font-size:20px;font-weight:800}
+.user-area{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{display:flex;align-items:center;gap:7px;background:var(--accent);padding:6px 10px;border-radius:20px;font-size:13px}
+.avatar{width:24px;height:24px;border-radius:50%;background:var(--primary);color:white;display:grid;place-items:center;font-weight:700;font-size:11px}
+.small-btn{padding:7px 11px!important;width:auto!important;margin:0!important;border-radius:9px!important}
+.layout{display:grid;grid-template-columns:285px 1fr;gap:18px}
+.card{background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow);border-radius:20px;padding:20px}
+.sidebar{min-width:0}
+.nav{display:grid;gap:7px;margin-bottom:20px}
+.nav button{background:var(--accent);color:var(--text);text-align:left}
+.nav button.active{background:var(--primary);color:white}
+button{background:var(--primary);color:white;padding:11px 13px;border-radius:10px;font-weight:700}
+button:hover{background:var(--hover)}
+input[type=text],input[type=search],textarea,select{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px;background:white;color:var(--text);outline:none}
+textarea{resize:vertical}
+h2,h3{color:var(--primary);margin:0 0 12px}
+h4{margin:18px 0 8px;color:var(--primary)}
+.muted{color:var(--sub);font-size:13px}
+.hidden{display:none!important}
+.upload{border:2px dashed var(--primary);background:var(--accent);border-radius:15px;padding:24px;text-align:center;cursor:pointer;margin-bottom:18px}
+.upload strong{display:block;margin-top:5px}
+.swatches{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 18px}
+.swatch{width:28px;height:28px;border-radius:50%;border:2px solid white;box-shadow:0 2px 5px #0002;cursor:pointer}
+.tree{display:grid;gap:7px;max-height:330px;overflow:auto;margin-bottom:10px}
+.folder,.file{border-radius:10px;background:var(--accent);padding:8px}
+.folder-head,.file-head{display:flex;align-items:center;gap:6px}
+.folder-head{font-weight:700}
+.tree-actions{margin-left:auto;display:flex;gap:3px}
+.icon-btn{padding:4px 7px!important;border-radius:7px!important;font-size:12px}
+.file{margin-left:18px;cursor:pointer}
+.file.selected{outline:2px solid var(--primary)}
+.file small{display:block;color:var(--sub);margin-top:2px}
+.folder-children{display:grid;gap:6px;margin-top:6px}
+.add-row{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.panel{display:none}
+.panel.active{display:block}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar>*{width:auto}
+.doc-layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:15px}
+.doc-view{background:white;border:1px solid var(--border);border-radius:14px;padding:22px;min-height:480px;line-height:1.7;overflow:auto}
+.doc-view h1,.doc-view h2,.doc-view h3{color:var(--primary)}
+.doc-meta{background:var(--accent);padding:14px;border-radius:12px;height:max-content}
+.original-frame{width:100%;height:420px;border:1px solid var(--border);border-radius:10px;background:white}
+.file-pill{display:inline-block;background:var(--accent);border-radius:20px;padding:4px 9px;font-size:12px;margin:2px}
+.config-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.config-card{background:var(--accent);padding:12px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.config-card select{width:105px}
+.total{padding:12px;border-radius:12px;background:var(--accent);font-weight:800;text-align:center;margin:12px 0}
+.quiz-card{background:white;border:1px solid var(--border);padding:16px;border-radius:13px;margin-top:10px}
+.qtype{font-size:12px;color:var(--sub);margin-bottom:6px}
+.option{display:block;background:var(--bg);padding:9px;border-radius:8px;margin-top:6px;cursor:pointer}
+.option:hover{background:var(--accent)}
+.answer{background:var(--accent);padding:9px;border-radius:8px;margin-top:9px}
+.result{padding:15px;background:var(--accent);border-radius:12px;margin:12px 0}
+.score{font-size:28px;font-weight:900;color:var(--primary)}
+.review-wrong{border-left:4px solid var(--primary);padding:8px 12px;margin:8px 0;background:var(--accent);border-radius:8px}
+.essay-grid{display:grid;grid-template-columns:1fr 320px;gap:15px}
+.rubric{display:grid;gap:8px}
+.rubric-row{background:var(--accent);padding:10px;border-radius:10px;display:grid;grid-template-columns:1fr 70px;align-items:center}
+.progress{height:8px;background:#ddd;border-radius:20px;overflow:hidden;margin-top:5px}
+.progress span{display:block;height:100%;background:var(--primary)}
+.folder-modal{position:fixed;inset:0;background:#0005;display:grid;place-items:center;z-index:20}
+.modal{background:white;padding:20px;border-radius:16px;width:min(420px,90vw)}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.doc-layout,.essay-grid{grid-template-columns:1fr}}
+@media(max-width:600px){body{padding:9px}.topbar{flex-direction:column;align-items:stretch}.config-grid{grid-template-columns:1fr}.add-row{grid-template-columns:1fr}}
 </style>
 </head>
 
 <body data-theme="rose">
 
-<!-- HEADER -->
+<header class="topbar">
+    <div class="brand" id="appTitle">🌸 Pastel Revision Studio</div>
+    <div class="user-area">
+        <div class="badge"><span class="avatar" id="avatar">?</span><span id="username">Guest User</span></div>
+        <button class="small-btn" onclick="toggleLanguage()" id="langBtn">🌐 廣東話</button>
+        <button class="small-btn" onclick="toggleAuth()" id="authBtn">Log In</button>
+    </div>
+</header>
 
-<div class="header">
+<div class="layout">
 
-    <h3 style="margin:0;" id="app-title">
-        🌸 Pastel Revision Studio
-    </h3>
+<aside class="card sidebar">
+    <h3 data-i18n="functions">🧭 Functions</h3>
+    <div class="nav">
+        <button class="active" onclick="showPanel('notes',this)" data-i18n="notesLibrary">📚 Notes & Library</button>
+        <button onclick="showPanel('test',this)" data-i18n="practiceTest">📝 Practice Test</button>
+        <button onclick="showPanel('essay',this)" data-i18n="essayMarker">✍️ Essay Marker</button>
+    </div>
 
-    <div class="user-profile-section">
+    <h4 data-i18n="theme">🎨 Theme</h4>
+    <div class="swatches">
+        <span class="swatch" style="background:#d5a1a3" onclick="setTheme('rose')" data-i18n-title="rose" title="Rose"></span>
+        <span class="swatch" style="background:#80adbc" onclick="setTheme('blue')" data-i18n-title="blue" title="Blue"></span>
+        <span class="swatch" style="background:#cab08b" onclick="setTheme('nude')" data-i18n-title="nude" title="Nude"></span>
+        <span class="swatch" style="background:#9caf88" onclick="setTheme('sage')" data-i18n-title="sage" title="Sage"></span>
+        <span class="swatch" style="background:#b5a0d0" onclick="setTheme('lavender')" data-i18n-title="lavender" title="Lavender"></span>
+        <span class="swatch" style="background:#e8a87c" onclick="setTheme('peach')" data-i18n-title="peach" title="Peach"></span>
+    </div>
 
-        <div class="profile-badge">
+    <h4 data-i18n="library">📁 Library</h4>
+    <div class="toolbar">
+        <button class="small-btn" onclick="openFolderModal()" data-i18n="addFolder">+ Folder</button>
+        <button class="small-btn" onclick="document.getElementById('upload').click()" data-i18n="addFile">+ File</button>
+    </div>
+    <input id="upload" type="file" hidden multiple accept=".txt,.pdf,.docx,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onchange="handleFiles(event)">
+    <div id="tree" class="tree"></div>
+    <p class="muted" data-i18n="libraryHelp">Upload PDF, DOCX or TXT. Files are stored locally in this browser.</p>
+</aside>
 
-            <div
-                class="avatar-icon"
-                id="user-avatar">
-                ?
-            </div>
+<main class="card">
 
-            <span id="user-display">
-                Guest User
-            </span>
+<section id="panel-notes" class="panel active">
+    <h2 data-i18n="notesTitle">📚 Notes & Document Library</h2>
+    <div class="toolbar">
+        <input type="search" id="noteSearch" data-i18n-placeholder="searchDoc" placeholder="Search inside the current document..." oninput="renderCurrentDoc()">
+        <button class="small-btn" onclick="downloadCurrentText()" data-i18n="exportNotes">Export Notes</button>
+        <button class="small-btn" onclick="openOriginal()" data-i18n="openOriginal">Open Original</button>
+    </div>
 
+    <div id="emptyNotes" class="result">
+        <strong data-i18n="noDoc">No document selected.</strong>
+        <p class="muted" data-i18n="selectDocHelp">Upload a PDF, DOCX or TXT, then choose it from the library.</p>
+    </div>
+
+    <div id="documentArea" class="hidden">
+        <div class="doc-layout">
+            <article class="doc-view" id="docView"></article>
+            <aside class="doc-meta">
+                <h3 id="docTitle">Document</h3>
+                <div id="docInfo"></div>
+                <hr>
+                <button onclick="openOriginal()" data-i18n="openExact">📄 Open exact uploaded file</button>
+                <button onclick="showPanel('test',document.querySelectorAll('.nav button')[1])" data-i18n="makeTest">🧠 Make a test</button>
+            </aside>
         </div>
+    </div>
+</section>
 
-        <button
-            class="compact-lang-btn"
-            onclick="toggleLanguage()"
-            id="lang-toggle-btn"
-            style="width:auto;margin:0;">
+<section id="panel-test" class="panel">
+    <h2 data-i18n="practiceTitle">📝 Practice Test</h2>
+    <p class="muted" data-i18n="practiceHelp">Select documents/folders in the library, choose 0/1/5/10/25/50 questions, then start the test.</p>
 
-            🌐 廣東話
-
-        </button>
-
-        <button
-            id="auth-btn"
-            onclick="toggleAuthModal()"
-            style="
-                width:auto;
-                padding:5px 12px;
-                margin:0;
-                font-size:12px;
-            ">
-
-            Log In
-
-        </button>
-
+    <div class="result">
+        <strong data-i18n="selectedMaterial">Selected material</strong>
+        <div id="selectedMaterial">No files selected.</div>
     </div>
 
-</div>
-
-
-<div class="app-layout">
-
-<!-- ================= SIDEBAR ================= -->
-
-<div class="sidebar">
-
-    <h3>
-        🧭 Functions
-    </h3>
-
-    <div class="function-nav">
-
-        <button
-            class="function-btn active"
-            onclick="showPanel('test', this)">
-
-            📝 Practice Test
-
-        </button>
-
-        <button
-            class="function-btn"
-            onclick="showPanel('essay', this)">
-
-            ✍️ Essay Marker
-
-        </button>
-
-        <button
-            class="function-btn"
-            onclick="showPanel('notes', this)">
-
-            📚 Notes / Docs
-
-        </button>
-
+    <h3 data-i18n="configurator">⚙️ Test Configurator</h3>
+    <div class="config-grid">
+        <div class="config-card"><span data-i18n="mcq">Multiple Choice</span><select class="qcount" id="count-mcq" onchange="updateTotal()"><option>0</option><option>1</option><option>5</option><option>10</option><option>25</option><option>50</option></select></div>
+        <div class="config-card"><span data-i18n="tf">True / False</span><select class="qcount" id="count-tf" onchange="updateTotal()"><option>0</option><option>1</option><option>5</option><option>10</option><option>25</option><option>50</option></select></div>
+        <div class="config-card"><span data-i18n="shortAnswer">Short Answer</span><select class="qcount" id="count-sa" onchange="updateTotal()"><option>0</option><option>1</option><option>5</option><option>10</option><option>25</option><option>50</option></select></div>
+        <div class="config-card"><span data-i18n="essayPrompts">Essay Prompts</span><select class="qcount" id="count-essay" onchange="updateTotal()"><option>0</option><option>1</option><option>5</option><option>10</option><option>25</option><option>50</option></select></div>
     </div>
 
-
-    <h3 id="lbl-theme">
-        🎨 Theme Swatches
-    </h3>
-
-    <div class="swatch-grid">
-
-        <span
-            class="swatch"
-            style="background:#D5A1A3;"
-            onclick="setTheme('rose')">
-        </span>
-
-        <span
-            class="swatch"
-            style="background:#80ADBC;"
-            onclick="setTheme('blue')">
-        </span>
-
-        <span
-            class="swatch"
-            style="background:#CAB08B;"
-            onclick="setTheme('nude')">
-        </span>
-
-        <span
-            class="swatch"
-            style="background:#9CAF88;"
-            onclick="setTheme('sage')">
-        </span>
-
-        <span
-            class="swatch"
-            style="background:#B5A0D0;"
-            onclick="setTheme('lavender')">
-        </span>
-
-        <span
-            class="swatch"
-            style="background:#E8A87C;"
-            onclick="setTheme('peach')">
-        </span>
-
-    </div>
-
-
-    <!-- FILE TREE -->
-
-    <h3>
-        📂 My Topics
-    </h3>
-
-    <div
-        id="file-tree"
-        class="file-tree">
-
-        <div class="empty-document"
-             style="padding:20px;font-size:13px;">
-
-            No files uploaded yet.
-
-        </div>
-
-    </div>
-
-
-    <!-- ADD FOLDER -->
-
-    <h4
-        style="
-            margin-top:20px;
-            color:var(--primary);
-        ">
-
-        📁 Create Parent Topic
-
-    </h4>
-
-    <input
-        type="text"
-        id="folder-title"
-        placeholder="e.g. Biology">
-
-    <button
-        onclick="addFolder()">
-
-        + Create Topic
-
-    </button>
-
-
-    <!-- UPLOAD -->
-
-    <h4
-        style="
-            margin-top:20px;
-            color:var(--primary);
-        ">
-
-        📎 Add File
-
-    </h4>
-
-    <select
-        id="upload-folder"
-        style="margin-bottom:8px;">
-
-        <option value="General">
-            General
-        </option>
-
-    </select>
-
-    <div
-        class="upload-zone"
-        onclick="document.getElementById('file-upload-input').click()"
-        style="padding:15px;margin-bottom:8px;">
-
-        <div style="font-size:22px;">
-            📄
-        </div>
-
-        <strong>
-            Upload File
-        </strong>
-
-        <br>
-
-        <small>
-            PDF · DOCX · TXT
-        </small>
-
-        <input
-            type="file"
-            id="file-upload-input"
-            accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            multiple
-            style="display:none;"
-            onchange="handleFileUpload(event)">
-
-    </div>
-
-</div>
-
-
-<!-- ================= MAIN ================= -->
-
-<div class="main-panel">
-
-
-<!-- AUTH -->
-
-<div
-    id="auth-box"
-    class="hidden"
-    style="
-        background:var(--accent-bg);
-        padding:15px;
-        border-radius:12px;
-        margin-bottom:20px;
-    ">
-
-    <input
-        type="text"
-        id="user-input"
-        placeholder="Enter Username"
-        style="margin-bottom:8px;">
-
-    <button onclick="loginUser()">
-        Sign In / Register
-    </button>
-
-</div>
-
-
-<!-- ================= TEST ================= -->
-
-<div
-    id="panel-test"
-    class="function-panel active">
-
-    <h2>
-        📥 Upload Material
-    </h2>
-
-    <p style="color:var(--text-sub);">
-
-        Upload your revision material as PDF, DOCX or TXT.
-        The files will automatically appear in your Notes library.
-
-    </p>
-
-
-    <div
-        class="upload-zone"
-        onclick="document.getElementById('main-file-upload').click()">
-
-        <span style="font-size:28px;">
-            📄
-        </span>
-
-        <p style="margin:5px 0;font-weight:600;">
-
-            Click or Drop Files Here
-
-        </p>
-
-        <small>
-            PDF · DOCX · TXT
-        </small>
-
-        <input
-            type="file"
-            id="main-file-upload"
-            accept=".pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            multiple
-            style="display:none;"
-            onchange="handleFileUpload(event)">
-
-    </div>
-
-
-    <h2>
-        ⚙️ Test Configurator
-    </h2>
-
-
-    <div class="type-grid">
-
-        <!-- MCQ -->
-
-        <div class="type-card">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="cb-mcq"
-                    checked>
-
-                Multiple Choice
-
-            </label>
-
-            <select id="count-mcq">
-
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="5" selected>5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-
+    <div class="total"><span data-i18n="configTotal">Test Configurator:</span> <span id="totalQuestions">0</span> <span data-i18n="questions">questions</span></div>
+
+    <div class="toolbar">
+        <label class="file-pill"><span data-i18n="difficulty">Difficulty</span>
+            <select id="difficulty" style="width:auto;margin-left:5px" onchange="saveState()">
+                <option data-i18n="mixed">Mixed</option><option data-i18n="easy">Easy</option><option data-i18n="medium">Medium</option><option data-i18n="hard">Hard</option>
             </select>
-
-        </div>
-
-
-        <!-- TRUE FALSE -->
-
-        <div class="type-card">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="cb-tf"
-                    checked>
-
-                True / False
-
-            </label>
-
-            <select id="count-tf">
-
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="5" selected>5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-
-            </select>
-
-        </div>
-
-
-        <!-- SHORT ANSWER -->
-
-        <div class="type-card">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="cb-sa"
-                    checked>
-
-                Short Answer
-
-            </label>
-
-            <select id="count-sa">
-
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="5">5</option>
-                <option value="10" selected>10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-
-            </select>
-
-        </div>
-
-
-        <!-- ESSAY -->
-
-        <div class="type-card">
-
-            <label>
-
-                <input
-                    type="checkbox"
-                    id="cb-essay"
-                    checked>
-
-                Essay Prompts
-
-            </label>
-
-            <select id="count-essay">
-
-                <option value="0">0</option>
-                <option value="1" selected>1</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-
-            </select>
-
-        </div>
-
+        </label>
+        <button onclick="generateTest()" data-i18n="generateTest">🧠 Generate Test</button>
+        <button onclick="submitTest()" id="submitTestBtn" class="hidden" data-i18n="submitTest">✅ Submit Test</button>
+        <button onclick="resetTest()" class="hidden" id="resetTestBtn" data-i18n="newTest">↻ New Test</button>
     </div>
 
+    <div id="testResult" class="result hidden"></div>
+    <div id="quiz"></div>
+</section>
 
-    <button
-        onclick="generatePracticeTest()"
-        style="
-            padding:14px;
-            font-size:16px;
-        ">
-
-        🧠 Generate Practice Test
-
-    </button>
-
-
-    <div
-        id="generated-quiz-output"
-        class="hidden"
-        style="margin-top:20px;">
-
-        <div class="score-box">
-
-            <h3>
-                Generated Practice Questions
-            </h3>
-
-            <span id="question-count">
-                0 questions generated
-            </span>
-
+<section id="panel-essay" class="panel">
+    <h2 data-i18n="essayTitle">✍️ Essay Marker</h2>
+    <div class="essay-grid">
+        <div>
+            <input id="essayPrompt" type="text" data-i18n-placeholder="essayPrompt" placeholder="Essay prompt/title..." style="margin-bottom:10px">
+            <textarea id="essayText" rows="18" data-i18n-placeholder="essayText" placeholder="Write or paste your essay here..."></textarea>
+            <button onclick="markEssay()" style="margin-top:10px" data-i18n="markEssay">Submit & Mark Essay</button>
         </div>
-
-        <div id="quiz-content-list"></div>
-
-    </div>
-
-</div>
-
-
-<!-- ================= ESSAY ================= -->
-
-<div
-    id="panel-essay"
-    class="function-panel">
-
-    <h2>
-        📝 Instant Essay Marker
-    </h2>
-
-    <input
-        type="text"
-        id="essay-prompt"
-        placeholder="Essay Prompt Title..."
-        style="margin-bottom:10px;">
-
-    <textarea
-        id="essay-text"
-        rows="10"
-        placeholder="Write or paste essay...">
-    </textarea>
-
-    <button
-        onclick="markEssay()">
-
-        Submit & Mark Essay
-
-    </button>
-
-
-    <div
-        id="essay-result"
-        class="hidden">
-
-        <strong
-            id="essay-grade"
-            style="
-                font-size:16px;
-                color:var(--primary);
-            ">
-
-        </strong>
-
-        <p
-            id="essay-feedback"
-            style="
-                margin:8px 0 0 0;
-                font-size:13px;
-            ">
-        </p>
-
-    </div>
-
-</div>
-
-
-<!-- ================= NOTES ================= -->
-
-<div
-    id="panel-notes"
-    class="function-panel">
-
-    <h2>
-        📚 Notes & Documents
-    </h2>
-
-    <p style="color:var(--text-sub);">
-
-        Your uploaded documents are organised below.
-        Select a file to view its contents.
-
-    </p>
-
-
-    <div class="notes-layout">
-
-        <!-- DOCUMENT TREE -->
-
-        <div class="notes-sidebar">
-
-            <div class="notes-sidebar-title">
-                📂 Documents
-            </div>
-
-            <div id="notes-file-list">
-
-                <div class="empty-document"
-                     style="padding:30px 5px;">
-
-                    No documents yet.
-
-                </div>
-
-            </div>
-
+        <div id="essayResult" class="result">
+            <strong data-i18n="rubric">Rubric</strong>
+            <p class="muted" data-i18n="rubricHelp">The marker gives a practice estimate based on structure, evidence, explanation, terminology and argument. It is not an official grade.</p>
+            <div id="rubric" class="rubric"></div>
         </div>
-
-
-        <!-- DOCUMENT VIEWER -->
-
-        <div
-            class="notes-document"
-            id="document-viewer">
-
-            <div class="empty-document">
-
-                <div style="font-size:50px;">
-                    📚
-                </div>
-
-                <h3>
-                    Your Notes
-                </h3>
-
-                <p>
-                    Upload a PDF, DOCX or TXT file to begin.
-                </p>
-
-            </div>
-
-        </div>
-
     </div>
+</section>
 
+</main>
 </div>
 
+<div id="authModal" class="folder-modal hidden">
+    <div class="modal">
+        <h3 data-i18n="profile">👤 Profile</h3>
+        <input id="userInput" type="text" data-i18n-placeholder="usernamePlaceholder" placeholder="Enter username">
+        <div class="toolbar" style="margin-top:10px">
+            <button onclick="loginUser()" data-i18n="save">Save</button>
+            <button onclick="toggleAuth()" data-i18n="cancel">Cancel</button>
+        </div>
+    </div>
 </div>
 
+<div id="folderModal" class="folder-modal hidden">
+    <div class="modal">
+        <h3 data-i18n="newFolder">📁 New Folder</h3>
+        <input id="folderName" type="text" data-i18n-placeholder="folderName" placeholder="Folder name">
+        <select id="parentFolder" style="margin-top:8px"></select>
+        <div class="toolbar" style="margin-top:10px">
+            <button onclick="createFolder()" data-i18n="create">Create</button>
+            <button onclick="closeFolderModal()">Cancel</button>
+        </div>
+    </div>
 </div>
-
 
 <script>
-
-/* =========================================================
-   DATA
-========================================================= */
-
-let currentLang = 'en';
-
-const folders = {
-    General: []
-};
-
-const uploadedNotes = {};
-
-
-/* =========================================================
-   TRANSLATIONS
-========================================================= */
-
-const translations = {
-
-    en: {
-
-        title: "🌸 Pastel Revision Studio",
-
-        lang: "🌐 廣東話",
-
-        guest: "Guest User"
-
-    },
-
-    zh: {
-
-        title: "🌸 溫習筆記與測驗生成器",
-
-        lang: "🌐 English",
-
-        guest: "訪客"
-
-    }
-
-};
-
-
-/* =========================================================
-   LANGUAGE
-========================================================= */
-
-function toggleLanguage() {
-
-    currentLang =
-        currentLang === 'en'
-            ? 'zh'
-            : 'en';
-
-    const t =
-        translations[currentLang];
-
-    document.getElementById(
-        'app-title'
-    ).innerText = t.title;
-
-    document.getElementById(
-        'lang-toggle-btn'
-    ).innerText = t.lang;
-
-    const user =
-        document.getElementById(
-            'user-display'
-        );
-
-    if (
-        user.innerText === 'Guest User' ||
-        user.innerText === '訪客'
-    ) {
-
-        user.innerText = t.guest;
-
-    }
-
-}
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function showPanel(name, button) {
-
-    document
-        .querySelectorAll('.function-panel')
-        .forEach(panel => {
-
-            panel.classList.remove('active');
-
-        });
-
-    document
-        .querySelectorAll('.function-btn')
-        .forEach(btn => {
-
-            btn.classList.remove('active');
-
-        });
-
-    document
-        .getElementById('panel-' + name)
-        .classList.add('active');
-
-    if (button) {
-
-        button.classList.add('active');
-
-    }
-
-}
-
-
-/* =========================================================
-   THEMES
-========================================================= */
-
-function setTheme(theme) {
-
-    document.body.setAttribute(
-        'data-theme',
-        theme
-    );
-
-}
-
-
-/* =========================================================
-   AUTH
-========================================================= */
-
-function toggleAuthModal() {
-
-    document
-        .getElementById('auth-box')
-        .classList
-        .toggle('hidden');
-
-}
-
-
-function loginUser() {
-
-    const username =
-        document
-            .getElementById('user-input')
-            .value
-            .trim();
-
-    if (!username) {
-
-        alert(
-            currentLang === 'en'
-                ? 'Please enter a username.'
-                : '請輸入使用者名稱。'
-        );
-
-        return;
-
-    }
-
-    document
-        .getElementById('user-display')
-        .innerText = username;
-
-    document
-        .getElementById('user-avatar')
-        .innerText =
-        username
-            .charAt(0)
-            .toUpperCase();
-
-    document
-        .getElementById('auth-box')
-        .classList
-        .add('hidden');
-
-}
-
-
-/* =========================================================
-   CREATE FOLDER
-========================================================= */
-
-function addFolder() {
-
-    const input =
-        document.getElementById(
-            'folder-title'
-        );
-
-    const name =
-        input.value.trim();
-
-    if (!name) {
-
-        alert('Please enter a topic name.');
-
-        return;
-
-    }
-
-    if (folders[name]) {
-
-        alert('This topic already exists.');
-
-        return;
-
-    }
-
-    folders[name] = [];
-
-    input.value = '';
-
-    updateFolderSelectors();
-
-    renderFileTree();
-
-}
-
-
-/* =========================================================
-   UPDATE FOLDER SELECT
-========================================================= */
-
-function updateFolderSelectors() {
-
-    const select =
-        document.getElementById(
-            'upload-folder'
-        );
-
-    select.innerHTML = '';
-
-    Object.keys(folders)
-        .forEach(folder => {
-
-            const option =
-                document.createElement(
-                    'option'
-                );
-
-            option.value = folder;
-
-            option.innerText =
-                folder;
-
-            select.appendChild(option);
-
-        });
-
-}
-
-
-/* =========================================================
-   FILE UPLOAD
-========================================================= */
-
-function handleFileUpload(event) {
-
-    const files =
-        Array.from(
-            event.target.files
-        );
-
-    if (!files.length) return;
-
-    const folder =
-        document.getElementById(
-            'upload-folder'
-        ).value || 'General';
-
-    files.forEach(file => {
-
-        const extension =
-            file.name
-                .split('.')
-                .pop()
-                .toLowerCase();
-
-        if (
-            !['pdf','docx','txt']
-                .includes(extension)
-        ) {
-
-            alert(
-                `${file.name}: Unsupported file type.`
-            );
-
-            return;
-
-        }
-
-        const id =
-            'file_' +
-            Date.now() +
-            '_' +
-            Math.random()
-                .toString(36)
-                .substring(2);
-
-        const fileObject = {
-
-            id: id,
-
-            name: file.name,
-
-            type: extension,
-
-            size: file.size,
-
-            folder: folder,
-
-            originalFile: file,
-
-            text: '',
-
-            url: URL.createObjectURL(file)
-
+/* -----------------------------
+   IndexedDB storage
+----------------------------- */
+const DB_NAME='PastelRevisionStudioDB';
+const DB_VERSION=1;
+let db;
+let folders=[];
+let docs=[];
+let currentDocId=null;
+let currentTest=[];
+let originalBlobUrls=new Map();
+
+const $=id=>document.getElementById(id);
+const uid=()=>crypto.randomUUID ? crypto.randomUUID() : Date.now()+'-'+Math.random();
+
+function openDB(){
+    return new Promise((resolve,reject)=>{
+        const req=indexedDB.open(DB_NAME,DB_VERSION);
+        req.onupgradeneeded=e=>{
+            const d=e.target.result;
+            if(!d.objectStoreNames.contains('folders')) d.createObjectStore('folders',{keyPath:'id'});
+            if(!d.objectStoreNames.contains('docs')) d.createObjectStore('docs',{keyPath:'id'});
+            if(!d.objectStoreNames.contains('settings')) d.createObjectStore('settings',{keyPath:'key'});
         };
-
-        uploadedNotes[id] =
-            fileObject;
-
-        if (!folders[folder]) {
-
-            folders[folder] = [];
-
-        }
-
-        folders[folder].push(id);
-
-        processUploadedFile(
-            fileObject
-        );
-
+        req.onsuccess=e=>{db=e.target.result;resolve(db)};
+        req.onerror=()=>reject(req.error);
     });
-
-    renderFileTree();
-
-    renderNotesFileList();
-
-    event.target.value = '';
-
+}
+function tx(store,mode='readonly'){return db.transaction(store,mode).objectStore(store)}
+function put(store,obj){return new Promise((res,rej)=>{const r=tx(store,'readwrite').put(obj);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function getAll(store){return new Promise((res,rej)=>{const r=tx(store).getAll();r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
+function del(store,id){return new Promise((res,rej)=>{const r=tx(store,'readwrite').delete(id);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+async function saveState(){
+    await put('settings',{key:'theme',value:document.body.dataset.theme});
+    await put('settings',{key:'difficulty',value:$('difficulty').value});
+    await put('settings',{key:'user',value:$('username').textContent});
+    await put('settings',{key:'language',value:lang});
+}
+async function getSetting(key){
+    return new Promise(resolve=>{
+        const r=tx('settings').get(key);
+        r.onsuccess=()=>resolve(r.result?.value);
+        r.onerror=()=>resolve(null);
+    });
 }
 
+/* -----------------------------
+   Initialisation
+----------------------------- */
+(async function init(){
+    await openDB();
+    folders=await getAll('folders');
+    docs=await getAll('docs');
+    const theme=await getSetting('theme'); if(theme) document.body.dataset.theme=theme;
+    const savedLang=await getSetting('language'); if(savedLang) lang=savedLang;
+    const user=await getSetting('user'); if(user && user!=='Guest User'){setUser(user)}
+    const diff=await getSetting('difficulty'); if(diff) $('difficulty').value=diff;
+    applyLanguage();
+    renderTree();
+    updateTotal();
+    if(docs.length) selectDoc(docs[0].id);
+})();
 
-/* =========================================================
-   PROCESS UPLOAD
-========================================================= */
+/* -----------------------------
+   Library / folders
+----------------------------- */
+function renderTree(){
+    const root=$('tree');
+    root.innerHTML='';
+    const roots=folders.filter(f=>!f.parentId);
+    roots.forEach(f=>root.appendChild(renderFolder(f)));
+    docs.filter(d=>!d.folderId).forEach(d=>root.appendChild(renderDocItem(d)));
+}
+function renderFolder(folder){
+    const wrap=document.createElement('div');wrap.className='folder';
+    const head=document.createElement('div');head.className='folder-head';
+    head.innerHTML=`<span>📁</span><span>${escapeHTML(folder.name)}</span>`;
+    const actions=document.createElement('span');actions.className='tree-actions';
+    const add=document.createElement('button');add.className='icon-btn';add.textContent='+';
+    add.title=t('addSubfolder');add.onclick=e=>{e.stopPropagation();openFolderModal(folder.id)};
+    const delBtn=document.createElement('button');delBtn.className='icon-btn';delBtn.textContent='×';
+    delBtn.title=t('deleteFolder');delBtn.onclick=async e=>{e.stopPropagation();await deleteFolder(folder.id)};
+    actions.append(add,delBtn);head.appendChild(actions);wrap.appendChild(head);
+    const children=document.createElement('div');children.className='folder-children';
+    folders.filter(f=>f.parentId===folder.id).forEach(f=>children.appendChild(renderFolder(f)));
+    docs.filter(d=>d.folderId===folder.id).forEach(d=>children.appendChild(renderDocItem(d)));
+    wrap.appendChild(children);return wrap;
+}
+function renderDocItem(doc){
+    const el=document.createElement('div');el.className='file'+(doc.id===currentDocId?' selected':'');
+    el.onclick=()=>selectDoc(doc.id);
+    const icon=doc.type==='pdf'?'📕':doc.type==='docx'?'📘':'📄';
+    el.innerHTML=`<div class="file-head"><span>${icon}</span><strong>${escapeHTML(doc.name)}</strong></div><small>${formatBytes(doc.size)} · ${doc.pages?doc.pages+' '+t('pages')+' · ':''}Extracted text</small>`;
+    return el;
+}
+async function deleteFolder(id){
+    const descendants=new Set([id]);
+    let changed=true;
+    while(changed){changed=false;folders.forEach(f=>{if(f.parentId && descendants.has(f.parentId)&&!descendants.has(f.id)){descendants.add(f.id);changed=true}})}
+    const affected=docs.filter(d=>descendants.has(d.folderId));
+    if(!confirm(t('deleteConfirm',{n:affected.length}))) return;
+    for(const d of affected){if(currentDocId===d.id){currentDocId=null}$('docView').innerHTML='';await del('docs',d.id)}
+    for(const f of [...descendants]) await del('folders',f);
+    folders=await getAll('folders');docs=await getAll('docs');renderTree();
+}
+function openFolderModal(parentId=''){
+    $('folderModal').classList.remove('hidden');
+    $('folderName').value='';
+    const sel=$('parentFolder');sel.innerHTML=`<option value="">${t('mainLibrary')}</option>`;
+    folders.forEach(f=>{const o=document.createElement('option');o.value=f.id;o.textContent='📁 '+f.name;if(f.id===parentId)o.selected=true;sel.appendChild(o)});
+}
+function closeFolderModal(){$('folderModal').classList.add('hidden')}
+async function createFolder(){
+    const name=$('folderName').value.trim();if(!name)return;
+    const f={id:uid(),name,parentId:$('parentFolder').value||null,created:Date.now()};
+    folders.push(f);await put('folders',f);closeFolderModal();renderTree();
+}
 
-async function processUploadedFile(fileObject) {
-
-    try {
-
-        if (fileObject.type === 'txt') {
-
-            fileObject.text =
-                await fileObject.originalFile.text();
-
+/* -----------------------------
+   Upload and extraction
+----------------------------- */
+async function handleFiles(e){
+    const files=[...e.target.files];
+    for(const file of files) await importFile(file);
+    e.target.value='';
+    renderTree();
+}
+async function importFile(file){
+    const ext=file.name.split('.').pop().toLowerCase();
+    if(!['pdf','docx','txt'].includes(ext)){alert(t('uploadTypes'));return}
+    let text='',pages=0;
+    try{
+        if(ext==='pdf'){
+            const result=await extractPDF(file);
+            text=result.text;pages=result.pages;
+        }else if(ext==='docx'){
+            const result=await mammoth.extractRawText({arrayBuffer:await file.arrayBuffer()});
+            text=result.value;
+        }else{
+            text=await file.text();
         }
+    }catch(err){
+        console.error(err);alert(t('readError',{name:file.name}));return;
+    }
+    if(!text.trim()){alert(t('noReadable',{name:file.name}));return}
+    const doc={id:uid(),name:file.name,type:ext,size:file.size,blob:file,text:text.trim(),pages,folderId:null,created:Date.now()};
+    docs.push(doc);await put('docs',doc);selectDoc(doc.id);
+}
+async function extractPDF(file){
+    pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+    let text=[];
+    for(let i=1;i<=pdf.numPages;i++){
+        const page=await pdf.getPage(i);
+        const content=await page.getTextContent();
+        const pageText=content.items.map(x=>x.str).join(' ');
+        text.push(`Page ${i}\n${pageText}`);
+    }
+    return {text:text.join('\n\n'),pages:pdf.numPages};
+}
 
+/* -----------------------------
+   Document viewer
+----------------------------- */
+function selectDoc(id){
+    currentDocId=id;renderTree();renderCurrentDoc();renderSelectedMaterial();
+}
+function renderCurrentDoc(){
+    const doc=docs.find(d=>d.id===currentDocId);
+    if(!doc){$('emptyNotes').classList.remove('hidden');$('documentArea').classList.add('hidden');return}
+    $('emptyNotes').classList.add('hidden');$('documentArea').classList.remove('hidden');
+    $('docTitle').textContent=doc.name;
+    $('docInfo').innerHTML=`<span class="file-pill">${doc.type.toUpperCase()}</span><br><br>${formatBytes(doc.size)}<br>${doc.pages?doc.pages+' '+t('pdfPages')+'<br>':''}${new Date(doc.created).toLocaleString()}`;
+    const query=$('noteSearch').value.trim().toLowerCase();
+    let text=doc.text;
+    if(query){
+        const parts=text.split(/\n+/).filter(p=>p.toLowerCase().includes(query));
+        text=parts.length?parts.join('\n\n'):t('noMatch');
+    }
+    $('docView').innerHTML=escapeHTML(text).replace(/\n{2,}/g,'</p><p>').replace(/\n/g,'<br>');
+    $('docView').innerHTML='<p>'+ $('docView').innerHTML +'</p>';
+}
+function openOriginal(){
+    const doc=docs.find(d=>d.id===currentDocId);if(!doc)return;
+    let url=originalBlobUrls.get(doc.id);
+    if(!url){url=URL.createObjectURL(doc.blob);originalBlobUrls.set(doc.id,url)}
+    window.open(url,'_blank');
+}
+function downloadCurrentText(){
+    const doc=docs.find(d=>d.id===currentDocId);if(!doc)return;
+    const blob=new Blob([doc.text],{type:'text/plain;charset=utf-8'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=doc.name.replace(/\.[^.]+$/,'')+'-notes.txt';a.click();
+}
+function renderSelectedMaterial(){
+    const chosen=docs.filter(d=>d.selected);
+    $('selectedMaterial').innerHTML=chosen.length?chosen.map(d=>`<span class="file-pill">${escapeHTML(d.name)}</span>`).join(' '):t('selectFiles');
+}
 
-        else if (fileObject.type === 'pdf') {
+/* Clicking a file selects it for viewing; Ctrl/Meta-click toggles test selection */
+document.addEventListener('click',e=>{
+    const file=e.target.closest('.file');
+    if(!file)return;
+});
 
-            fileObject.text =
-                await extractPDFText(
-                    fileObject.originalFile
-                );
+/* Add a test-selection button to each document after rendering */
+const oldRenderDocItem=renderDocItem;
+renderDocItem=function(doc){
+    const el=oldRenderDocItem(doc);
+    const toggle=document.createElement('button');
+    toggle.className='icon-btn';toggle.textContent=doc.selected?'✓':'＋';toggle.title=t('includeTest');
+    toggle.onclick=e=>{e.stopPropagation();doc.selected=!doc.selected;put('docs',doc);renderTree();renderSelectedMaterial()};
+    el.querySelector('.file-head').appendChild(toggle);
+    return el;
+};
 
+/* -----------------------------
+   Test generator
+----------------------------- */
+function updateTotal(){
+    let total=0;document.querySelectorAll('.qcount').forEach(s=>total+=Number(s.value));
+    $('totalQuestions').textContent=total;
+}
+function getSelectedDocs(){
+    let chosen=docs.filter(d=>d.selected);
+    if(!chosen.length && currentDocId){const d=docs.find(x=>x.id===currentDocId);if(d)chosen=[d]}
+    return chosen;
+}
+function splitSentences(text){
+    return text.replace(/\r/g,' ').split(/(?<=[.!?])\s+|\n+/).map(x=>x.trim()).filter(x=>x.length>=35);
+}
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function generateTest(){
+    const sources=getSelectedDocs();
+    if(!sources.length){alert(t('selectTest'));return}
+    const counts={mcq:+$('count-mcq').value,tf:+$('count-tf').value,sa:+$('count-sa').value,essay:+$('count-essay').value};
+    const total=Object.values(counts).reduce((a,b)=>a+b,0);
+    if(!total){alert(t('zeroQuestions'));return}
+    const all=sources.flatMap(d=>splitSentences(d.text).map(s=>({s,topic:d.name})));
+    if(!all.length){alert(t('notEnough'));return}
+    const bank=shuffle(all), questions=[];
+    for(let i=0;i<counts.mcq;i++)questions.push(makeMCQ(bank[i%bank.length],all,i));
+    for(let i=0;i<counts.tf;i++)questions.push(makeTF(bank[(i+counts.mcq)%bank.length],i));
+    for(let i=0;i<counts.sa;i++)questions.push(makeSA(bank[(i+counts.mcq+counts.tf)%bank.length]));
+    for(let i=0;i<counts.essay;i++)questions.push(makeEssay(bank[(i+counts.mcq+counts.tf+counts.sa)%bank.length]));
+    currentTest=shuffle(questions);
+    renderTest();
+    $('submitTestBtn').classList.remove('hidden');
+    $('resetTestBtn').classList.remove('hidden');
+    $('testResult').classList.add('hidden');
+}
+function makeMCQ(item,all,index){
+    const words=item.s.replace(/[.,!?;:()[\]{}]/g,'').split(/\s+/).filter(w=>w.length>=5);
+    const answer=words[index%words.length]||words[0];
+    const question=item.s.replace(new RegExp(escapeRegExp(answer),'i'),'_____');
+    const wrong=shuffle([...new Set(all.flatMap(x=>x.s.replace(/[.,!?;:()[\]{}]/g,'').split(/\s+/).filter(w=>w.length>=5&&w.toLowerCase()!==answer.toLowerCase())))]).slice(0,3);
+    while(wrong.length<3)wrong.push(t('notStated'));
+    return {type:'mcq',topic:item.topic,question:t('mcqQuestion',{q:question}),options:shuffle([answer,...wrong]),answer};
+}
+function makeTF(item,index){
+    const falseQ=index%2===1;
+    let statement=item.s;
+    if(falseQ){
+        const words=statement.split(/\s+/);
+        if(words.length>5){const p=Math.floor(words.length/2);words[p]=words[p]+' ('+(lang==='zh'?'不正確':'incorrect')+')';statement=words.join(' ')}
+    }
+    return {type:'tf',topic:item.topic,question:statement,answer:falseQ?'False':'True'};
+}
+function makeSA(item){return {type:'sa',topic:item.topic,question:t('saQuestion',{q:item.s}),answer:item.s}}
+function makeEssay(item){return {type:'essay',topic:item.topic,question:t('essayQuestion',{topic:item.topic}),answer:item.s}}
+function renderTest(){
+    $('quiz').innerHTML='';
+    currentTest.forEach((q,i)=>{
+        const box=document.createElement('div');box.className='quiz-card';box.dataset.index=i;
+        box.innerHTML=`<div class="qtype">${escapeHTML(q.type==='mcq'?t('mcq'):q.type==='tf'?t('tf'):q.type==='sa'?t('shortAnswer'):t('essayPrompts'))} · ${escapeHTML(q.topic)}</div><strong>Q${i+1}. ${escapeHTML(q.question)}</strong>`;
+        if(q.type==='mcq'){
+            q.options.forEach(o=>{
+                const l=document.createElement('label');l.className='option';
+                l.innerHTML=`<input type="radio" name="q${i}" value="${escapeHTML(o)}"> ${escapeHTML(o)}`;
+                box.appendChild(l);
+            });
+        }else if(q.type==='tf'){
+            [[['True',t('tfTrue')],['False',t('tfFalse')]].forEach(([value,label])=>{
+                const l=document.createElement('label');l.className='option';
+                l.innerHTML=`<input type="radio" name="q${i}" value="${value}"> ${label}`;box.appendChild(l);
+            });
+        }else{
+            const ta=document.createElement('textarea');ta.rows=q.type==='essay'?7:4;ta.placeholder=q.type==='essay'?t('planEssay'):t('writeAnswer');ta.className='user-answer';box.appendChild(ta);
         }
-
-
-        else if (fileObject.type === 'docx') {
-
-            const arrayBuffer =
-                await fileObject.originalFile.arrayBuffer();
-
-            const result =
-                await mammoth.extractRawText({
-                    arrayBuffer:
-                        arrayBuffer
-                });
-
-            fileObject.text =
-                result.value;
-
+        $('quiz').appendChild(box);
+    });
+}
+function submitTest(){
+    if(!currentTest.length)return;
+    let correct=0,auto=0,wrong=[];
+    currentTest.forEach((q,i)=>{
+        if(q.type==='mcq'||q.type==='tf'){
+            auto++;
+            const selected=document.querySelector(`input[name="q${i}"]:checked`)?.value;
+            if(selected===q.answer)correct++;else wrong.push({q,i,selected});
         }
-
-        renderFileTree();
-
-        renderNotesFileList();
-
-        /*
-            Automatically show newly uploaded document
-        */
-
-        openDocument(fileObject.id);
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        alert(
-            `Could not read ${fileObject.name}.`
-        );
-
-    }
-
+    });
+    const pct=auto?Math.round(correct/auto*100):0;
+    $('testResult').classList.remove('hidden');
+    $('testResult').innerHTML=`<div class="score">${correct} / ${auto}</div><strong>${pct}${t('automaticallyMarked')}</strong><p class="muted">${t('shortEssayReview')}</p>`+
+        (wrong.length?`<h4>${t('reviewWrong')}</h4>`+wrong.map(x=>`<div class="review-wrong"><strong>Q${x.i+1}</strong><br>${t('yourAnswer')}: ${escapeHTML(x.selected||t('noAnswer'))}<br>${t('correctAnswer')}: ${escapeHTML(x.q.answer)}</div>`).join(''):`<p>${t('allCorrect')}</p>`);
+    window.scrollTo({top:$('testResult').offsetTop-20,behavior:'smooth'});
 }
-
-
-/* =========================================================
-   PDF TEXT EXTRACTION
-========================================================= */
-
-async function extractPDFText(file) {
-
-    const arrayBuffer =
-        await file.arrayBuffer();
-
-    const pdf =
-        await pdfjsLib
-            .getDocument({
-                data: arrayBuffer
-            })
-            .promise;
-
-    let text = '';
-
-    for (
-        let pageNumber = 1;
-        pageNumber <= pdf.numPages;
-        pageNumber++
-    ) {
-
-        const page =
-            await pdf.getPage(
-                pageNumber
-            );
-
-        const content =
-            await page.getTextContent();
-
-        const pageText =
-            content.items
-                .map(
-                    item => item.str
-                )
-                .join(' ');
-
-        text +=
-            pageText +
-            '\n\n';
-
-    }
-
-    return text.trim();
-
-}
-
-
-/* =========================================================
-   FILE ICON
-========================================================= */
-
-function getFileIcon(type) {
-
-    if (type === 'pdf') return '📕';
-
-    if (type === 'docx') return '📘';
-
-    if (type === 'txt') return '📄';
-
-    return '📎';
-
-}
-
-
-/* =========================================================
-   FILE TREE
-========================================================= */
-
-function renderFileTree() {
-
-    const tree =
-        document.getElementById(
-            'file-tree'
-        );
-
-    tree.innerHTML = '';
-
-    Object.keys(folders)
-        .forEach(folderName => {
-
-            const folder =
-                document.createElement(
-                    'div'
-                );
-
-            folder.className =
-                'folder';
-
-
-            const header =
-                document.createElement(
-                    'div'
-                );
-
-            header.className =
-                'folder-header';
-
-            header.innerHTML =
-                `
-                <span>
-                    📁 ${escapeHTML(folderName)}
-                </span>
-
-                <span>
-                    ${folders[folderName].length}
-                </span>
-                `;
-
-
-            const fileContainer =
-                document.createElement(
-                    'div'
-                );
-
-            fileContainer.className =
-                'folder-files';
-
-
-            folders[folderName]
-                .forEach(id => {
-
-                    const file =
-                        uploadedNotes[id];
-
-                    if (!file) return;
-
-
-                    const item =
-                        document.createElement(
-                            'div'
-                        );
-
-                    item.className =
-                        'file-item';
-
-                    item.onclick =
-                        () => {
-
-                            openDocument(
-                                file.id
-                            );
-
-                            showPanelByName(
-                                'notes'
-                            );
-
-                        };
-
-
-                    item.innerHTML =
-                        `
-                        <span class="file-icon">
-                            ${getFileIcon(file.type)}
-                        </span>
-
-                        <span class="file-name">
-                            ${escapeHTML(file.name)}
-                        </span>
-                        `;
-
-
-                    fileContainer.appendChild(
-                        item
-                    );
-
-                });
-
-
-            folder.appendChild(header);
-
-            folder.appendChild(
-                fileContainer
-            );
-
-            tree.appendChild(folder);
-
-        });
-
-
-    if (
-        Object.keys(uploadedNotes)
-            .length === 0
-    ) {
-
-        tree.innerHTML =
-            `
-            <div class="empty-document"
-                 style="padding:20px;font-size:13px;">
-                No files uploaded yet.
-            </div>
-            `;
-
-    }
-
-}
-
-
-/* =========================================================
-   NOTES FILE LIST
-========================================================= */
-
-function renderNotesFileList() {
-
-    const list =
-        document.getElementById(
-            'notes-file-list'
-        );
-
-    list.innerHTML = '';
-
-
-    Object.keys(folders)
-        .forEach(folderName => {
-
-            const folderTitle =
-                document.createElement(
-                    'div'
-                );
-
-            folderTitle.style =
-                `
-                font-size:12px;
-                font-weight:700;
-                color:var(--text-sub);
-                margin:12px 4px 5px;
-                `;
-
-            folderTitle.innerText =
-                '📁 ' + folderName;
-
-            list.appendChild(
-                folderTitle
-            );
-
-
-            folders[folderName]
-                .forEach(id => {
-
-                    const file =
-                        uploadedNotes[id];
-
-                    if (!file) return;
-
-
-                    const item =
-                        document.createElement(
-                            'div'
-                        );
-
-                    item.className =
-                        'file-item';
-
-                    item.onclick =
-                        () => openDocument(
-                            file.id
-                        );
-
-
-                    item.innerHTML =
-                        `
-                        <span class="file-icon">
-                            ${getFileIcon(file.type)}
-                        </span>
-
-                        <span class="file-name">
-                            ${escapeHTML(file.name)}
-                        </span>
-                        `;
-
-
-                    list.appendChild(item);
-
-                });
-
-        });
-
-
-    if (
-        Object.keys(uploadedNotes)
-            .length === 0
-    ) {
-
-        list.innerHTML =
-            `
-            <div class="empty-document"
-                 style="padding:30px 5px;">
-                No documents yet.
-            </div>
-            `;
-
-    }
-
-}
-
-
-/* =========================================================
-   OPEN DOCUMENT
-========================================================= */
-
-function openDocument(id) {
-
-    const file =
-        uploadedNotes[id];
-
-    if (!file) return;
-
-
-    const viewer =
-        document.getElementById(
-            'document-viewer'
-        );
-
-
-    let html = '';
-
-
-    /*
-        PDF
-        Display the actual uploaded PDF.
-    */
-
-    if (file.type === 'pdf') {
-
-        html =
-            `
-            <div class="document-header">
-
-                <div class="document-title">
-                    📕 ${escapeHTML(file.name)}
-                </div>
-
-                <div class="document-meta">
-                    PDF · Original uploaded document
-                </div>
-
-            </div>
-
-            <div class="file-preview-toolbar">
-
-                <button
-                    onclick="downloadFile('${file.id}')">
-
-                    ⬇️ Download PDF
-
-                </button>
-
-                <button
-                    onclick="openOriginalFile('${file.id}')">
-
-                    ↗️ Open Original
-
-                </button>
-
-            </div>
-
-            <iframe
-                class="pdf-viewer"
-                src="${file.url}">
-            </iframe>
-
-            <details style="margin-top:20px;">
-
-                <summary>
-                    📖 Extracted text for revision
-                </summary>
-
-                <div
-                    class="document-content"
-                    style="
-                        margin-top:15px;
-                        white-space:pre-wrap;
-                    ">
-
-                    ${escapeHTML(
-                        file.text ||
-                        'No text could be extracted from this PDF.'
-                    )}
-
-                </div>
-
-            </details>
-            `;
-
-    }
-
-
-    /*
-        DOCX
-    */
-
-    else if (file.type === 'docx') {
-
-        html =
-            `
-            <div class="document-header">
-
-                <div class="document-title">
-                    📘 ${escapeHTML(file.name)}
-                </div>
-
-                <div class="document-meta">
-                    DOCX · Structured document preview
-                </div>
-
-            </div>
-
-            <div class="file-preview-toolbar">
-
-                <button
-                    onclick="downloadFile('${file.id}')">
-
-                    ⬇️ Download Original DOCX
-
-                </button>
-
-                <button
-                    onclick="openOriginalFile('${file.id}')">
-
-                    ↗️ Open Original
-
-                </button>
-
-            </div>
-
-            <div
-                class="document-content"
-                style="white-space:pre-wrap;">
-
-                ${escapeHTML(
-                    file.text ||
-                    'Loading document...'
-                )}
-
-            </div>
-            `;
-
-    }
-
-
-    /*
-        TXT
-    */
-
-    else {
-
-        html =
-            `
-            <div class="document-header">
-
-                <div class="document-title">
-                    📄 ${escapeHTML(file.name)}
-                </div>
-
-                <div class="document-meta">
-                    TXT · Uploaded notes
-                </div>
-
-            </div>
-
-            <div class="file-preview-toolbar">
-
-                <button
-                    onclick="downloadFile('${file.id}')">
-
-                    ⬇️ Download
-
-                </button>
-
-                <button
-                    onclick="openOriginalFile('${file.id}')">
-
-                    ↗️ Open Original
-
-                </button>
-
-            </div>
-
-            <div
-                class="document-content"
-                style="white-space:pre-wrap;">
-
-                ${escapeHTML(
-                    file.text
-                )}
-
-            </div>
-            `;
-
-    }
-
-
-    viewer.innerHTML = html;
-
-
-    /*
-        Highlight selected file
-    */
-
-    document
-        .querySelectorAll(
-            '#notes-file-list .file-item'
-        )
-        .forEach(item => {
-
-            item.classList.remove(
-                'active'
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   DOWNLOAD
-========================================================= */
-
-function downloadFile(id) {
-
-    const file =
-        uploadedNotes[id];
-
-    if (!file) return;
-
-    const link =
-        document.createElement('a');
-
-    link.href =
-        file.url;
-
-    link.download =
-        file.name;
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
-
-}
-
-
-/* =========================================================
-   OPEN ORIGINAL
-========================================================= */
-
-function openOriginalFile(id) {
-
-    const file =
-        uploadedNotes[id];
-
-    if (!file) return;
-
-    window.open(
-        file.url,
-        '_blank'
-    );
-
-}
-
-
-/* =========================================================
-   SHOW NOTES PANEL
-========================================================= */
-
-function showPanelByName(name) {
-
-    document
-        .querySelectorAll('.function-panel')
-        .forEach(panel => {
-
-            panel.classList.remove(
-                'active'
-            );
-
-        });
-
-    document
-        .getElementById(
-            'panel-' + name
-        )
-        .classList
-        .add('active');
-
-}
-
-
-/* =========================================================
-   GET ALL NOTES FOR TEST
-========================================================= */
-
-function getSelectedNotes() {
-
-    return Object.values(
-        uploadedNotes
-    )
-
-    .map(file => file.text)
-
-    .filter(Boolean)
-
-    .join('\n\n');
-
-}
-
-
-/* =========================================================
-   SENTENCE EXTRACTION
-========================================================= */
-
-function extractSentences(notes) {
-
-    return notes
-
-        .replace(/\r/g, ' ')
-
-        .replace(/\n+/g, ' ')
-
-        .replace(/\s+/g, ' ')
-
-        .split(
-            /(?<=[.!?])\s+/
-        )
-
-        .map(
-            sentence =>
-                sentence.trim()
-        )
-
-        .filter(
-            sentence =>
-                sentence.length >= 30
-        );
-
-}
-
-
-/* =========================================================
-   GENERATE TEST
-========================================================= */
-
-function generatePracticeTest() {
-
-    const notes =
-        getSelectedNotes();
-
-
-    if (!notes) {
-
-        alert(
-            'Upload at least one PDF, DOCX or TXT file first.'
-        );
-
-        return;
-
-    }
-
-
-    const settings = {
-
-        mcq:
-            document.getElementById(
-                'cb-mcq'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-mcq'
-                    ).value
-                )
-                : 0,
-
-        tf:
-            document.getElementById(
-                'cb-tf'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-tf'
-                    ).value
-                )
-                : 0,
-
-        sa:
-            document.getElementById(
-                'cb-sa'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-sa'
-                    ).value
-                )
-                : 0,
-
-        essay:
-            document.getElementById(
-                'cb-essay'
-            ).checked
-                ? Number(
-                    document.getElementById(
-                        'count-essay'
-                    ).value
-                )
-                : 0
-
+function resetTest(){currentTest=[];$('quiz').innerHTML='';$('testResult').classList.add('hidden');$('submitTestBtn').classList.add('hidden');$('resetTestBtn').classList.add('hidden')}
+
+/* -----------------------------
+   Essay marker
+----------------------------- */
+function markEssay(){
+    const text=$('essayText').value.trim(),prompt=$('essayPrompt').value.trim();
+    if(!text){alert(t('essayRequired'));return}
+    const words=text.split(/\s+/).filter(Boolean), wc=words.length;
+    const sentences=text.split(/[.!?]+/).map(x=>x.trim()).filter(Boolean);
+    const paragraphs=text.split(/\n\s*\n/).filter(x=>x.trim());
+    const evidence=(text.match(/\b(for example|for instance|evidence|because|according to|this shows|therefore|however)\b/gi)||[]).length;
+    const terminology=new Set(words.filter(w=>w.length>=8).map(w=>w.toLowerCase())).size;
+    const scores={
+        [t('argument')]:Math.min(10,Math.max(2,Math.round(4+wc/70))),
+        [t('evidence')]:Math.min(10,Math.max(2,4+evidence)),
+        [t('explanation')]:Math.min(10,Math.max(2,Math.round(4+sentences.length/5))),
+        [t('structure')]:Math.min(10,Math.max(2,paragraphs.length*2)),
+        [t('terminology')]:Math.min(10,Math.max(2,Math.round(3+terminology/8)))
     };
-
-
-    const total =
-        settings.mcq +
-        settings.tf +
-        settings.sa +
-        settings.essay;
-
-
-    if (total === 0) {
-
-        alert(
-            'Set at least one question type above 0.'
-        );
-
-        return;
-
-    }
-
-
-    const sentences =
-        extractSentences(notes);
-
-
-    if (!sentences.length) {
-
-        alert(
-            'Not enough readable text was found in your uploaded documents.'
-        );
-
-        return;
-
-    }
-
-
-    const questions = [];
-
-
-    /*
-        MCQ
-    */
-
-    for (
-        let i = 0;
-        i < settings.mcq;
-        i++
-    ) {
-
-        const sentence =
-            sentences[
-                i % sentences.length
-            ];
-
-        const q =
-            createMCQ(
-                sentence,
-                sentences
-            );
-
-        if (q) {
-
-            questions.push(q);
-
-        }
-
-    }
-
-
-    /*
-        TRUE / FALSE
-    */
-
-    for (
-        let i = 0;
-        i < settings.tf;
-        i++
-    ) {
-
-        const sentence =
-            sentences[
-                (
-                    i +
-                    settings.mcq
-                )
-                %
-                sentences.length
-            ];
-
-        questions.push(
-            createTrueFalse(
-                sentence,
-                i
-            )
-        );
-
-    }
-
-
-    /*
-        SHORT ANSWER
-    */
-
-    for (
-        let i = 0;
-        i < settings.sa;
-        i++
-    ) {
-
-        const sentence =
-            sentences[
-                (
-                    i +
-                    settings.mcq +
-                    settings.tf
-                )
-                %
-                sentences.length
-            ];
-
-
-        questions.push({
-
-            type: 'Short Answer',
-
-            topic: 'Uploaded Notes',
-
-            question:
-                `Explain this idea from your notes: "${sentence}"`,
-
-            answer:
-                sentence
-
-        });
-
-    }
-
-
-    /*
-        ESSAY
-    */
-
-    for (
-        let i = 0;
-        i < settings.essay;
-        i++
-    ) {
-
-        questions.push({
-
-            type: 'Essay',
-
-            topic: 'Uploaded Notes',
-
-            question:
-                'Discuss the key ideas from your uploaded revision material. Use evidence and examples from the notes.',
-
-            answer:
-                sentences
-                    .slice(
-                        0,
-                        Math.min(
-                            5,
-                            sentences.length
-                        )
-                    )
-                    .join(' ')
-
-        });
-
-    }
-
-
-    questions.sort(
-        () => Math.random() - 0.5
-    );
-
-
-    renderQuestions(
-        questions
-    );
-
+    const total=Object.values(scores).reduce((a,b)=>a+b,0),pct=Math.round(total/50*100);
+    const grade=pct>=90?'A*':pct>=80?'A':pct>=70?'B':pct>=60?'C':pct>=50?'D':'E';
+    $('rubric').innerHTML=`<div class="score">${grade}</div><div><strong>${pct}% ${t('practiceEstimate')}</strong> · ${wc} ${t('words')}${prompt?' · '+escapeHTML(prompt):''}</div>`+
+        Object.entries(scores).map(([k,v])=>`<div class="rubric-row"><div><strong>${k}</strong><div class="progress"><span style="width:${v*10}%"></span></div></div><strong>${v}/10</strong></div>`).join('')+
+        `<div class="result"><strong>${t('nextSteps')}</strong><p>${wc<180?t('develop'):evidence<3?t('addEvidence'):t('keepEvidence')}</p></div>`;
 }
 
-
-/* =========================================================
-   MCQ
-========================================================= */
-
-function createMCQ(
-    sentence,
-    allSentences
-) {
-
-    const words =
-        sentence
-
-            .replace(
-                /[.,!?;:()[\]{}]/g,
-                ''
-            )
-
-            .split(/\s+/)
-
-            .filter(
-                word =>
-                    word.length >= 5
-            );
-
-
-    if (words.length < 4) {
-
-        return null;
-
-    }
-
-
-    const answer =
-        words[
-            Math.floor(
-                Math.random()
-                *
-                words.length
-            )
-        ];
-
-
-    const questionText =
-        sentence.replace(
-            new RegExp(
-                escapeRegExp(answer),
-                'i'
-            ),
-            '_____'
-        );
-
-
-    const wrongAnswers =
-        allSentences
-
-            .flatMap(
-                s =>
-                    s
-                        .replace(
-                            /[.,!?;:()[\]{}]/g,
-                            ''
-                        )
-                        .split(/\s+/)
-            )
-
-            .filter(
-                word =>
-                    word.length >= 5 &&
-                    word.toLowerCase()
-                    !==
-                    answer.toLowerCase()
-            )
-
-            .filter(
-                (word, index, array) =>
-                    array
-                        .findIndex(
-                            x =>
-                                x.toLowerCase()
-                                ===
-                                word.toLowerCase()
-                        )
-                    === index
-            )
-
-            .sort(
-                () => Math.random() - 0.5
-            )
-
-            .slice(0,3);
-
-
-    if (
-        wrongAnswers.length < 3
-    ) {
-
-        return null;
-
-    }
-
-
-    const options =
-        [
-            answer,
-            ...wrongAnswers
-        ]
-
-        .sort(
-            () => Math.random() - 0.5
-        );
-
-
-    return {
-
-        type:
-            'Multiple Choice',
-
-        topic:
-            'Uploaded Notes',
-
-        question:
-            `Which word correctly completes this statement? "${questionText}"`,
-
-        options:
-            options,
-
-        answer:
-            `${String.fromCharCode(
-                65 +
-                options.indexOf(answer)
-            )}. ${answer}`
-
-    };
-
+/* -----------------------------
+   Navigation / settings
+----------------------------- */
+function showPanel(name,button){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+    $('panel-'+name).classList.add('active');if(button)button.classList.add('active');
 }
-
-
-/* =========================================================
-   TRUE / FALSE
-========================================================= */
-
-function createTrueFalse(
-    sentence,
-    index
-) {
-
-    const makeFalse =
-        index % 2 === 1;
-
-
-    let statement =
-        sentence;
-
-
-    if (makeFalse) {
-
-        const words =
-            sentence.split(/\s+/);
-
-
-        if (words.length > 5) {
-
-            const position =
-                Math.floor(
-                    words.length / 2
-                );
-
-            words[position] =
-                'not ' +
-                words[position];
-
-            statement =
-                words.join(' ');
-
-        }
-
-    }
-
-
-    return {
-
-        type:
-            'True / False',
-
-        topic:
-            'Uploaded Notes',
-
-        question:
-            `True or False: ${statement}`,
-
-        answer:
-            makeFalse
-                ? 'False'
-                : 'True'
-
-    };
-
+function setTheme(t){document.body.dataset.theme=t;saveState()}
+function toggleAuth(){$('authModal').classList.toggle('hidden')}
+function loginUser(){
+    const name=$('userInput').value.trim();if(!name)return;
+    setUser(name);toggleAuth();saveState();
 }
-
-
-/* =========================================================
-   RENDER QUESTIONS
-========================================================= */
-
-function renderQuestions(
-    questions
-) {
-
-    const container =
-        document.getElementById(
-            'quiz-content-list'
-        );
-
-    container.innerHTML = '';
-
-
-    questions.forEach(
-        (question, index) => {
-
-            const box =
-                document.createElement(
-                    'div'
-                );
-
-            box.className =
-                'quiz-question';
-
-
-            const type =
-                document.createElement(
-                    'div'
-                );
-
-            type.className =
-                'question-type';
-
-            type.innerText =
-                `${question.type} · ${question.topic}`;
-
-            box.appendChild(type);
-
-
-            const title =
-                document.createElement(
-                    'strong'
-                );
-
-            title.innerText =
-                `Q${index + 1}. ${question.question}`;
-
-            box.appendChild(title);
-
-
-            if (
-                question.type ===
-                'Multiple Choice'
-            ) {
-
-                question.options
-                    .forEach(
-                        (option, optionIndex) => {
-
-                            const label =
-                                document.createElement(
-                                    'label'
-                                );
-
-                            label.className =
-                                'option';
-
-
-                            const radio =
-                                document.createElement(
-                                    'input'
-                                );
-
-                            radio.type =
-                                'radio';
-
-                            radio.name =
-                                `question-${index}`;
-
-                            radio.value =
-                                option;
-
-
-                            label.appendChild(
-                                radio
-                            );
-
-                            label.appendChild(
-                                document.createTextNode(
-                                    ` ${String.fromCharCode(
-                                        65 +
-                                        optionIndex
-                                    )}. ${option}`
-                                )
-                            );
-
-                            box.appendChild(
-                                label
-                            );
-
-                        }
-                    );
-
-
-                addAnswerButton(
-                    box,
-                    question.answer
-                );
-
-            }
-
-
-            else if (
-                question.type ===
-                'True / False'
-            ) {
-
-                ['True','False']
-                    .forEach(
-                        value => {
-
-                            const label =
-                                document.createElement(
-                                    'label'
-                                );
-
-                            label.className =
-                                'option';
-
-
-                            const radio =
-                                document.createElement(
-                                    'input'
-                                );
-
-                            radio.type =
-                                'radio';
-
-                            radio.name =
-                                `question-${index}`;
-
-                            radio.value =
-                                value;
-
-
-                            label.appendChild(
-                                radio
-                            );
-
-                            label.appendChild(
-                                document.createTextNode(
-                                    ` ${value}`
-                                )
-                            );
-
-                            box.appendChild(
-                                label
-                            );
-
-                        }
-                    );
-
-
-                addAnswerButton(
-                    box,
-                    question.answer
-                );
-
-            }
-
-
-            else if (
-                question.type ===
-                'Short Answer'
-            ) {
-
-                const textarea =
-                    document.createElement(
-                        'textarea'
-                    );
-
-                textarea.rows = 4;
-
-                textarea.placeholder =
-                    'Write your answer here...';
-
-                textarea.style.marginTop =
-                    '10px';
-
-                box.appendChild(
-                    textarea
-                );
-
-
-                addAnswerButton(
-                    box,
-                    question.answer
-                );
-
-            }
-
-
-            else {
-
-                const textarea =
-                    document.createElement(
-                        'textarea'
-                    );
-
-                textarea.rows = 8;
-
-                textarea.placeholder =
-                    'Plan your essay here...';
-
-                textarea.style.marginTop =
-                    '10px';
-
-                box.appendChild(
-                    textarea
-                );
-
-                addAnswerButton(
-                    box,
-                    question.answer
-                );
-
-            }
-
-
-            container.appendChild(
-                box
-            );
-
-        }
-    );
-
-
-    document.getElementById(
-        'question-count'
-    ).innerText =
-        `${questions.length} questions generated`;
-
-
-    document
-        .getElementById(
-            'generated-quiz-output'
-        )
-        .classList
-        .remove('hidden');
-
+function setUser(name){$('username').textContent=name;$('avatar').textContent=name.charAt(0).toUpperCase()}
+
+/* -----------------------------
+   Full English / Cantonese UI
+----------------------------- */
+let lang='en';
+
+const i18n={
+ en:{
+  appTitle:'🌸 Pastel Revision Studio',langBtn:'🌐 廣東話',guest:'Guest User',
+  auth:'Log In',functions:'🧭 Functions',notesLibrary:'📚 Notes & Library',
+  practiceTest:'📝 Practice Test',essayMarker:'✍️ Essay Marker',theme:'🎨 Theme',
+  library:'📁 Library',addFolder:'+ Folder',addFile:'+ File',
+  libraryHelp:'Upload PDF, DOCX or TXT. Files are stored locally in this browser.',
+  notesTitle:'📚 Notes & Document Library',searchDoc:'Search inside the current document...',
+  exportNotes:'Export Notes',openOriginal:'Open Original',noDoc:'No document selected.',
+  selectDocHelp:'Upload a PDF, DOCX or TXT, then choose it from the library.',
+  openExact:'📄 Open exact uploaded file',makeTest:'🧠 Make a test',
+  practiceTitle:'📝 Practice Test',
+  practiceHelp:'Select documents/folders in the library, choose 0/1/5/10/25/50 questions, then start the test.',
+  selectedMaterial:'Selected material',configurator:'⚙️ Test Configurator',
+  mcq:'Multiple Choice',tf:'True / False',shortAnswer:'Short Answer',essayPrompts:'Essay Prompts',
+  configTotal:'Test Configurator:',questions:'questions',difficulty:'Difficulty',
+  mixed:'Mixed',easy:'Easy',medium:'Medium',hard:'Hard',generateTest:'🧠 Generate Test',
+  submitTest:'✅ Submit Test',newTest:'↻ New Test',essayTitle:'✍️ Essay Marker',
+  essayPrompt:'Essay prompt/title...',essayText:'Write or paste your essay here...',
+  markEssay:'Submit & Mark Essay',rubric:'Rubric',
+  rubricHelp:'The marker gives a practice estimate based on structure, evidence, explanation, terminology and argument. It is not an official grade.',
+  profile:'👤 Profile',usernamePlaceholder:'Enter username',save:'Save',cancel:'Cancel',
+  newFolder:'📁 New Folder',folderName:'Folder name',create:'Create',
+  mainLibrary:'📁 Main Library',addSubfolder:'Add subfolder',deleteFolder:'Delete folder',
+  extractedText:t('extractedText'),pages:'pages',pdfPages:'PDF pages',noMatch:t('noMatch'),
+  selectFiles:t('selectFiles'),includeTest:'Include in test',
+  deleteConfirm:'Delete this folder and its {n} file(s)?',
+  uploadTypes:'Please upload PDF, DOCX or TXT files.',
+  readError:'Could not read {name}.',noReadable:'{name} did not contain readable text.',
+  selectTest:'Select at least one document for the test.',
+  zeroQuestions:'Set at least one question type above 0.',
+  notEnough:'Not enough readable text to create questions.',
+  notStated:'Not stated',mcqQuestion:'Which word correctly completes the statement? "{q}"',
+  tfTrue:'True',tfFalse:'False',saQuestion:'Explain this idea in your own words: "{q}"',
+  essayQuestion:'Discuss {topic}. Use evidence and ideas from the document.',
+  planEssay:'Plan your response here...',writeAnswer:'Write your answer here...',
+  automaticallyMarked:'% automatically marked',shortEssayReview:'Short-answer and essay responses are left for review.',
+  reviewWrong:'Review incorrect answers',yourAnswer:'Your answer',noAnswer:'No answer',
+  correctAnswer:'Correct answer',allCorrect:'🎉 All automatically marked questions are correct.',
+  essayRequired:'Please enter an essay.',practiceEstimate:'practice estimate',words:'words',
+  nextSteps:'⭐ Next steps',develop:'Develop the essay with more explanation and specific evidence.',
+  addEvidence:'Add more explicit evidence and link each example back to your argument.',
+  keepEvidence:'Keep linking evidence directly to your argument and explain why each example matters.',
+  argument:'Argument',evidence:'Evidence',explanation:'Explanation',structure:'Structure',terminology:'Terminology',rose:'Rose',blue:'Blue',nude:'Nude',sage:'Sage',lavender:'Lavender',peach:'Peach'
+ },
+ zh:{
+  appTitle:'🌸 溫習筆記與測驗生成器',langBtn:'🌐 English',guest:'訪客',
+  auth:'登入',functions:'🧭 功能',notesLibrary:'📚 筆記及文件庫',
+  practiceTest:'📝 溫習測驗',essayMarker:'✍️ 文章批改',theme:'🎨 主題配色',
+  library:'📁 文件庫',addFolder:'+ 新增資料夾',addFile:'+ 新增檔案',
+  libraryHelp:'上傳 PDF、DOCX 或 TXT。檔案會儲存在此瀏覽器內。',
+  notesTitle:'📚 筆記及文件庫',searchDoc:'搜尋目前文件內容...',
+  exportNotes:'匯出筆記',openOriginal:'開啟原檔',noDoc:'未選擇文件。',
+  selectDocHelp:'上傳 PDF、DOCX 或 TXT，然後從文件庫選擇文件。',
+  openExact:'📄 開啟已上傳的原檔',makeTest:'🧠 製作測驗',
+  practiceTitle:'📝 溫習測驗',
+  practiceHelp:'在文件庫選擇文件／資料夾，設定 0／1／5／10／25／50 題，然後開始測驗。',
+  selectedMaterial:'已選取教材',configurator:'⚙️ 測驗設定',
+  mcq:'多項選擇題',tf:'是非題',shortAnswer:'短答題',essayPrompts:'文章題目',
+  configTotal:'測驗設定：',questions:'題',difficulty:'難度',
+  mixed:'混合',easy:'簡易',medium:'中等',hard:'困難',generateTest:'🧠 生成測驗',
+  submitTest:'✅ 提交測驗',newTest:'↻ 新測驗',essayTitle:'✍️ 文章批改',
+  essayPrompt:'文章題目／標題...',essayText:'在此撰寫或貼上文章...',
+  markEssay:'提交並批改文章',rubric:'評分準則',
+  rubricHelp:'此工具會根據結構、證據、解釋、術語及論點提供練習性評估，並非正式成績。',
+  profile:'👤 個人資料',usernamePlaceholder:'輸入使用者名稱',save:'儲存',cancel:'取消',
+  newFolder:'📁 新增資料夾',folderName:'資料夾名稱',create:'建立',
+  mainLibrary:'📁 主文件庫',addSubfolder:'新增子資料夾',deleteFolder:'刪除資料夾',
+  extractedText:'已擷取文字',pages:'頁',pdfPages:'PDF 頁數',noMatch:'找不到符合的內容。',
+  selectFiles:'請在下方選擇文件。',includeTest:'加入測驗',
+  deleteConfirm:'確定要刪除此資料夾及其中的 {n} 個檔案嗎？',
+  uploadTypes:'請上傳 PDF、DOCX 或 TXT 檔案。',
+  readError:'無法讀取 {name}。',noReadable:'{name} 沒有可讀取的文字。',
+  selectTest:'請至少選擇一份文件作為測驗材料。',
+  zeroQuestions:'請至少將一種題型設定為 1 題或以上。',
+  notEnough:'可讀取的文字不足，無法生成題目。',
+  notStated:'筆記沒有提及',mcqQuestion:'哪一個詞語可以正確完成以下句子？「{q}」',
+  tfTrue:'正確',tfFalse:'錯誤',saQuestion:'請用自己的文字解釋這個概念：「{q}」',
+  essayQuestion:'討論「{topic}」，並運用文件中的證據及資料。',
+  planEssay:'在此規劃你的文章...',writeAnswer:'在此輸入答案...',
+  automaticallyMarked:'% 自動評分',shortEssayReview:'短答題及文章題需要另外檢閱。',
+  reviewWrong:'檢視答錯的題目',yourAnswer:'你的答案',noAnswer:'沒有作答',
+  correctAnswer:'正確答案',allCorrect:'🎉 所有可自動評分的題目都答對了。',
+  essayRequired:'請先輸入文章。',practiceEstimate:'練習評估',words:'字',
+  nextSteps:'⭐ 下一步建議',develop:'增加更多解釋及具體證據，令文章發展更完整。',
+  addEvidence:'加入更明確的證據，並將每個例子連結回你的論點。',
+  keepEvidence:'繼續將證據直接連結到論點，並解釋每個例子的重要性。',
+  argument:'論點',evidence:'證據',explanation:'解釋',structure:'結構',terminology:'術語',rose:'玫瑰',blue:'柔和藍',nude:'裸色',sage:'鼠尾草綠',lavender:'薰衣草',peach:'蜜桃'
+ }
+};
+
+function t(key,vars={}){
+    let value=i18n[lang]?.[key] ?? i18n.en[key] ?? key;
+    Object.entries(vars).forEach(([k,v])=>value=value.replaceAll('{'+k+'}',String(v)));
+    return value;
 }
-
-
-/* =========================================================
-   ANSWER BUTTON
-========================================================= */
-
-function addAnswerButton(
-    box,
-    answer
-) {
-
-    const button =
-        document.createElement(
-            'button'
-        );
-
-    button.style.width =
-        'auto';
-
-    button.style.padding =
-        '8px 12px';
-
-    button.innerText =
-        currentLang === 'en'
-            ? 'Show Answer'
-            : '顯示答案';
-
-
-    const answerBox =
-        document.createElement(
-            'div'
-        );
-
-    answerBox.className =
-        'answer-box hidden';
-
-    answerBox.innerText =
-        `Answer: ${answer}`;
-
-
-    button.onclick =
-        function() {
-
-            answerBox.classList.toggle(
-                'hidden'
-            );
-
-        };
-
-
-    box.appendChild(
-        button
-    );
-
-    box.appendChild(
-        answerBox
-    );
-
+function applyLanguage(){
+    document.documentElement.lang=lang==='zh'?'zh-HK':'en';
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key=el.dataset.i18n;
+        if(i18n[lang][key]!==undefined) el.textContent=t(key);
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el=>{
+        el.placeholder=t(el.dataset.i18nPlaceholder);
+    });
+    $('appTitle').textContent=t('appTitle');
+    $('langBtn').textContent=t('langBtn');
+    const savedUser=$('username').textContent;
+    if(savedUser==='Guest User'||savedUser==='訪客') $('username').textContent=t('guest');
+    document.querySelectorAll('#difficulty option[data-i18n]').forEach(o=>o.textContent=t(o.dataset.i18n));
+    document.querySelectorAll('[data-i18n-title]').forEach(el=>el.title=t(el.dataset.i18nTitle));
+    renderTree(); renderCurrentDoc(); renderSelectedMaterial(); updateTotal();
+    if(currentTest.length) renderTest();
 }
-
-
-/* =========================================================
-   ESSAY MARKER
-========================================================= */
-
-function markEssay() {
-
-    const text =
-        document
-            .getElementById(
-                'essay-text'
-            )
-            .value
-            .trim();
-
-
-    if (!text) {
-
-        alert(
-            'Please enter essay text.'
-        );
-
-        return;
-
-    }
-
-
-    const wordCount =
-        text.split(/\s+/).length;
-
-
-    let grade;
-
-    let feedback;
-
-
-    if (wordCount >= 300) {
-
-        grade = 'A-';
-
-        feedback =
-            'Strong amount of detail. Make sure each paragraph clearly supports your argument.';
-
-    }
-
-    else if (wordCount >= 180) {
-
-        grade = 'B+';
-
-        feedback =
-            'Good level of detail and structure. Add more specific evidence to strengthen the argument.';
-
-    }
-
-    else if (wordCount >= 100) {
-
-        grade = 'B';
-
-        feedback =
-            'A reasonable structure is present. Develop your examples and explanations further.';
-
-    }
-
-    else {
-
-        grade = 'C';
-
-        feedback =
-            'The response is quite short. Add more explanation, evidence and developed paragraphs.';
-
-    }
-
-
-    document.getElementById(
-        'essay-grade'
-    ).innerText =
-        `Grade: ${grade}`;
-
-
-    document.getElementById(
-        'essay-feedback'
-    ).innerText =
-        `Feedback: ${feedback} Word count: ${wordCount}`;
-
-
-    document
-        .getElementById(
-            'essay-result'
-        )
-        .classList
-        .remove('hidden');
-
+async function toggleLanguage(){
+    lang=lang==='en'?'zh':'en';
+    await put('settings',{key:'language',value:lang});
+    applyLanguage();
 }
-
-
-/* =========================================================
-   HTML ESCAPING
-========================================================= */
-
-function escapeHTML(text) {
-
-    return String(text)
-
-        .replace(
-            /&/g,
-            '&amp;'
-        )
-
-        .replace(
-            /</g,
-            '&lt;'
-        )
-
-        .replace(
-            />/g,
-            '&gt;'
-        )
-
-        .replace(
-            /"/g,
-            '&quot;'
-        )
-
-        .replace(
-            /'/g,
-            '&#039;'
-        );
-
+/* -----------------------------
+   Helpers
+----------------------------- */
+function formatBytes(n){
+    if(!n)return '0 B';const units=['B','KB','MB','GB'];let i=0;
+    while(n>=1024&&i<units.length-1){n/=1024;i++}return n.toFixed(i?1:0)+' '+units[i];
 }
-
-
-function escapeRegExp(text) {
-
-    return String(text)
-
-        .replace(
-            /[.*+?^${}()|[\]\\]/g,
-            '\\$&'
-        );
-
+function escapeHTML(text){
+    return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
 }
+function escapeRegExp(text){return String(text).replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
 
-
-/* =========================================================
-   INITIALISE
-========================================================= */
-
-updateFolderSelectors();
-
-renderFileTree();
-
-renderNotesFileList();
-
+/* Keep document selection state after reload */
+window.addEventListener('beforeunload',()=>{
+    docs.forEach(d=>{try{put('docs',d)}catch(e){}});
+});
 </script>
-
 </body>
-
 </html>

@@ -6,7 +6,15 @@
 
 <title>StudySpace</title>
 
+<!-- PDF.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs"
+        type="module"></script>
+
+<!-- Mammoth DOCX reader -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.8.0/mammoth.browser.min.js"></script>
+
 <style>
+
 :root {
     --primary: #A4C8D5;
     --primary-dark: #80ADBC;
@@ -31,7 +39,12 @@ html {
 
 body {
     margin: 0;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
     background: var(--background);
     color: var(--text);
 }
@@ -173,6 +186,18 @@ button {
     cursor: pointer;
 }
 
+.small-btn {
+    padding: 7px 11px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: white;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
 /* HERO */
 
 .hero {
@@ -281,10 +306,6 @@ textarea {
     margin-bottom: 15px;
 }
 
-.hidden {
-    display: none !important;
-}
-
 /* FEATURES */
 
 .feature-grid {
@@ -367,6 +388,59 @@ textarea {
     flex-wrap: wrap;
 }
 
+/* UPLOAD */
+
+.upload-box {
+    border: 2px dashed var(--border);
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    background: var(--surface-2);
+    margin-bottom: 18px;
+}
+
+.upload-box:hover {
+    border-color: var(--primary-dark);
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.upload-title {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.upload-description {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.file-name {
+    margin-top: 12px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.upload-progress {
+    width: 100%;
+    height: 8px;
+    background: #e8e5e2;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.upload-progress-fill {
+    width: 0%;
+    height: 100%;
+    background: var(--primary-dark);
+    transition: width 0.2s;
+}
+
 /* TOMATO CLOCK */
 
 .focus-layout {
@@ -377,7 +451,17 @@ textarea {
 
 .timer {
     text-align: center;
-    padding: 25px;
+    padding: 30px;
+}
+
+.tomato-icon {
+    font-size: 55px;
+    margin-bottom: 5px;
+}
+
+.timer-mode {
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .timer-display {
@@ -393,6 +477,30 @@ textarea {
     gap: 10px;
     flex-wrap: wrap;
 }
+
+.timer-progress {
+    width: 100%;
+    height: 10px;
+    background: #ece9e7;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.timer-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary-dark);
+    transition: width 1s linear;
+}
+
+.timer-info {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* TASKS */
 
 .task-list {
     list-style: none;
@@ -485,6 +593,21 @@ textarea {
     transition: 0.3s;
 }
 
+/* REVISION */
+
+.revision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.revision-item {
+    background: var(--surface-2);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
 /* COLOURS */
 
 .color-grid {
@@ -522,25 +645,6 @@ textarea {
     font-size: 12px;
 }
 
-.choose-color:hover {
-    background: #e6e3e1;
-}
-
-/* REVISION */
-
-.revision-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.revision-item {
-    background: var(--surface-2);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 10px;
-}
-
 /* FOOTER */
 
 footer {
@@ -549,10 +653,6 @@ footer {
     padding: 30px 20px;
     text-align: center;
     color: var(--muted);
-}
-
-.reset-area {
-    margin-top: 20px;
 }
 
 /* TOAST */
@@ -580,6 +680,7 @@ footer {
 /* RESPONSIVE */
 
 @media (max-width: 950px) {
+
     .hero,
     .login-grid,
     .focus-layout,
@@ -605,6 +706,7 @@ footer {
 }
 
 @media (max-width: 650px) {
+
     .navbar {
         flex-wrap: wrap;
     }
@@ -636,12 +738,14 @@ footer {
         grid-template-columns: repeat(2, 1fr);
     }
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <nav class="navbar">
 
     <div class="logo" onclick="scrollToSection('home')">
@@ -650,7 +754,7 @@ footer {
 
     <div class="nav-links">
 
-        <button onclick="scrollToSection('features')"
+        <button onclick="scrollToSection('features)"
                 data-en="Features"
                 data-zh="功能">
             Features
@@ -706,6 +810,7 @@ footer {
     </div>
 
 </nav>
+
 </header>
 
 
@@ -724,10 +829,10 @@ footer {
                 Study smarter. Feel calmer.
             </h1>
 
-            <p data-en="One peaceful place for your notes, revision, flashcards, focus sessions and study planning."
-               data-zh="一個簡單舒服嘅學習空間，集中管理你嘅筆記、溫習、閃卡、專注時間同讀書計劃。">
-                One peaceful place for your notes, revision, flashcards,
-                focus sessions and study planning.
+            <p data-en="One peaceful place for your notes, revision, flashcards, tomato clock and study planning."
+               data-zh="一個簡單舒服嘅學習空間，集中管理你嘅筆記、溫習、閃卡、番茄鐘同讀書計劃。">
+                One peaceful place for your notes, revision,
+                flashcards, tomato clock and study planning.
             </p>
 
             <div class="hero-buttons">
@@ -740,10 +845,10 @@ footer {
                 </button>
 
                 <button class="secondary-btn"
-                        onclick="scrollToSection('colours')"
-                        data-en="Choose a colour"
-                        data-zh="選擇顏色">
-                    Choose a colour
+                        onclick="scrollToSection('focus')"
+                        data-en="Start Tomato Clock"
+                        data-zh="開始番茄鐘">
+                    Start Tomato Clock
                 </button>
 
             </div>
@@ -753,24 +858,39 @@ footer {
         <div class="hero-side">
 
             <div class="stat-card">
-                <div data-en="Saved notes" data-zh="已保存筆記">
+                <div data-en="Saved notes"
+                     data-zh="已保存筆記">
                     Saved notes
                 </div>
-                <div class="stat-number" id="heroNotes">0</div>
-            </div>
 
-            <div class="stat-card">
-                <div data-en="Study sessions" data-zh="學習次數">
-                    Study sessions
+                <div class="stat-number"
+                     id="heroNotes">
+                    0
                 </div>
-                <div class="stat-number" id="heroSessions">0</div>
             </div>
 
             <div class="stat-card">
-                <div data-en="Flashcards" data-zh="閃卡">
+                <div data-en="Focus sessions"
+                     data-zh="專注時間">
+                    Focus sessions
+                </div>
+
+                <div class="stat-number"
+                     id="heroSessions">
+                    0
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div data-en="Flashcards"
+                     data-zh="閃卡">
                     Flashcards
                 </div>
-                <div class="stat-number" id="heroFlashcards">0</div>
+
+                <div class="stat-number"
+                     id="heroFlashcards">
+                    0
+                </div>
             </div>
 
         </div>
@@ -791,9 +911,9 @@ footer {
     </h2>
 
     <p class="section-subtitle"
-       data-en="Log in to keep your study information saved on this device."
-       data-zh="登入後，你嘅學習資料會保存喺呢部裝置。">
-        Log in to keep your study information saved on this device.
+       data-en="Your study information is saved locally on this device."
+       data-zh="你嘅學習資料會保存喺呢部裝置。">
+        Your study information is saved locally on this device.
     </p>
 
     <div class="login-grid">
@@ -804,7 +924,8 @@ footer {
 
                 <div class="form-group">
 
-                    <label data-en="Name" data-zh="名稱">
+                    <label data-en="Name"
+                           data-zh="名稱">
                         Name
                     </label>
 
@@ -816,7 +937,8 @@ footer {
 
                 <div class="form-group">
 
-                    <label data-en="Email" data-zh="電郵">
+                    <label data-en="Email"
+                           data-zh="電郵">
                         Email
                     </label>
 
@@ -828,7 +950,8 @@ footer {
 
                 <div class="form-group">
 
-                    <label data-en="Password" data-zh="密碼">
+                    <label data-en="Password"
+                           data-zh="密碼">
                         Password
                     </label>
 
@@ -847,15 +970,20 @@ footer {
 
             </div>
 
-            <div id="loggedInArea" class="hidden">
+            <div id="loggedInArea"
+                 class="hidden">
 
                 <div class="user-status">
 
-                    <strong id="userName">User</strong>
+                    <strong id="userName">
+                        User
+                    </strong>
 
                     <br>
 
-                    <span id="userEmail">email</span>
+                    <span id="userEmail">
+                        email
+                    </span>
 
                 </div>
 
@@ -877,15 +1005,17 @@ footer {
                 Local saving
             </h3>
 
-            <p data-en="Your notes, tasks, flashcards, colour choice and study statistics are stored locally in your browser."
-               data-zh="你嘅筆記、工作、閃卡、顏色選擇同學習統計會保存喺瀏覽器本機。">
-                Your notes, tasks, flashcards, colour choice and study
-                statistics are stored locally in your browser.
+            <p data-en="Your notes, uploaded note text, tasks, flashcards, plans, colour choice and study statistics are stored locally in your browser."
+               data-zh="你嘅筆記、上載嘅筆記文字、工作、閃卡、計劃、顏色選擇同學習統計會保存喺瀏覽器本機。">
+                Your notes, uploaded note text, tasks, flashcards,
+                plans, colour choice and study statistics are stored
+                locally in your browser.
             </p>
 
-            <p data-en="No example data is included when you first open the website."
-               data-zh="第一次打開網站時，入面唔會有任何示範資料。">
-                No example data is included when you first open the website.
+            <p data-en="Uploaded PDF and DOCX files are read in your browser. The original file is not uploaded to a server by this page."
+               data-zh="PDF 同 DOCX 會喺你嘅瀏覽器讀取，呢個頁面唔會將原始檔案上載到伺服器。">
+                Uploaded PDF and DOCX files are read in your browser.
+                The original file is not uploaded to a server by this page.
             </p>
 
         </div>
@@ -922,21 +1052,20 @@ footer {
                 AI Revision Studio
             </h3>
 
-            <p data-en="Turn your notes into revision questions, true/false questions and short-answer practice."
-               data-zh="將你嘅筆記變成溫習問題、是非題同短答題。">
-                Turn your notes into revision questions,
-                true/false questions and short-answer practice.
+            <p data-en="Upload PDF or DOCX notes and turn them into revision practice."
+               data-zh="上載 PDF 或 DOCX 筆記，再將內容變成溫習練習。">
+                Upload PDF or DOCX notes and turn them into
+                revision practice.
             </p>
 
             <button class="primary-btn"
-                    onclick="generateRevision()"
-                    data-en="Create questions"
-                    data-zh="建立問題">
-                Create questions
+                    onclick="scrollToSection('revisionStudio')"
+                    data-en="Open Revision Studio"
+                    data-zh="開啟溫習工作室">
+                Open Revision Studio
             </button>
 
         </div>
-
 
         <div class="feature-card">
 
@@ -947,10 +1076,10 @@ footer {
                 Study Buddy
             </h3>
 
-            <p data-en="Ask for explanations, hints and simple breakdowns of difficult topics."
-               data-zh="詢問解釋、提示，或者將困難嘅概念拆開慢慢理解。">
-                Ask for explanations, hints and simple breakdowns
-                of difficult topics.
+            <p data-en="Break difficult topics into smaller ideas and practise recalling them."
+               data-zh="將困難概念拆細，再透過回憶練習理解。">
+                Break difficult topics into smaller ideas and
+                practise recalling them.
             </p>
 
             <button class="primary-btn"
@@ -962,7 +1091,6 @@ footer {
 
         </div>
 
-
         <div class="feature-card">
 
             <div class="feature-icon">🍅</div>
@@ -972,21 +1100,19 @@ footer {
                 Tomato Clock
             </h3>
 
-            <p data-en="Use a simple 25-minute tomato clock and keep track of your study sessions."
-               data-zh="使用簡單嘅 25 分鐘番茄鐘，記錄你嘅學習時間。">
-                Use a simple 25-minute tomato clock and keep track
-                of your study sessions.
+            <p data-en="Focus for 25 minutes, then take a 5-minute break."
+               data-zh="專注 25 分鐘，再休息 5 分鐘。">
+                Focus for 25 minutes, then take a 5-minute break.
             </p>
 
             <button class="primary-btn"
                     onclick="scrollToSection('focus')"
-                    data-en="Start Tomato Clock"
-                    data-zh="開始番茄鐘">
-                Start Tomato Clock
+                    data-en="Start timer"
+                    data-zh="開始計時">
+                Start timer
             </button>
 
         </div>
-
 
         <div class="feature-card">
 
@@ -997,10 +1123,10 @@ footer {
                 Flashcard Quest
             </h3>
 
-            <p data-en="Create your own flashcards and mark cards as known or needing review."
-               data-zh="建立自己嘅閃卡，再標記「識」或者「要再溫習」。">
-                Create your own flashcards and mark cards
-                as known or needing review.
+            <p data-en="Create flashcards and mark cards as known or needing review."
+               data-zh="建立閃卡，再標記「識」或者「要再溫習」。">
+                Create flashcards and mark cards as known
+                or needing review.
             </p>
 
             <button class="primary-btn"
@@ -1012,7 +1138,6 @@ footer {
 
         </div>
 
-
         <div class="feature-card">
 
             <div class="feature-icon">📊</div>
@@ -1022,9 +1147,9 @@ footer {
                 Study Dashboard
             </h3>
 
-            <p data-en="See your saved notes, flashcards and completed focus sessions."
-               data-zh="查看你保存嘅筆記、閃卡同完成嘅專注學習時間。">
-                See your saved notes, flashcards and completed
+            <p data-en="See your notes, flashcards, tasks and completed focus sessions."
+               data-zh="查看你嘅筆記、閃卡、工作同完成嘅專注時間。">
+                See your notes, flashcards, tasks and completed
                 focus sessions.
             </p>
 
@@ -1037,7 +1162,6 @@ footer {
 
         </div>
 
-
         <div class="feature-card">
 
             <div class="feature-icon">📝</div>
@@ -1047,10 +1171,9 @@ footer {
                 Essay Coach
             </h3>
 
-            <p data-en="Paste your essay and receive structured areas to think about while improving it."
-               data-zh="貼上作文內容，按照結構、清晰度同論點方向進行改善。">
-                Paste your essay and receive structured areas
-                to think about while improving it.
+            <p data-en="Review structure, clarity and word count."
+               data-zh="檢查結構、清晰度同字數。">
+                Review structure, clarity and word count.
             </p>
 
             <button class="primary-btn"
@@ -1058,31 +1181,6 @@ footer {
                     data-en="Open Essay Coach"
                     data-zh="開啟作文助手">
                 Open Essay Coach
-            </button>
-
-        </div>
-
-
-        <div class="feature-card">
-
-            <div class="feature-icon">📖</div>
-
-            <h3 data-en="Revision Planner"
-                data-zh="溫習計劃">
-                Revision Planner
-            </h3>
-
-            <p data-en="Add your subjects and exam dates to organise your revision."
-               data-zh="輸入科目同考試日期，幫你整理溫習計劃。">
-                Add your subjects and exam dates to organise
-                your revision.
-            </p>
-
-            <button class="primary-btn"
-                    onclick="addRevisionPlan()"
-                    data-en="Add plan"
-                    data-zh="加入計劃">
-                Add plan
             </button>
 
         </div>
@@ -1103,9 +1201,9 @@ footer {
     </h2>
 
     <p class="section-subtitle"
-       data-en="Create notes and save them directly in your browser."
-       data-zh="建立筆記，直接保存喺你嘅瀏覽器。">
-        Create notes and save them directly in your browser.
+       data-en="Create notes or save text extracted from uploaded documents."
+       data-zh="建立筆記，或者保存由上載文件提取出嚟嘅文字。">
+        Create notes or save text extracted from uploaded documents.
     </p>
 
     <div class="notes-layout">
@@ -1117,7 +1215,9 @@ footer {
                 Saved notes
             </h3>
 
-            <div id="notesList" class="notes-list"></div>
+            <div id="notesList"
+                 class="notes-list">
+            </div>
 
         </div>
 
@@ -1166,7 +1266,7 @@ footer {
 </section>
 
 
-<!-- AI REVISION STUDIO -->
+<!-- REVISION STUDIO -->
 
 <section id="revisionStudio">
 
@@ -1177,12 +1277,61 @@ footer {
     </h2>
 
     <p class="section-subtitle"
-       data-en="Use your saved notes as the starting point for revision practice."
-       data-zh="以你保存嘅筆記作為溫習練習嘅起點。">
-        Use your saved notes as the starting point for revision practice.
+       data-en="Upload your own PDF or DOCX notes, or paste text manually."
+       data-zh="上載自己嘅 PDF 或 DOCX 筆記，或者直接貼上文字。">
+        Upload your own PDF or DOCX notes, or paste text manually.
     </p>
 
     <div class="card">
+
+        <!-- FILE UPLOAD -->
+
+        <div class="upload-box">
+
+            <div class="upload-icon">
+                📄
+            </div>
+
+            <div class="upload-title"
+                 data-en="Upload your notes"
+                 data-zh="上載你嘅筆記">
+                Upload your notes
+            </div>
+
+            <div class="upload-description"
+                 data-en="Supported formats: PDF and DOCX"
+                 data-zh="支援格式：PDF 同 DOCX">
+                Supported formats: PDF and DOCX
+            </div>
+
+            <input id="notesFile"
+                   type="file"
+                   accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                   class="hidden"
+                   onchange="handleNotesUpload(event)">
+
+            <button class="primary-btn"
+                    onclick="document.getElementById('notesFile').click()"
+                    data-en="Choose PDF / DOCX"
+                    data-zh="選擇 PDF / DOCX">
+                Choose PDF / DOCX
+            </button>
+
+            <div id="fileName"
+                 class="file-name">
+            </div>
+
+            <div id="uploadProgress"
+                 class="upload-progress hidden">
+
+                <div id="uploadProgressFill"
+                     class="upload-progress-fill">
+                </div>
+
+            </div>
+
+        </div>
+
 
         <textarea id="revisionInput"
                   placeholder="Paste notes or a topic here..."
@@ -1198,7 +1347,16 @@ footer {
             Generate revision practice
         </button>
 
-        <div id="revisionOutput" style="margin-top:20px;"></div>
+        <button class="secondary-btn"
+                onclick="saveRevisionAsNote()"
+                data-en="Save extracted text as note"
+                data-zh="將文字保存為筆記">
+            Save extracted text as note
+        </button>
+
+        <div id="revisionOutput"
+             style="margin-top:20px;">
+        </div>
 
     </div>
 
@@ -1218,11 +1376,12 @@ footer {
     <div class="card">
 
         <div id="buddyMessages"
-             style="min-height:180px;
-                    background:var(--surface-2);
-                    border-radius:13px;
-                    padding:15px;
-                    margin-bottom:15px;">
+             style="
+                min-height:180px;
+                background:var(--surface-2);
+                border-radius:13px;
+                padding:15px;
+                margin-bottom:15px;">
         </div>
 
         <div style="display:flex;gap:8px;">
@@ -1256,22 +1415,35 @@ footer {
     </h2>
 
     <p class="section-subtitle"
-       data-en="A simple 25-minute tomato clock for focused study."
-       data-zh="簡單嘅 25 分鐘番茄鐘，幫你專心學習。">
-        A simple 25-minute tomato clock for focused study.
+       data-en="Focus for 25 minutes, then take a 5-minute break."
+       data-zh="專注 25 分鐘，再休息 5 分鐘。">
+        Focus for 25 minutes, then take a 5-minute break.
     </p>
 
     <div class="focus-layout">
 
         <div class="card timer">
 
-            <div data-en="Tomato Clock session"
-                 data-zh="番茄鐘時間">
-                Tomato Clock session
+            <div class="tomato-icon">
+                🍅
             </div>
 
-            <div class="timer-display" id="timerDisplay">
+            <div class="timer-mode"
+                 id="timerMode">
+                Focus Time
+            </div>
+
+            <div class="timer-display"
+                 id="timerDisplay">
                 25:00
+            </div>
+
+            <div class="timer-progress">
+
+                <div class="timer-progress-fill"
+                     id="timerProgressFill">
+                </div>
+
             </div>
 
             <div class="timer-buttons">
@@ -1299,13 +1471,19 @@ footer {
 
             </div>
 
+            <p class="timer-info"
+               id="timerInfo">
+                Focus for 25 minutes.
+            </p>
+
         </div>
+
 
         <div class="card">
 
-            <h3 data-en="Tasks"
-                data-zh="工作">
-                Tasks
+            <h3 data-en="Study tasks"
+                data-zh="學習工作">
+                Study tasks
             </h3>
 
             <div style="display:flex;gap:8px;margin-bottom:15px;">
@@ -1322,7 +1500,9 @@ footer {
 
             </div>
 
-            <ul id="taskList" class="task-list"></ul>
+            <ul id="taskList"
+                class="task-list">
+            </ul>
 
         </div>
 
@@ -1433,25 +1613,47 @@ footer {
     <div class="dashboard-grid">
 
         <div class="dashboard-stat">
-            <span data-en="Notes" data-zh="筆記">Notes</span>
-            <strong id="dashboardNotes">0</strong>
+            <span data-en="Notes"
+                  data-zh="筆記">
+                Notes
+            </span>
+
+            <strong id="dashboardNotes">
+                0
+            </strong>
         </div>
 
         <div class="dashboard-stat">
-            <span data-en="Flashcards" data-zh="閃卡">Flashcards</span>
-            <strong id="dashboardFlashcards">0</strong>
+            <span data-en="Flashcards"
+                  data-zh="閃卡">
+                Flashcards
+            </span>
+
+            <strong id="dashboardFlashcards">
+                0
+            </strong>
         </div>
 
         <div class="dashboard-stat">
-            <span data-en="Sessions" data-zh="專注時間">Sessions</span>
-            <strong id="dashboardSessions">0</strong>
+            <span data-en="Focus sessions"
+                  data-zh="專注時間">
+                Focus sessions
+            </span>
+
+            <strong id="dashboardSessions">
+                0
+            </strong>
         </div>
 
         <div class="dashboard-stat">
-            <span data-en="Tasks completed" data-zh="完成工作">
+            <span data-en="Tasks completed"
+                  data-zh="完成工作">
                 Tasks completed
             </span>
-            <strong id="dashboardTasks">0</strong>
+
+            <strong id="dashboardTasks">
+                0
+            </strong>
         </div>
 
     </div>
@@ -1580,7 +1782,7 @@ footer {
 </section>
 
 
-<!-- COLOUR THEMES -->
+<!-- COLOURS -->
 
 <section id="colours">
 
@@ -1596,7 +1798,9 @@ footer {
         Pick a pastel theme. Your choice will be remembered.
     </p>
 
-    <div class="color-grid" id="colorGrid"></div>
+    <div class="color-grid"
+         id="colorGrid">
+    </div>
 
 </section>
 
@@ -1618,16 +1822,12 @@ footer {
             plans, account information, progress and colour settings.
         </p>
 
-        <div class="reset-area">
-
-            <button class="danger-btn"
-                    onclick="resetEverything()"
-                    data-en="Reset everything"
-                    data-zh="全部重設">
-                Reset everything
-            </button>
-
-        </div>
+        <button class="danger-btn"
+                onclick="resetEverything()"
+                data-en="Reset everything"
+                data-zh="全部重設">
+            Reset everything
+        </button>
 
     </div>
 
@@ -1651,12 +1851,21 @@ footer {
 </footer>
 
 
-<div id="toast" class="toast"></div>
+<div id="toast"
+     class="toast">
+</div>
 
 
-<script>
+<script type="module">
 
-const STORAGE_KEY = "studyspace_data_v2";
+/*
+=========================================================
+STUDYSPACE
+Main application
+=========================================================
+*/
+
+const STORAGE_KEY = "studyspace_data_v3";
 
 let data = {
     user: null,
@@ -1673,20 +1882,51 @@ let currentNoteId = null;
 let currentFlashcard = 0;
 let flashShowingAnswer = false;
 
+let currentLanguage =
+    localStorage.getItem("studyspace_language") || "en";
 
-/* LOAD DATA */
+
+/*
+=========================================================
+PDF.JS
+=========================================================
+*/
+
+let pdfjsLib = null;
+
+try {
+
+    const pdfModule =
+        await import(
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs"
+        );
+
+    pdfjsLib = pdfModule;
+
+} catch (error) {
+
+    console.warn("PDF.js could not be loaded.", error);
+
+}
+
+
+/*
+=========================================================
+LOAD / SAVE
+=========================================================
+*/
 
 function loadData() {
 
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved =
+        localStorage.getItem(STORAGE_KEY);
 
-    if (!saved) {
-        return;
-    }
+    if (!saved) return;
 
     try {
 
-        const parsed = JSON.parse(saved);
+        const parsed =
+            JSON.parse(saved);
 
         data = {
             ...data,
@@ -1695,13 +1935,14 @@ function loadData() {
 
     } catch (error) {
 
-        console.log("No valid saved data.");
+        console.warn(
+            "Saved data could not be loaded."
+        );
 
     }
+
 }
 
-
-/* SAVE DATA */
 
 function saveData() {
 
@@ -1713,11 +1954,11 @@ function saveData() {
 }
 
 
-/* LANGUAGE */
-
-let currentLanguage =
-    localStorage.getItem("studyspace_language") || "en";
-
+/*
+=========================================================
+LANGUAGE
+=========================================================
+*/
 
 function toggleLanguage() {
 
@@ -1733,6 +1974,14 @@ function toggleLanguage() {
 
     updateLanguage();
 
+    renderColours();
+
+    renderNotes();
+
+    renderFlashcard();
+
+    updateTimerLabels();
+
 }
 
 
@@ -1744,30 +1993,33 @@ function updateLanguage() {
             : "zh-HK";
 
 
-    document.querySelectorAll("[data-en]").forEach(element => {
+    document
+        .querySelectorAll("[data-en]")
+        .forEach(element => {
 
-        element.textContent =
-            currentLanguage === "en"
-                ? element.dataset.en
-                : element.dataset.zh;
+            element.textContent =
+                currentLanguage === "en"
+                    ? element.dataset.en
+                    : element.dataset.zh;
 
-    });
-
-
-    document.querySelectorAll("[data-placeholder-en]").forEach(element => {
-
-        element.placeholder =
-            currentLanguage === "en"
-                ? element.dataset.placeholderEn
-                : element.dataset.placeholderZh;
-
-    });
+        });
 
 
-    const languageButton =
-        document.getElementById("languageButton");
+    document
+        .querySelectorAll("[data-placeholder-en]")
+        .forEach(element => {
 
-    languageButton.textContent =
+            element.placeholder =
+                currentLanguage === "en"
+                    ? element.dataset.placeholderEn
+                    : element.dataset.placeholderZh;
+
+        });
+
+
+    document.getElementById(
+        "languageButton"
+    ).textContent =
         currentLanguage === "en"
             ? "🇬🇧 English"
             : "🇭🇰 廣東話";
@@ -1775,7 +2027,48 @@ function updateLanguage() {
 }
 
 
-/* NAVIGATION */
+function updateTimerLabels() {
+
+    const mode =
+        document.getElementById("timerMode");
+
+    const info =
+        document.getElementById("timerInfo");
+
+    if (timerMode === "focus") {
+
+        mode.textContent =
+            currentLanguage === "en"
+                ? "Focus Time"
+                : "專注時間";
+
+        info.textContent =
+            currentLanguage === "en"
+                ? "Focus for 25 minutes."
+                : "專注 25 分鐘。";
+
+    } else {
+
+        mode.textContent =
+            currentLanguage === "en"
+                ? "Break Time"
+                : "休息時間";
+
+        info.textContent =
+            currentLanguage === "en"
+                ? "Take a 5-minute break."
+                : "休息 5 分鐘。";
+
+    }
+
+}
+
+
+/*
+=========================================================
+NAVIGATION
+=========================================================
+*/
 
 function scrollToSection(id) {
 
@@ -1793,7 +2086,11 @@ function scrollToSection(id) {
 }
 
 
-/* TOAST */
+/*
+=========================================================
+TOAST
+=========================================================
+*/
 
 function showToast(message) {
 
@@ -1813,18 +2110,28 @@ function showToast(message) {
 }
 
 
-/* LOGIN */
+/*
+=========================================================
+LOGIN
+=========================================================
+*/
 
 function login() {
 
     const name =
-        document.getElementById("loginName").value.trim();
+        document.getElementById(
+            "loginName"
+        ).value.trim();
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById(
+            "loginEmail"
+        ).value.trim();
 
     const password =
-        document.getElementById("loginPassword").value.trim();
+        document.getElementById(
+            "loginPassword"
+        ).value.trim();
 
 
     if (!name || !email || !password) {
@@ -1836,14 +2143,19 @@ function login() {
         );
 
         return;
+
     }
 
+
+    /*
+    The password is intentionally NOT stored.
+    This is only a local profile UI.
+    */
 
     data.user = {
         name,
         email
     };
-
 
     saveData();
 
@@ -1872,10 +2184,14 @@ function logout() {
 function renderAccount() {
 
     const loggedOut =
-        document.getElementById("loggedOutArea");
+        document.getElementById(
+            "loggedOutArea"
+        );
 
     const loggedIn =
-        document.getElementById("loggedInArea");
+        document.getElementById(
+            "loggedInArea"
+        );
 
 
     if (data.user) {
@@ -1884,10 +2200,14 @@ function renderAccount() {
 
         loggedIn.classList.remove("hidden");
 
-        document.getElementById("userName").textContent =
+        document.getElementById(
+            "userName"
+        ).textContent =
             data.user.name;
 
-        document.getElementById("userEmail").textContent =
+        document.getElementById(
+            "userEmail"
+        ).textContent =
             data.user.email;
 
     } else {
@@ -1901,15 +2221,23 @@ function renderAccount() {
 }
 
 
-/* NOTES */
+/*
+=========================================================
+NOTES
+=========================================================
+*/
 
 function saveNote() {
 
     const title =
-        document.getElementById("noteTitle").value.trim();
+        document.getElementById(
+            "noteTitle"
+        ).value.trim();
 
     const content =
-        document.getElementById("noteContent").value.trim();
+        document.getElementById(
+            "noteContent"
+        ).value.trim();
 
 
     if (!title && !content) {
@@ -1921,6 +2249,7 @@ function saveNote() {
         );
 
         return;
+
     }
 
 
@@ -1962,7 +2291,8 @@ function saveNote() {
 
         data.notes.unshift(note);
 
-        currentNoteId = note.id;
+        currentNoteId =
+            note.id;
 
     }
 
@@ -1985,7 +2315,9 @@ function saveNote() {
 function renderNotes() {
 
     const list =
-        document.getElementById("notesList");
+        document.getElementById(
+            "notesList"
+        );
 
     list.innerHTML = "";
 
@@ -2003,6 +2335,7 @@ function renderNotes() {
         `;
 
         return;
+
     }
 
 
@@ -2045,12 +2378,17 @@ function loadNote(id) {
 
     if (!note) return;
 
-    currentNoteId = id;
+    currentNoteId =
+        id;
 
-    document.getElementById("noteTitle").value =
+    document.getElementById(
+        "noteTitle"
+    ).value =
         note.title;
 
-    document.getElementById("noteContent").value =
+    document.getElementById(
+        "noteContent"
+    ).value =
         note.content;
 
 }
@@ -2060,9 +2398,13 @@ function newNote() {
 
     currentNoteId = null;
 
-    document.getElementById("noteTitle").value = "";
+    document.getElementById(
+        "noteTitle"
+    ).value = "";
 
-    document.getElementById("noteContent").value = "";
+    document.getElementById(
+        "noteContent"
+    ).value = "";
 
 }
 
@@ -2078,6 +2420,7 @@ function deleteCurrentNote() {
         );
 
         return;
+
     }
 
 
@@ -2085,7 +2428,6 @@ function deleteCurrentNote() {
         data.notes.filter(
             n => n.id !== currentNoteId
         );
-
 
     currentNoteId = null;
 
@@ -2100,12 +2442,371 @@ function deleteCurrentNote() {
 }
 
 
-/* TASKS */
+/*
+=========================================================
+PDF / DOCX UPLOAD
+=========================================================
+*/
+
+async function handleNotesUpload(event) {
+
+    const file =
+        event.target.files[0];
+
+    if (!file) return;
+
+
+    const fileName =
+        document.getElementById(
+            "fileName"
+        );
+
+    const progress =
+        document.getElementById(
+            "uploadProgress"
+        );
+
+    const progressFill =
+        document.getElementById(
+            "uploadProgressFill"
+        );
+
+
+    fileName.textContent =
+        "📄 " + file.name;
+
+    progress.classList.remove(
+        "hidden"
+    );
+
+    progressFill.style.width =
+        "10%";
+
+
+    try {
+
+        let extractedText = "";
+
+
+        if (
+            file.type === "application/pdf" ||
+            file.name.toLowerCase().endsWith(".pdf")
+        ) {
+
+            extractedText =
+                await extractPDFText(file);
+
+        }
+
+        else if (
+            file.name.toLowerCase().endsWith(".docx")
+        ) {
+
+            extractedText =
+                await extractDOCXText(file);
+
+        }
+
+        else {
+
+            throw new Error(
+                "Unsupported file type."
+            );
+
+        }
+
+
+        progressFill.style.width =
+            "100%";
+
+
+        if (!extractedText.trim()) {
+
+            throw new Error(
+                "No readable text was found in this file."
+            );
+
+        }
+
+
+        document.getElementById(
+            "revisionInput"
+        ).value =
+            extractedText;
+
+
+        /*
+        Automatically give the note a useful title
+        based on the uploaded filename.
+        */
+
+        const suggestedTitle =
+            file.name
+                .replace(/\.(pdf|docx)$/i, "")
+                .trim();
+
+
+        document.getElementById(
+            "noteTitle"
+        ).value =
+            suggestedTitle;
+
+
+        showToast(
+            currentLanguage === "en"
+                ? "Notes extracted successfully."
+                : "筆記文字提取成功。"
+        );
+
+
+        setTimeout(() => {
+
+            progress.classList.add(
+                "hidden"
+            );
+
+            progressFill.style.width =
+                "0%";
+
+        }, 800);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        progress.classList.add(
+            "hidden"
+        );
+
+        progressFill.style.width =
+            "0%";
+
+        showToast(
+            currentLanguage === "en"
+                ? "Could not read this file."
+                : "無法讀取呢個檔案。"
+        );
+
+    }
+
+
+    event.target.value = "";
+
+}
+
+
+/*
+=========================================================
+PDF EXTRACTION
+=========================================================
+*/
+
+async function extractPDFText(file) {
+
+    if (!pdfjsLib) {
+
+        throw new Error(
+            "PDF reader is unavailable."
+        );
+
+    }
+
+
+    const arrayBuffer =
+        await file.arrayBuffer();
+
+
+    const loadingTask =
+        pdfjsLib.getDocument({
+            data: arrayBuffer
+        });
+
+
+    const pdf =
+        await loadingTask.promise;
+
+
+    let fullText = "";
+
+
+    for (
+        let pageNumber = 1;
+        pageNumber <= pdf.numPages;
+        pageNumber++
+    ) {
+
+        const page =
+            await pdf.getPage(
+                pageNumber
+            );
+
+        const textContent =
+            await page.getTextContent();
+
+
+        const pageText =
+            textContent.items
+                .map(item => item.str)
+                .join(" ");
+
+
+        fullText +=
+            pageText +
+            "\n\n";
+
+    }
+
+
+    return cleanExtractedText(
+        fullText
+    );
+
+}
+
+
+/*
+=========================================================
+DOCX EXTRACTION
+=========================================================
+*/
+
+async function extractDOCXText(file) {
+
+    if (
+        typeof mammoth ===
+        "undefined"
+    ) {
+
+        throw new Error(
+            "DOCX reader is unavailable."
+        );
+
+    }
+
+
+    const arrayBuffer =
+        await file.arrayBuffer();
+
+
+    const result =
+        await mammoth.extractRawText({
+            arrayBuffer
+        });
+
+
+    return cleanExtractedText(
+        result.value
+    );
+
+}
+
+
+/*
+=========================================================
+CLEAN IMPORTED TEXT
+=========================================================
+*/
+
+function cleanExtractedText(text) {
+
+    return String(text)
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .replace(/[ \t]+/g, " ")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+}
+
+
+/*
+=========================================================
+SAVE EXTRACTED TEXT AS NOTE
+=========================================================
+*/
+
+function saveRevisionAsNote() {
+
+    const content =
+        document.getElementById(
+            "revisionInput"
+        ).value.trim();
+
+
+    if (!content) {
+
+        showToast(
+            currentLanguage === "en"
+                ? "Upload or paste some notes first."
+                : "請先上載或者貼上筆記。"
+        );
+
+        return;
+
+    }
+
+
+    const titleInput =
+        document.getElementById(
+            "noteTitle"
+        );
+
+    const title =
+        titleInput.value.trim() ||
+        (
+            currentLanguage === "en"
+                ? "Imported Notes"
+                : "上載筆記"
+        );
+
+
+    const note = {
+
+        id: Date.now(),
+
+        title,
+
+        content,
+
+        updated:
+            new Date().toLocaleString()
+
+    };
+
+
+    data.notes.unshift(note);
+
+    currentNoteId =
+        note.id;
+
+    saveData();
+
+    renderNotes();
+
+    updateDashboard();
+
+    showToast(
+        currentLanguage === "en"
+            ? "Imported notes saved."
+            : "上載筆記已保存。"
+    );
+
+}
+
+
+/*
+=========================================================
+TASKS
+=========================================================
+*/
 
 function addTask() {
 
     const input =
-        document.getElementById("taskInput");
+        document.getElementById(
+            "taskInput"
+        );
 
     const text =
         input.value.trim();
@@ -2138,7 +2839,9 @@ function addTask() {
 function renderTasks() {
 
     const list =
-        document.getElementById("taskList");
+        document.getElementById(
+            "taskList"
+        );
 
     list.innerHTML = "";
 
@@ -2156,13 +2859,14 @@ function renderTasks() {
                 ${task.completed ? "checked" : ""}
                 style="width:auto">
 
-            <span
-                style="
-                    flex:1;
-                    ${task.completed
+            <span style="
+                flex:1;
+                ${
+                    task.completed
                         ? "text-decoration:line-through;color:var(--muted);"
-                        : ""}
-                ">
+                        : ""
+                }
+            ">
                 ${escapeHTML(task.text)}
             </span>
 
@@ -2176,7 +2880,9 @@ function renderTasks() {
         `;
 
 
-        li.querySelector("input").onchange =
+        li.querySelector(
+            "input"
+        ).onchange =
             function() {
 
                 task.completed =
@@ -2224,32 +2930,80 @@ function deleteTask(id) {
 }
 
 
-/* TOMATO CLOCK */
+/*
+=========================================================
+TOMATO CLOCK
+=========================================================
+*/
 
-let timerSeconds = 25 * 60;
-let timerInterval = null;
+const FOCUS_SECONDS =
+    25 * 60;
+
+const BREAK_SECONDS =
+    5 * 60;
+
+let timerSeconds =
+    FOCUS_SECONDS;
+
+let timerInterval =
+    null;
+
+let timerMode =
+    "focus";
 
 
 function updateTimerDisplay() {
 
     const minutes =
-        Math.floor(timerSeconds / 60);
+        Math.floor(
+            timerSeconds / 60
+        );
 
     const seconds =
         timerSeconds % 60;
 
-    document.getElementById("timerDisplay")
-        .textContent =
+
+    document.getElementById(
+        "timerDisplay"
+    ).textContent =
         String(minutes).padStart(2, "0")
         + ":"
         + String(seconds).padStart(2, "0");
+
+
+    const totalSeconds =
+        timerMode === "focus"
+            ? FOCUS_SECONDS
+            : BREAK_SECONDS;
+
+
+    const elapsed =
+        totalSeconds -
+        timerSeconds;
+
+
+    const percentage =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                (elapsed / totalSeconds) * 100
+            )
+        );
+
+
+    document.getElementById(
+        "timerProgressFill"
+    ).style.width =
+        percentage + "%";
 
 }
 
 
 function startTimer() {
 
-    if (timerInterval) return;
+    if (timerInterval)
+        return;
 
 
     timerInterval =
@@ -2257,28 +3011,10 @@ function startTimer() {
 
             if (timerSeconds <= 0) {
 
-                clearInterval(timerInterval);
-
-                timerInterval = null;
-
-                data.sessions++;
-
-                saveData();
-
-                updateDashboard();
-
-                showToast(
-                    currentLanguage === "en"
-                        ? "Tomato Clock session completed!"
-                        : "番茄鐘時間完成！"
-                );
-
-                timerSeconds =
-                    25 * 60;
-
-                updateTimerDisplay();
+                finishTimer();
 
                 return;
+
             }
 
 
@@ -2293,7 +3029,9 @@ function startTimer() {
 
 function pauseTimer() {
 
-    clearInterval(timerInterval);
+    clearInterval(
+        timerInterval
+    );
 
     timerInterval = null;
 
@@ -2304,25 +3042,93 @@ function resetTimer() {
 
     pauseTimer();
 
+    timerMode =
+        "focus";
+
     timerSeconds =
-        25 * 60;
+        FOCUS_SECONDS;
 
     updateTimerDisplay();
+
+    updateTimerLabels();
 
 }
 
 
-/* FLASHCARDS */
+function finishTimer() {
+
+    pauseTimer();
+
+
+    if (timerMode === "focus") {
+
+        /*
+        A completed focus period counts as
+        one completed study session.
+        */
+
+        data.sessions++;
+
+        saveData();
+
+        updateDashboard();
+
+
+        showToast(
+            currentLanguage === "en"
+                ? "Focus complete! Time for a break 🍅"
+                : "專注完成！休息時間到啦 🍅"
+        );
+
+
+        timerMode =
+            "break";
+
+        timerSeconds =
+            BREAK_SECONDS;
+
+    } else {
+
+        showToast(
+            currentLanguage === "en"
+                ? "Break complete! Ready to focus?"
+                : "休息完成！準備再次專注？"
+        );
+
+
+        timerMode =
+            "focus";
+
+        timerSeconds =
+            FOCUS_SECONDS;
+
+    }
+
+
+    updateTimerDisplay();
+
+    updateTimerLabels();
+
+}
+
+
+/*
+=========================================================
+FLASHCARDS
+=========================================================
+*/
 
 function addFlashcard() {
 
     const question =
-        document.getElementById("flashQuestion")
-        .value.trim();
+        document.getElementById(
+            "flashQuestion"
+        ).value.trim();
 
     const answer =
-        document.getElementById("flashAnswer")
-        .value.trim();
+        document.getElementById(
+            "flashAnswer"
+        ).value.trim();
 
 
     if (!question || !answer) {
@@ -2334,6 +3140,7 @@ function addFlashcard() {
         );
 
         return;
+
     }
 
 
@@ -2350,15 +3157,20 @@ function addFlashcard() {
     });
 
 
-    document.getElementById("flashQuestion").value = "";
+    document.getElementById(
+        "flashQuestion"
+    ).value = "";
 
-    document.getElementById("flashAnswer").value = "";
+    document.getElementById(
+        "flashAnswer"
+    ).value = "";
 
 
     currentFlashcard =
         data.flashcards.length - 1;
 
-    flashShowingAnswer = false;
+    flashShowingAnswer =
+        false;
 
     saveData();
 
@@ -2372,7 +3184,9 @@ function addFlashcard() {
 function renderFlashcard() {
 
     const text =
-        document.getElementById("flashcardText");
+        document.getElementById(
+            "flashcardText"
+        );
 
 
     if (data.flashcards.length === 0) {
@@ -2383,11 +3197,14 @@ function renderFlashcard() {
                 : "暫時未有閃卡。";
 
         return;
+
     }
 
 
     const card =
-        data.flashcards[currentFlashcard];
+        data.flashcards[
+            currentFlashcard
+        ];
 
 
     text.textContent =
@@ -2400,8 +3217,9 @@ function renderFlashcard() {
 
 function flipFlashcard() {
 
-    if (data.flashcards.length === 0)
-        return;
+    if (
+        data.flashcards.length === 0
+    ) return;
 
     flashShowingAnswer =
         !flashShowingAnswer;
@@ -2413,14 +3231,20 @@ function flipFlashcard() {
 
 function nextFlashcard() {
 
-    if (data.flashcards.length === 0)
-        return;
+    if (
+        data.flashcards.length === 0
+    ) return;
+
 
     currentFlashcard =
-        (currentFlashcard + 1)
-        % data.flashcards.length;
+        (
+            currentFlashcard + 1
+        ) %
+        data.flashcards.length;
 
-    flashShowingAnswer = false;
+
+    flashShowingAnswer =
+        false;
 
     renderFlashcard();
 
@@ -2429,14 +3253,22 @@ function nextFlashcard() {
 
 function previousFlashcard() {
 
-    if (data.flashcards.length === 0)
-        return;
+    if (
+        data.flashcards.length === 0
+    ) return;
+
 
     currentFlashcard =
-        (currentFlashcard - 1 + data.flashcards.length)
-        % data.flashcards.length;
+        (
+            currentFlashcard -
+            1 +
+            data.flashcards.length
+        ) %
+        data.flashcards.length;
 
-    flashShowingAnswer = false;
+
+    flashShowingAnswer =
+        false;
 
     renderFlashcard();
 
@@ -2445,11 +3277,15 @@ function previousFlashcard() {
 
 function markFlashcard() {
 
-    if (data.flashcards.length === 0)
-        return;
+    if (
+        data.flashcards.length === 0
+    ) return;
 
-    data.flashcards[currentFlashcard].known =
-        true;
+
+    data.flashcards[
+        currentFlashcard
+    ].known = true;
+
 
     saveData();
 
@@ -2464,37 +3300,53 @@ function markFlashcard() {
 }
 
 
-/* DASHBOARD */
+/*
+=========================================================
+DASHBOARD
+=========================================================
+*/
 
 function updateDashboard() {
 
-    document.getElementById("dashboardNotes")
-        .textContent =
+    document.getElementById(
+        "dashboardNotes"
+    ).textContent =
         data.notes.length;
 
-    document.getElementById("dashboardFlashcards")
-        .textContent =
+
+    document.getElementById(
+        "dashboardFlashcards"
+    ).textContent =
         data.flashcards.length;
 
-    document.getElementById("dashboardSessions")
-        .textContent =
+
+    document.getElementById(
+        "dashboardSessions"
+    ).textContent =
         data.sessions;
 
-    document.getElementById("dashboardTasks")
-        .textContent =
+
+    document.getElementById(
+        "dashboardTasks"
+    ).textContent =
         data.completedTasks;
 
 
-    document.getElementById("heroNotes")
-        .textContent =
+    document.getElementById(
+        "heroNotes"
+    ).textContent =
         data.notes.length;
 
-    document.getElementById("heroSessions")
-        .textContent =
+
+    document.getElementById(
+        "heroSessions"
+    ).textContent =
         data.sessions;
 
-    document.getElementById("heroFlashcards")
-        .textContent =
+
+    document.getElementById(
+        "heroFlashcards"
+    ).textContent =
         data.flashcards.length;
 
 
@@ -2512,42 +3364,56 @@ function updateDashboard() {
         );
 
 
-    document.getElementById("progressFill")
-        .style.width =
+    document.getElementById(
+        "progressFill"
+    ).style.width =
         percentage + "%";
 
 }
 
 
-/* REVISION STUDIO */
+/*
+=========================================================
+REVISION STUDIO
+=========================================================
+*/
 
 function generateRevision() {
 
-    const input =
-        document.getElementById("revisionInput");
-
     const text =
-        input.value.trim();
-
+        document.getElementById(
+            "revisionInput"
+        ).value.trim();
 
     const output =
-        document.getElementById("revisionOutput");
+        document.getElementById(
+            "revisionOutput"
+        );
 
 
     if (!text) {
 
         output.innerHTML = `
+
             <div class="revision-item">
+
                 ${
                     currentLanguage === "en"
                     ? "Add some notes or a topic first."
                     : "請先加入筆記或者輸入一個主題。"
                 }
+
             </div>
+
         `;
 
         return;
+
     }
+
+
+    const words =
+        text.split(/\s+/).length;
 
 
     output.innerHTML = `
@@ -2565,8 +3431,8 @@ function generateRevision() {
             <p>
                 ${
                     currentLanguage === "en"
-                    ? "Explain the main idea of this topic in your own words."
-                    : "用你自己嘅說話解釋呢個主題最重要嘅概念。"
+                    ? "Explain the main idea of these notes in your own words."
+                    : "用你自己嘅說話解釋呢份筆記最重要嘅概念。"
                 }
             </p>
 
@@ -2586,8 +3452,8 @@ function generateRevision() {
             <p>
                 ${
                     currentLanguage === "en"
-                    ? "List three important facts you remember."
-                    : "寫出三個你記得嘅重要資料。"
+                    ? "List three important facts you remember without looking back."
+                    : "唔睇筆記，寫出三個你記得嘅重要資料。"
                 }
             </p>
 
@@ -2614,19 +3480,47 @@ function generateRevision() {
 
         </div>
 
+
+        <div class="revision-item">
+
+            <strong>
+                ${
+                    currentLanguage === "en"
+                    ? "Imported text"
+                    : "已讀取文字"
+                }
+            </strong>
+
+            <p>
+                ${
+                    currentLanguage === "en"
+                    ? `${words} words were loaded into the revision area.`
+                    : `已經將大約 ${words} 個詞載入溫習區域。`
+                }
+            </p>
+
+        </div>
+
     `;
 
 }
 
 
-/* STUDY BUDDY */
+/*
+=========================================================
+STUDY BUDDY
+=========================================================
+*/
 
 function openBuddy() {
 
-    scrollToSection("studyBuddy");
+    scrollToSection(
+        "studyBuddy"
+    );
 
-    document.getElementById("buddyInput")
-        .focus();
+    document.getElementById(
+        "buddyInput"
+    ).focus();
 
 }
 
@@ -2634,7 +3528,9 @@ function openBuddy() {
 function sendBuddyMessage() {
 
     const input =
-        document.getElementById("buddyInput");
+        document.getElementById(
+            "buddyInput"
+        );
 
     const message =
         input.value.trim();
@@ -2644,26 +3540,36 @@ function sendBuddyMessage() {
 
 
     const box =
-        document.getElementById("buddyMessages");
+        document.getElementById(
+            "buddyMessages"
+        );
 
 
     const userMessage =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    userMessage.style.marginBottom = "10px";
+    userMessage.style.marginBottom =
+        "10px";
 
     userMessage.innerHTML =
         "<strong>You:</strong> "
         + escapeHTML(message);
 
 
-    box.appendChild(userMessage);
+    box.appendChild(
+        userMessage
+    );
 
 
     const response =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
-    response.style.marginBottom = "10px";
+    response.style.marginBottom =
+        "10px";
 
 
     response.innerHTML =
@@ -2673,20 +3579,23 @@ function sendBuddyMessage() {
             <strong>Study Buddy:</strong>
             Break the topic into smaller ideas,
             explain what you already know,
-            and identify the part you are unsure about.
-            Then practise recalling it without looking at your notes.
+            identify what you are unsure about,
+            and practise recalling it without looking
+            at your notes.
           `
 
         : `
             <strong>學習助手：</strong>
             可以先將主題拆成幾個細小概念，
             講下你已經知道嘅內容，
-            再找出你最唔肯定嘅部分。
+            再找出你最唔肯定嘅部分，
             最後嘗試唔睇筆記自己回憶。
           `;
 
 
-    box.appendChild(response);
+    box.appendChild(
+        response
+    );
 
     input.value = "";
 
@@ -2696,11 +3605,17 @@ function sendBuddyMessage() {
 }
 
 
-/* ESSAY COACH */
+/*
+=========================================================
+ESSAY COACH
+=========================================================
+*/
 
 function openEssayCoach() {
 
-    scrollToSection("essayCoach");
+    scrollToSection(
+        "essayCoach"
+    );
 
 }
 
@@ -2708,12 +3623,14 @@ function openEssayCoach() {
 function analyseEssay() {
 
     const essay =
-        document.getElementById("essayInput")
-        .value.trim();
-
+        document.getElementById(
+            "essayInput"
+        ).value.trim();
 
     const output =
-        document.getElementById("essayOutput");
+        document.getElementById(
+            "essayOutput"
+        );
 
 
     if (!essay) {
@@ -2733,6 +3650,7 @@ function analyseEssay() {
         `;
 
         return;
+
     }
 
 
@@ -2805,11 +3723,17 @@ function analyseEssay() {
 }
 
 
-/* REVISION PLANNER */
+/*
+=========================================================
+REVISION PLANNER
+=========================================================
+*/
 
 function addRevisionPlan() {
 
-    scrollToSection("planner");
+    scrollToSection(
+        "planner"
+    );
 
 }
 
@@ -2817,12 +3741,14 @@ function addRevisionPlan() {
 function savePlan() {
 
     const subject =
-        document.getElementById("planSubject")
-        .value.trim();
+        document.getElementById(
+            "planSubject"
+        ).value.trim();
 
     const date =
-        document.getElementById("planDate")
-        .value;
+        document.getElementById(
+            "planDate"
+        ).value;
 
 
     if (!subject || !date) {
@@ -2834,6 +3760,7 @@ function savePlan() {
         );
 
         return;
+
     }
 
 
@@ -2852,9 +3779,13 @@ function savePlan() {
 
     renderPlans();
 
-    document.getElementById("planSubject").value = "";
+    document.getElementById(
+        "planSubject"
+    ).value = "";
 
-    document.getElementById("planDate").value = "";
+    document.getElementById(
+        "planDate"
+    ).value = "";
 
 }
 
@@ -2862,7 +3793,9 @@ function savePlan() {
 function renderPlans() {
 
     const list =
-        document.getElementById("planList");
+        document.getElementById(
+            "planList"
+        );
 
     list.innerHTML = "";
 
@@ -2884,16 +3817,20 @@ function renderPlans() {
         `;
 
         return;
+
     }
 
 
     data.plans.forEach(plan => {
 
         const div =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
         div.className =
             "revision-item";
+
 
         div.innerHTML = `
 
@@ -2916,6 +3853,7 @@ function renderPlans() {
 
         `;
 
+
         list.appendChild(div);
 
     });
@@ -2937,249 +3875,62 @@ function deletePlan(id) {
 }
 
 
-/* COLOUR THEMES */
+/*
+=========================================================
+COLOURS
+=========================================================
+*/
 
 const colours = [
 
-    {
-        name: "Cloud",
-        code: "#FAE9E2"
-    },
-
-    {
-        name: "Cream",
-        code: "#F6F3EE"
-    },
-
-    {
-        name: "Mist",
-        code: "#EDECEB"
-    },
-
-    {
-        name: "Lavender",
-        code: "#EAE8EB"
-    },
-
-    {
-        name: "Rose",
-        code: "#EDDFDE"
-    },
-
-    {
-        name: "Peach",
-        code: "#FBFEF3"
-    },
-
-    {
-        name: "Soft Pink",
-        code: "#FCE4E2"
-    },
-
-    {
-        name: "Blush",
-        code: "#FAE8E8"
-    },
-
-    {
-        name: "Dusty Rose",
-        code: "#F8E6E6"
-    },
-
-    {
-        name: "Mauve",
-        code: "#CE9C9D"
-    },
-
-    {
-        name: "Rosewood",
-        code: "#D5A1A3"
-    },
-
-    {
-        name: "Pink",
-        code: "#E9BDBE"
-    },
-
-    {
-        name: "Warm Cream",
-        code: "#FAF3EB"
-    },
-
-    {
-        name: "Sage",
-        code: "#EAEEE0"
-    },
-
-    {
-        name: "Stone",
-        code: "#B0B0B2"
-    },
-
-    {
-        name: "Cool Grey",
-        code: "#E1E2E4"
-    },
-
-    {
-        name: "Light Grey",
-        code: "#DADADC"
-    },
-
-    {
-        name: "Taupe",
-        code: "#B5A28A"
-    },
-
-    {
-        name: "Ice",
-        code: "#EBF6FA"
-    },
-
-    {
-        name: "Blue Grey",
-        code: "#D9E6EC"
-    },
-
-    {
-        name: "Pastel Blue",
-        code: "#A4C8D5"
-    },
-
-    {
-        name: "Ocean",
-        code: "#80ADBC"
-    },
-
-    {
-        name: "Sky",
-        code: "#AED9EA"
-    },
-
-    {
-        name: "Blue Stone",
-        code: "#C0D3D8"
-    },
-
-    {
-        name: "Pearl",
-        code: "#EFEFEF"
-    },
-
-    {
-        name: "Pale Rose",
-        code: "#ECDCDC"
-    },
-
-    {
-        name: "Soft Lilac",
-        code: "#EEE8E8"
-    },
-
-    {
-        name: "Peach Cream",
-        code: "#E9CCC4"
-    },
-
-    {
-        name: "Sage Cream",
-        code: "#E7E7DB"
-    },
-
-    {
-        name: "Butter",
-        code: "#DFD8AB"
-    },
-
-    {
-        name: "Sand",
-        code: "#EFDFD5"
-    },
-
-    {
-        name: "Grey Beige",
-        code: "#E3E2E1"
-    },
-
-    {
-        name: "Pale Blue Grey",
-        code: "#DEE9EB"
-    },
-
-    {
-        name: "Off White",
-        code: "#F0EDE8"
-    },
-
-    {
-        name: "Mushroom",
-        code: "#C2B7B1"
-    },
-
-    {
-        name: "Warm Beige",
-        code: "#E1D7CD"
-    },
-
-    {
-        name: "Fog",
-        code: "#D7E0E5"
-    },
-
-    {
-        name: "Slate",
-        code: "#ADB5BE"
-    },
-
-    {
-        name: "Stone Beige",
-        code: "#D4C8B6"
-    },
-
-    {
-        name: "Caramel",
-        code: "#D9BD9C"
-    },
-
-    {
-        name: "Golden Beige",
-        code: "#CAB08B"
-    },
-
-    {
-        name: "Grey Mist",
-        code: "#D7DBDA"
-    },
-
-    {
-        name: "Very Light Blue",
-        code: "#E6EDF3"
-    },
-
-    {
-        name: "Powder Blue",
-        code: "#D4E2EF"
-    },
-
-    {
-        name: "Periwinkle",
-        code: "#B4C6DC"
-    },
-
-    {
-        name: "Clay",
-        code: "#DEC8BD"
-    },
-
-    {
-        name: "Apricot",
-        code: "#F1D5BD"
-    },
-
-    {
-        name: "Warm Peach",
-        code: "#E0B394"
-    }
+    { name: "Cloud", code: "#FAE9E2" },
+    { name: "Cream", code: "#F6F3EE" },
+    { name: "Mist", code: "#EDECEB" },
+    { name: "Lavender", code: "#EAE8EB" },
+    { name: "Rose", code: "#EDDFDE" },
+    { name: "Peach", code: "#FBEEF3" },
+    { name: "Soft Pink", code: "#FCE4E2" },
+    { name: "Blush", code: "#FAE8E8" },
+    { name: "Dusty Rose", code: "#F8E6E6" },
+    { name: "Mauve", code: "#CE9C9D" },
+    { name: "Rosewood", code: "#D5A1A3" },
+    { name: "Pink", code: "#E9BDBE" },
+    { name: "Warm Cream", code: "#FAF3EB" },
+    { name: "Sage", code: "#EAEEE0" },
+    { name: "Stone", code: "#B0B0B2" },
+    { name: "Cool Grey", code: "#E1E2E4" },
+    { name: "Light Grey", code: "#DADADC" },
+    { name: "Taupe", code: "#B5A28A" },
+    { name: "Ice", code: "#EBF6FA" },
+    { name: "Blue Grey", code: "#D9E6EC" },
+    { name: "Pastel Blue", code: "#A4C8D5" },
+    { name: "Ocean", code: "#80ADBC" },
+    { name: "Sky", code: "#AED9EA" },
+    { name: "Blue Stone", code: "#C0D3D8" },
+    { name: "Pearl", code: "#EFEFEF" },
+    { name: "Pale Rose", code: "#ECDCDC" },
+    { name: "Soft Lilac", code: "#EEE8E8" },
+    { name: "Peach Cream", code: "#E9CCC4" },
+    { name: "Sage Cream", code: "#E7E7DB" },
+    { name: "Butter", code: "#DFD8AB" },
+    { name: "Sand", code: "#EFDFD5" },
+    { name: "Grey Beige", code: "#E3E2E1" },
+    { name: "Pale Blue Grey", code: "#DEE9EB" },
+    { name: "Off White", code: "#F0EDE8" },
+    { name: "Mushroom", code: "#C2B7B1" },
+    { name: "Warm Beige", code: "#E1D7CD" },
+    { name: "Fog", code: "#D7E0E5" },
+    { name: "Slate", code: "#ADB5BE" },
+    { name: "Stone Beige", code: "#D4C8B6" },
+    { name: "Caramel", code: "#D9BD9C" },
+    { name: "Golden Beige", code: "#CAB08B" },
+    { name: "Grey Mist", code: "#D7DBDA" },
+    { name: "Very Light Blue", code: "#E6EDF3" },
+    { name: "Powder Blue", code: "#D4E2EF" },
+    { name: "Periwinkle", code: "#B4C6DC" },
+    { name: "Clay", code: "#DEC8BD" },
+    { name: "Apricot", code: "#F1D5BD" },
+    { name: "Warm Peach", code: "#E0B394" }
 
 ];
 
@@ -3187,51 +3938,57 @@ const colours = [
 function renderColours() {
 
     const grid =
-        document.getElementById("colorGrid");
+        document.getElementById(
+            "colorGrid"
+        );
 
     grid.innerHTML = "";
 
 
-    colours.forEach((colour, index) => {
+    colours.forEach(
+        (colour, index) => {
 
-        const card =
-            document.createElement("div");
+            const card =
+                document.createElement(
+                    "div"
+                );
 
-        card.className =
-            "color-card";
-
-
-        card.innerHTML = `
-
-            <div
-                class="color-preview"
-                style="background:${colour.code};">
-            </div>
-
-            <div>
-                ${escapeHTML(colour.name)}
-            </div>
-
-            <div class="color-code">
-                ${escapeHTML(colour.code)}
-            </div>
-
-            <button
-                class="choose-color"
-                onclick="chooseColour(${index})">
-                ${
-                    currentLanguage === "en"
-                    ? "Choose"
-                    : "選擇"
-                }
-            </button>
-
-        `;
+            card.className =
+                "color-card";
 
 
-        grid.appendChild(card);
+            card.innerHTML = `
 
-    });
+                <div
+                    class="color-preview"
+                    style="background:${colour.code};">
+                </div>
+
+                <div>
+                    ${escapeHTML(colour.name)}
+                </div>
+
+                <div class="color-code">
+                    ${colour.code}
+                </div>
+
+                <button
+                    class="choose-color"
+                    onclick="chooseColour(${index})">
+                    ${
+                        currentLanguage === "en"
+                            ? "Choose"
+                            : "選擇"
+                    }
+                </button>
+
+            `;
+
+
+            grid.appendChild(card);
+
+        }
+    );
 
 }
 
@@ -3246,7 +4003,9 @@ function chooseColour(index) {
 
     saveData();
 
-    applyColour(colour.code);
+    applyColour(
+        colour.code
+    );
 
     showToast(
         currentLanguage === "en"
@@ -3263,14 +4022,16 @@ function applyColour(code) {
 
 
     document.documentElement
-        .style.setProperty(
+        .style
+        .setProperty(
             "--primary",
             code
         );
 
 
     document.documentElement
-        .style.setProperty(
+        .style
+        .setProperty(
             "--primary-dark",
             code
         );
@@ -3278,7 +4039,11 @@ function applyColour(code) {
 }
 
 
-/* RESET EVERYTHING */
+/*
+=========================================================
+RESET
+=========================================================
+*/
 
 function resetEverything() {
 
@@ -3290,12 +4055,13 @@ function resetEverything() {
             : "你確定要刪除所有資料嗎？呢個動作無法還原。";
 
 
-    if (!confirm(confirmation)) {
+    if (!confirm(confirmation))
         return;
-    }
 
 
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
 
     localStorage.removeItem(
         "studyspace_language"
@@ -3333,13 +4099,21 @@ function resetEverything() {
     resetTimer();
 
 
-    document.getElementById("noteTitle").value = "";
+    document.getElementById(
+        "noteTitle"
+    ).value = "";
 
-    document.getElementById("noteContent").value = "";
+    document.getElementById(
+        "noteContent"
+    ).value = "";
 
-    document.getElementById("revisionInput").value = "";
+    document.getElementById(
+        "revisionInput"
+    ).value = "";
 
-    document.getElementById("essayInput").value = "";
+    document.getElementById(
+        "essayInput"
+    ).value = "";
 
 
     renderAccount();
@@ -3368,26 +4142,96 @@ function resetEverything() {
 }
 
 
-/* SECURITY */
+/*
+=========================================================
+SECURITY
+=========================================================
+*/
 
 function escapeHTML(value) {
 
     return String(value)
 
-        .replace(/&/g, "&amp;")
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-        .replace(/</g, "&lt;")
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
-        .replace(/>/g, "&gt;")
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-        .replace(/"/g, "&quot;")
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/'/g, "&#039;");
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/* INITIALISE */
+/*
+=========================================================
+KEYBOARD SHORTCUTS
+=========================================================
+*/
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        /*
+        Spacebar starts/pauses the timer,
+        but only when the user isn't typing.
+        */
+
+        const tag =
+            document.activeElement?.tagName;
+
+        const isTyping =
+            tag === "INPUT" ||
+            tag === "TEXTAREA" ||
+            tag === "SELECT";
+
+
+        if (
+            event.code === "Space" &&
+            !isTyping
+        ) {
+
+            event.preventDefault();
+
+            if (timerInterval) {
+
+                pauseTimer();
+
+            } else {
+
+                startTimer();
+
+            }
+
+        }
+
+    }
+);
+
+
+/*
+=========================================================
+INITIALISE
+=========================================================
+*/
 
 loadData();
 
